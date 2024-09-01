@@ -1,0 +1,71 @@
+[gd_scene load_steps=3 format=3 uid="uid://dbb11a2mx05o0"]
+
+[ext_resource type="PackedScene" uid="uid://blrviq8bw8aiw" path="res://scenes/table/table_row.tscn" id="1_eobwl"]
+[ext_resource type="PackedScene" uid="uid://cnosyelpkcivd" path="res://scenes/table/table_cell.tscn" id="2_koq57"]
+
+[node name="Table" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Rows" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 472.0
+offset_top = 12.0
+offset_right = 1622.0
+offset_bottom = 1514.0
+scale = Vector2(0.4, 0.4)
+
+[node name="TableRow" parent="Rows" instance=ExtResource("1_eobwl")]
+layout_mode = 2
+
+[node name="TableCell2" parent="Rows/TableRow" instance=ExtResource("2_koq57")]
+layout_mode = 2
+text = "10"
+
+[node name="TableRow2" parent="Rows" instance=ExtResource("1_eobwl")]
+layout_mode = 2
+
+[node name="TableCell2" parent="Rows/TableRow2" instance=ExtResource("2_koq57")]
+layout_mode = 2
+text = "10"
+
+[node name="TableRow3" parent="Rows" instance=ExtResource("1_eobwl")]
+layout_mode = 2
+
+[node name="TableCell2" parent="Rows/TableRow3" instance=ExtResource("2_koq57")]
+layout_mode = 2
+text = "10"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_right = 2000.0
+offset_bottom = 2000.0
+scale = Vector2(0.3, 0.3)
+
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer"]
+custom_minimum_size = Vector2(2000, 2000)
+layout_mode = 2
+
+[node name="TableCell" parent="VBoxContainer/PanelContainer" instance=ExtResource("2_koq57")]
+layout_mode = 2
+text = "EAR"
+
+[node name="TableCell2" parent="VBoxContainer/PanelContainer" instance=ExtResource("2_koq57")]
+layout_mode = 2
+text = "MID"
+
+[node name="TableCell3" parent="VBoxContainer/PanelContainer" instance=ExtResource("2_koq57")]
+layout_mode = 2
+text = "LAT"
