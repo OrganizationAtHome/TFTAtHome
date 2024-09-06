@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://cvqkji1h85i5k"]
 
 [ext_resource type="Script" path="res://scenes/Card.cs" id="1_wqg83"]
-[ext_resource type="PackedScene" path="res://scenes/table/Stat_Label.tscn" id="2_0esrq"]
+[ext_resource type="PackedScene" uid="uid://ds00ulykonvln" path="res://scenes/miscellaneous/Stat_Label.tscn" id="2_0esrq"]
 [ext_resource type="Texture2D" uid="uid://d0m6opvm4r6l7" path="res://images/cardimages/eric-cartman.jpg" id="2_8rmyp"]
 
 [node name="Node2D" type="Node2D"]

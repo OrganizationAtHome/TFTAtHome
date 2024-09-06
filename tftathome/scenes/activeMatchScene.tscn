@@ -1,10 +1,19 @@
-[gd_scene load_steps=2 format=3 uid="uid://bu5uwkaqalaf0"]
-
-[ext_resource type="Texture2D" uid="uid://dloca4g7ymwgy" path="res://images/backgrounds/battlegroundnew.jpg" id="1_mdoo5"]
+[gd_scene format=3 uid="uid://bu5uwkaqalaf0"]
 
 [node name="Node2D" type="Node2D"]
+position = Vector2(-95, -19)
 
-[node name="Battlegroundnew" type="Sprite2D" parent="."]
-position = Vector2(566, 321)
-scale = Vector2(0.854094, 0.534916)
-texture = ExtResource("1_mdoo5")
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+offset_left = 438.0
+offset_top = 69.0
+offset_right = 868.0
+offset_bottom = 604.0
+horizontal_scroll_mode = 2
+vertical_scroll_mode = 2
+
+[node name="GridContainer" type="GridContainer" parent="ScrollContainer"]
+layout_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="ScrollContainer/GridContainer"]
+custom_minimum_size = Vector2(500, 2000)
+layout_mode = 2
