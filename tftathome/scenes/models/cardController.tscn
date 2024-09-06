@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://ck0ub3d2k5ykt"]
+
+[ext_resource type="PackedScene" uid="uid://228x0lttm3ug" path="res://scenes/models/card.tscn" id="1_oujvu"]
+
+[node name="Container" type="Container"]
+offset_right = 304.0
+offset_bottom = 372.0
+
+[node name="Node2D" parent="." instance=ExtResource("1_oujvu")]
