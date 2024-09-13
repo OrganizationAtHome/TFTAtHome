@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace TFTAtHome.util
 {
-    internal class RenderUtil
+    /**
+     * This class is responsible for all sizing of nodes, resizing etc.
+     */
+    public class RenderUtil
     {
     }
 }

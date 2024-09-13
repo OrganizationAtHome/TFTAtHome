@@ -34,12 +34,12 @@ offset_bottom = 241.0
 color = Color(0.501961, 0.501961, 0.501961, 1)
 metadata/_edit_use_anchors_ = true
 
-[node name="Card_Image" type="Sprite2D" parent="Card"]
+[node name="CardImgSrc" type="Sprite2D" parent="Card"]
 position = Vector2(76, 120)
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("1_52fin")
 
-[node name="Character_Name_Label" type="RichTextLabel" parent="Card"]
+[node name="CardName" type="RichTextLabel" parent="Card"]
 offset_top = 3.0
 offset_right = 305.0
 offset_bottom = 43.0
@@ -47,7 +47,7 @@ bbcode_enabled = true
 text = "[center] CHARACTER NAME [/center]"
 metadata/_edit_use_anchors_ = true
 
-[node name="Character_Title_Label" type="RichTextLabel" parent="Card"]
+[node name="CardTitle" type="RichTextLabel" parent="Card"]
 offset_left = 1.0
 offset_top = 207.0
 offset_right = 306.0
@@ -83,7 +83,7 @@ scale = Vector2(0.15, 0.15)
 text = "LATE"
 horizontal_alignment = 1
 
-[node name="Early_Label_Value" parent="Card" instance=ExtResource("2_vy0w0")]
+[node name="Early" parent="Card" instance=ExtResource("2_vy0w0")]
 offset_left = 225.0
 offset_top = 67.0
 offset_right = 674.0
@@ -92,7 +92,7 @@ scale = Vector2(0.15, 0.15)
 text = "10"
 horizontal_alignment = 1
 
-[node name="Mid_Label_Value" parent="Card" instance=ExtResource("2_vy0w0")]
+[node name="Mid" parent="Card" instance=ExtResource("2_vy0w0")]
 offset_left = 225.0
 offset_top = 100.0
 offset_right = 674.0
@@ -101,7 +101,7 @@ scale = Vector2(0.15, 0.15)
 text = "10"
 horizontal_alignment = 1
 
-[node name="Late_Label_Value" parent="Card" instance=ExtResource("2_vy0w0")]
+[node name="Late" parent="Card" instance=ExtResource("2_vy0w0")]
 offset_left = 225.0
 offset_top = 134.0
 offset_right = 674.0
@@ -119,7 +119,7 @@ scale = Vector2(0.15, 0.15)
 text = "CLASS"
 horizontal_alignment = 1
 
-[node name="Class_Label_Value" parent="Card" instance=ExtResource("2_vy0w0")]
+[node name="Trait" parent="Card" instance=ExtResource("2_vy0w0")]
 anchors_preset = -1
 anchor_left = -1.61
 anchor_top = -2.031
@@ -143,7 +143,7 @@ scale = Vector2(0.15, 0.15)
 text = "COST"
 horizontal_alignment = 1
 
-[node name="CardCost_Label_Value" parent="Card" instance=ExtResource("2_vy0w0")]
+[node name="Cost" parent="Card" instance=ExtResource("2_vy0w0")]
 offset_left = 173.0
 offset_top = 293.0
 offset_right = 622.0
