@@ -12,8 +12,8 @@ namespace TFTAtHome.models
     {
         public GameManager(Node2D node)
         {
-            Upnp upnp = new();
-            SetupUpnp(upnp, 1234, "UDP");
+            //Upnp upnp = new();
+            //SetupUpnp(upnp, 1234, "UDP");
 
             node.Multiplayer.PeerConnected += (id) =>
             {
@@ -32,18 +32,12 @@ namespace TFTAtHome.models
             StartServer(server, 1234, 4);
 
             node.Multiplayer.MultiplayerPeer = server;
-            
-            
 
 
-
-            ENetMultiplayerPeer client = new();
-            Error clientError = ConnectClient(client, "127.0.0.1", 1234);
-            client.DisconnectPeer(client.GetUniqueId());
 
             ENetMultiplayerPeer client2 = new();
             Error clientError2 = ConnectClient(client2, "127.0.0.1", 1234);
-            client2.DisconnectPeer(client2.GetUniqueId());
+            server.DisconnectPeer(client2.GetUniqueId());
 
 
         }

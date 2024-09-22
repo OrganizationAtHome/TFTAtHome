@@ -80,16 +80,8 @@ namespace TFTAtHome.util
         {
             upnp.Discover();
             Upnp.UpnpResult result;
-            if (upnp.GetGateway() != null && upnp.GetGateway().IsValidGateway())
-            {
-                result = (Upnp.UpnpResult)upnp.AddPortMapping(port, 0, "TFTAtHome", proto, 120);
-                GD.Print("Port mapping successful");
-            }
-            else
-            {
-                result = Upnp.UpnpResult.NoGateway;
-                GD.Print("Port mapping failed");
-            }
+            result = (Upnp.UpnpResult)upnp.AddPortMapping(port, 0, "TFTAtHome", proto, 120);
+
 
             if (result == Upnp.UpnpResult.Success)
             {
