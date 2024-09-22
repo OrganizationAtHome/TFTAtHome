@@ -1,6 +1,8 @@
 using Godot;
 using System;
+using TFTAtHome.models;
 using TFTAtHome.util;
+
 
 public partial class ActiveMatchScene : Node2D
 {
@@ -11,6 +13,8 @@ public partial class ActiveMatchScene : Node2D
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
 	{
+        GameManager gameManager = new(this);
+        /*
         scrollContainer = GetNode("CardContainer") as ScrollContainer;
         gridContainer = scrollContainer.GetNode("CardGrid") as GridContainer;
         // ColorRect colorRect = GetNode<ColorRect>("ColorRect");
@@ -25,6 +29,7 @@ public partial class ActiveMatchScene : Node2D
         Container container2 = new();
         container2.CustomMinimumSize = new Vector2(220, 250);
         createCustomCard("[center] ZimmerMAN [/center]", container2);
+        */
     }
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -32,7 +37,7 @@ public partial class ActiveMatchScene : Node2D
 	{
         // addCard();
 	}
-
+    /*
     public void addCard(Container container)
     {
         Node card = cardScene.Instantiate();
@@ -43,18 +48,21 @@ public partial class ActiveMatchScene : Node2D
         gridContainer.AddChild(container);
         GD.Print(gridContainer.ToString());
     }
+    */
 
     /*, string title, int early, int mid, int late, string trait, int cardCost */
+    /*
     public void createCustomCard(string characterName, Container container)
     {
         Node card = cardScene.Instantiate();
         Node2D card2D = card as Node2D;
         card2D.ApplyScale(new Vector2(0.7f, 0.7f));
         card2D.GetChildren();
-        RichTextLabel lblName = (RichTextLabel)getNodeFromCard(card2D, "Character_Name_Label");
+        // RichTextLabel lblName = (RichTextLabel)getNodeFromCard(card2D, "Character_Name_Label");
         // GD.Print("createCustomCard: " + lblName.ToString());
         lblName.Text = characterName;
         container.AddChild(card);
         gridContainer.AddChild(container);
     }
+    */
 }
