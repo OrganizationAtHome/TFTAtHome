@@ -12,9 +12,10 @@ namespace TFTAtHome.util
         public static Error ConnectClient(ENetMultiplayerPeer client, string host, int port)
         {
             Error clientError = client.CreateClient(host, port);
+            
             if (clientError == Error.Ok)
             {
-                GD.Print("Client connected to server");
+                GD.Print("Client connecting to server");
             }
             else if (clientError == Error.Failed)
             {
@@ -44,7 +45,7 @@ namespace TFTAtHome.util
         }
 
         public static Error StartServer(ENetMultiplayerPeer server, int port, int maxPlayers) {
-            Error serverError = server.CreateServer(port, maxPlayers);
+            Error serverError = server.CreateServer(port);
             if (serverError == Error.Ok)
             {
                 GD.Print("Server started");
@@ -73,6 +74,16 @@ namespace TFTAtHome.util
             {
                 GD.Print("Server failed to start");
             }
+
+            server.PeerConnected += (id) =>
+            {
+                GD.Print("Client connected to server with the ID " + id);
+            };
+            server.PeerDisconnected += (id) =>
+            {
+                GD.Print("Client disconnected from server with the ID " + id);
+            };
+
             return serverError;
         }
 

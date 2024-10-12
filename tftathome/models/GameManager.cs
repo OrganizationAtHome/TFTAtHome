@@ -1,8 +1,10 @@
 ﻿using Godot;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using static TFTAtHome.util.ZimmyUtil;
 
@@ -19,25 +21,34 @@ namespace TFTAtHome.models
             {
                 GD.Print("Server connected to client with the ID " + id);
             };
-
-            ENetMultiplayerPeer server = new();
-            server.PeerConnected += (id) =>
+            var args = OS.GetCmdlineArgs();
+            if (args.Contains("server"))
             {
-                GD.Print("Client connected to server with the ID " + id);
-            };
-            server.PeerDisconnected += (id) =>
+                ENetMultiplayerPeer server = new();
+                StartServer(server, 1234, 4);
+
+                node.Multiplayer.MultiplayerPeer = server;
+            } else
             {
-                GD.Print("Client disconnected from server with the ID " + id);
-            };
-            StartServer(server, 1234, 4);
+                ENetMultiplayerPeer client;
+                do
+                {
+                    client = new();
+                    Error clientError = ConnectClient(client, "localhost", 1234);
 
-            node.Multiplayer.MultiplayerPeer = server;
+                    node.Multiplayer.MultiplayerPeer = client;
+
+                    Thread.Sleep(400);
+
+                } while (client.GetConnectionStatus() != MultiplayerPeer.ConnectionStatus.Connected);
+
+            }
 
 
 
-            ENetMultiplayerPeer client2 = new();
-            Error clientError2 = ConnectClient(client2, "127.0.0.1", 1234);
-            server.DisconnectPeer(client2.GetUniqueId());
+
+
+
 
 
         }
