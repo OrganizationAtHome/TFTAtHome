@@ -66,7 +66,7 @@ public partial class ActiveMatchScene : Node2D
         parentContainer.AddChild(container);
         GD.Print(gridContainer.ToString());
     }
-    */
+    
 
     public void createCustomCard(string characterName, Container container)
     {
@@ -92,5 +92,5 @@ public partial class ActiveMatchScene : Node2D
 
         return null;
     }
-    */
+    
 }
