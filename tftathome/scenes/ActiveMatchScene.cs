@@ -1,35 +1,53 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 using TFTAtHome.models;
+using TFTAtHome.storage;
 using TFTAtHome.util;
 
 
 public partial class ActiveMatchScene : Node2D
 {
-    private PackedScene cardScene = GD.Load<PackedScene>("res://scenes/models/card.tscn");
-    private ScrollContainer scrollContainer;
+    private PackedScene cardScene = GD.Load<PackedScene>("res://scenes/models/cardScene.tscn");
+    private PackedScene playerElementScene = GD.Load<PackedScene>("res://scenes/playerElementScene.tscn");
+    private ScrollContainer cardScrollContainer;
+    private ScrollContainer playerListScrollContainer;
     private GridContainer gridContainer;
+    private VBoxContainer playerListVBox;
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
 	{
-        GameManager gameManager = new(this);
-        /*
-        scrollContainer = GetNode("CardContainer") as ScrollContainer;
-        gridContainer = scrollContainer.GetNode("CardGrid") as GridContainer;
-        // ColorRect colorRect = GetNode<ColorRect>("ColorRect");
-        // Vector2 size = colorRect.Size;
 
-        for (int i = 0; i < 5; i++)
+        Game testGame = LocalStorage.GetGame();
+        cardScrollContainer = GetNode("CardContainer") as ScrollContainer;
+        gridContainer = cardScrollContainer.GetNode("CardGrid") as GridContainer;
+        playerListScrollContainer = GetNode("PlayerListContainer") as ScrollContainer;
+
+        gridContainer = cardScrollContainer.GetNode("CardGrid") as GridContainer;
+        playerListVBox = GetNode("PlayerListContainer/PlayerList") as VBoxContainer;
+
+
+        foreach (Card cardObj in testGame.getActiveCardPool())
         {
-            Container container = new();
-            container.CustomMinimumSize = new Vector2(220, 250);
-            addCard(container);
+            CardUtil.CreateCustomCardAndAddToContainer(cardObj.CardName, gridContainer);
         }
-        Container container2 = new();
+
+        List<Card> playerHand1 = new List<Card>();
+        playerHand1.Add(testGame.getActiveCardPool()[0]);
+        playerHand1.Add(testGame.getActiveCardPool()[1]);
+        playerHand1.Add(testGame.getActiveCardPool()[2]);
+
+        Player testPlayer = new Player(1, "Test", playerHand1);
+
+        SceneUtil.addPlayerElementToPlayerList(testPlayer, playerListVBox);
+        /*
+        Godot.Container container2 = new();
         container2.CustomMinimumSize = new Vector2(220, 250);
-        createCustomCard("[center] ZimmerMAN [/center]", container2);
-        */
+        Godot.Container container3 = new();
+        container3.CustomMinimumSize = new Vector2(220, 250);
+        addCard(container2, playerListVBox);
+        addCard(container3, playerListVBox); */
     }
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -37,32 +55,42 @@ public partial class ActiveMatchScene : Node2D
 	{
         // addCard();
 	}
-    /*
-    public void addCard(Container container)
+
+    public void addCard(Container container, Container parentContainer)
     {
         Node card = cardScene.Instantiate();
         Node2D card2D = card as Node2D;
-        card2D.ApplyScale(new Vector2(0.7f, 0.7f));
+        card2D.ApplyScale(new Vector2(0.6f, 0.6f));
 
         container.AddChild(card);
-        gridContainer.AddChild(container);
+        parentContainer.AddChild(container);
         GD.Print(gridContainer.ToString());
     }
     */
 
-    /*, string title, int early, int mid, int late, string trait, int cardCost */
-    /*
     public void createCustomCard(string characterName, Container container)
     {
-        Node card = cardScene.Instantiate();
-        Node2D card2D = card as Node2D;
-        card2D.ApplyScale(new Vector2(0.7f, 0.7f));
-        card2D.GetChildren();
-        // RichTextLabel lblName = (RichTextLabel)getNodeFromCard(card2D, "Character_Name_Label");
-        // GD.Print("createCustomCard: " + lblName.ToString());
-        lblName.Text = characterName;
+        Node card = CardUtil.CreateGodotCard(characterName);
         container.AddChild(card);
-        gridContainer.AddChild(container);
+    }
+
+    private static Node getNodeFromCard(Node2D card, string name)
+    {
+        Godot.Collections.Array<Node> slaves = card.GetChild(0).GetChildren();
+
+        foreach (var item in slaves)
+        {
+
+            if (item is Node node)
+            {
+                if (node.Name.Equals(name))
+                {
+                    return node;
+                }
+            }
+        }
+
+        return null;
     }
     */
 }

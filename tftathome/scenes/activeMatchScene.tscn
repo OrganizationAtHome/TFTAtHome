@@ -12,11 +12,23 @@ position = Vector2(-95, -19)
 scale = Vector2(0.99977, 1.0248)
 script = ExtResource("1_g2emj")
 
+[node name="PlayerListContainer" type="ScrollContainer" parent="."]
+offset_left = 133.0
+offset_top = 139.0
+offset_right = 662.0
+offset_bottom = 720.0
+horizontal_scroll_mode = 2
+vertical_scroll_mode = 2
+
+[node name="PlayerList" type="VBoxContainer" parent="PlayerListContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+
 [node name="CardContainer" type="ScrollContainer" parent="."]
-offset_left = 581.134
-offset_top = 138.564
-offset_right = 1206.13
-offset_bottom = 684.564
+offset_left = 787.181
+offset_top = 132.709
+offset_right = 1412.18
+offset_bottom = 678.709
 scale = Vector2(1.03652, 1.07897)
 theme_override_styles/panel = SubResource("StyleBoxTexture_l3lvf")
 horizontal_scroll_mode = 2

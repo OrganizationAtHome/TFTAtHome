@@ -4,46 +4,55 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TFTAtHome.storage;
+using TFTAtHome.models;
 
 namespace TFTAtHome.util
 {
     public static class CardUtil
     {
-        private static PackedScene cardScene = GD.Load<PackedScene>("res://scenes/models/card.tscn");
+        private static PackedScene cardScene = GD.Load<PackedScene>("res://scenes/models/cardScene.tscn");
         
         
-        public static Node2D createGodotCard(string cardName)
+        public static Node CreateGodotCard(string cardName)
         {
-            // getCard() -> Needs to be implemented from wherever we store our cards
-            string[] cardHeader = { "Navn", "Title" };
-            string imgSrc = "ImgSrc";
-            string[] stats = {"Early", "Mid", "Late", "Trait", "Cost"};
-           Node card = cardScene.Instantiate();
-           Node2D card2D = card as Node2D;
-           card2D.ApplyScale(new Vector2(0.7f, 0.7f));
-           card2D.GetChildren();
+                Card cardObj = LocalStorage.getCardFromName(cardName); // ?? throw new Exception("Could not find card!");
+                string[] cardHeader = { "CardTitle", "CardName" };
+                string[] cardHeaderValues = { cardObj.CardTitle, cardObj.CardName };
+                string[] statsName = { "Early", "Mid", "Late", "Trait", "Cost" };
+                string[] statValues = cardObj.getStatsValuesAsString();
 
-            for (int i = 0; i < stats.Length; i++)
-            {
-                Label node = (Label)getNodeFromCard(card2D, stats[i]);
-                node.Text = stats[i]; // Needs to get the value from the card itself
-            }
-            for (int i = 0; i < cardHeader.Length; i++)
-            {
-                RichTextLabel node = (RichTextLabel)getNodeFromCard(card2D, cardHeader[i]);
-                node.Text = cardHeader[i]; // Needs to get the value from the card itself
-            }
+                // Create the card node
+                Node card = cardScene.Instantiate();
+                Node2D card2D = card as Node2D;
+                card2D.ApplyScale(new Vector2(0.7f, 0.7f));
 
-            Sprite2D sprite2D = (Sprite2D)getNodeFromCard(card2D, "Character_Name_Label");
-            sprite2D.Texture.ResourcePath = imgSrc;
+                // Set card stats and headers
+                for (int i = 0; i < statsName.Length; i++)
+                {
+                    Label node = (Label)GetNodeFromCard(card2D, statsName[i]);
+                    node.Text = statValues[i];
+                }
 
-            return card2D;
+                for (int i = 0; i < cardHeader.Length; i++)
+                {
+                    RichTextLabel node = (RichTextLabel)GetNodeFromCard(card2D, cardHeader[i]);
+                    node.Text = "[center]" + cardHeaderValues[i] + "[/center]";
+                }
+
+            Texture2D newTexture = (Texture2D)GD.Load($"res://{cardObj.CardImgSrc}");
+            Texture2D scaledTexture = RenderUtil.ResizeTexture(newTexture, 300f, 300f);
+
+            Sprite2D sprite2D = (Sprite2D)GetNodeFromCard(card2D, "CardImgSrc");
+            
+            sprite2D.Texture = scaledTexture;
+            return card;
         }
 
         /**
      * RETURNS A Node OR NULL
      */
-        private static Node getNodeFromCard(Node2D card, string name)
+        private static Node GetNodeFromCard(Node2D card, string name)
         {
             Godot.Collections.Array<Node> slaves = card.GetChild(0).GetChildren();
 
@@ -60,6 +69,32 @@ namespace TFTAtHome.util
             }
 
             return null;
+        }
+
+        /**
+         * INPUTS:
+         *  CardName --> Name of the card you want to add
+         *  ParentContainer --> The container you want to add the card to
+         */
+        public static void CreateCustomCardAndAddToContainer(string cardName, Container parentContainer)
+        {
+
+            // New container to insert card into
+            Godot.Container container = new();
+            container.CustomMinimumSize = new Vector2(220, 250);
+
+            // Creating a 2DNode to insert the card into
+            Node card = cardScene.Instantiate();
+            Node2D card2D = card as Node2D;
+            card2D.ApplyScale(new Vector2(0.6f, 0.6f));
+
+            container.AddChild(card);
+
+            parentContainer.AddChild(container);
+
+            Node customCard = CreateGodotCard(cardName);
+
+            container.AddChild(customCard);
         }
     }
 }

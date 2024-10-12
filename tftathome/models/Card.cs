@@ -33,6 +33,16 @@ namespace TFTAtHome.models
             IsFictional = isFictional;
         }
 
+        public string[] getStatsValuesAsString()
+        {
+            string[] values = new string[5];
+            values[0] = "" + Early;
+            values[1] = "" + Mid;
+            values[2] = "" + Late;
+            values[3] = Trait;
+            values[4] = "" + Cost;
 
+            return values;
+        }
     }
 }
