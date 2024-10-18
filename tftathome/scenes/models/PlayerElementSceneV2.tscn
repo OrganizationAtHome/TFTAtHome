@@ -1,15 +1,8 @@
-[gd_scene format=3 uid="uid://cwumat7a6khfw"]
+[gd_scene format=3 uid="uid://be4fx1cw0o4cc"]
 
-[node name="Control" type="Control"]
-custom_minimum_size = Vector2(1600, 800)
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="Node2D" type="Node2D"]
 
-[node name="Node2D" type="Node2D" parent="."]
-
-[node name="ColorRect" type="ColorRect" parent="Node2D"]
+[node name="ColorRect" type="ColorRect" parent="."]
 clip_contents = true
 offset_left = 3.0
 offset_top = 3.0
@@ -18,18 +11,18 @@ offset_bottom = 803.0
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 10.78
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Node2D"]
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
 custom_minimum_size = Vector2(1600, 800)
 offset_right = 1600.0
 offset_bottom = 804.0
 
-[node name="PlayerInfoContainer" type="BoxContainer" parent="Node2D/VBoxContainer"]
+[node name="PlayerInfoContainer" type="BoxContainer" parent="VBoxContainer"]
 custom_minimum_size = Vector2(1600, 200)
 layout_mode = 2
 size_flags_vertical = 0
 theme_override_constants/separation = 30
 
-[node name="Label" type="Label" parent="Node2D/VBoxContainer/PlayerInfoContainer"]
+[node name="Label" type="Label" parent="VBoxContainer/PlayerInfoContainer"]
 layout_mode = 2
 size_flags_vertical = 0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
@@ -38,7 +31,7 @@ text = "TEAM:
 xxxxxxxxxxxx"
 horizontal_alignment = 1
 
-[node name="Label2" type="Label" parent="Node2D/VBoxContainer/PlayerInfoContainer"]
+[node name="Label2" type="Label" parent="VBoxContainer/PlayerInfoContainer"]
 layout_mode = 2
 size_flags_vertical = 0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
@@ -47,7 +40,7 @@ text = "WINS (SPLIT):
 XX"
 horizontal_alignment = 1
 
-[node name="Label3" type="Label" parent="Node2D/VBoxContainer/PlayerInfoContainer"]
+[node name="Label3" type="Label" parent="VBoxContainer/PlayerInfoContainer"]
 layout_mode = 2
 size_flags_vertical = 0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
@@ -56,7 +49,7 @@ text = "LOSSES (SPLIT):
 XX"
 horizontal_alignment = 1
 
-[node name="Label4" type="Label" parent="Node2D/VBoxContainer/PlayerInfoContainer"]
+[node name="Label4" type="Label" parent="VBoxContainer/PlayerInfoContainer"]
 layout_mode = 2
 size_flags_vertical = 0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
@@ -65,7 +58,7 @@ text = "SPLIT WINS:
 XX"
 horizontal_alignment = 1
 
-[node name="Label5" type="Label" parent="Node2D/VBoxContainer/PlayerInfoContainer"]
+[node name="Label5" type="Label" parent="VBoxContainer/PlayerInfoContainer"]
 layout_mode = 2
 size_flags_vertical = 0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
@@ -74,15 +67,16 @@ text = "SEASON WINS:
 XX"
 horizontal_alignment = 1
 
-[node name="PlayerHandContainer" type="ScrollContainer" parent="Node2D/VBoxContainer"]
+[node name="PlayerHandContainer" type="ScrollContainer" parent="VBoxContainer"]
 custom_minimum_size = Vector2(1600, 600)
 layout_mode = 2
+vertical_scroll_mode = 2
 
-[node name="CardGridContainer" type="GridContainer" parent="Node2D/VBoxContainer/PlayerHandContainer"]
-custom_minimum_size = Vector2(2400, 600)
+[node name="CardGridContainer" type="GridContainer" parent="VBoxContainer/PlayerHandContainer"]
+custom_minimum_size = Vector2(4000, 600)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme_override_constants/h_separation = 100
-theme_override_constants/v_separation = 100
-columns = 5
+theme_override_constants/h_separation = 200
+theme_override_constants/v_separation = 200
+columns = 12

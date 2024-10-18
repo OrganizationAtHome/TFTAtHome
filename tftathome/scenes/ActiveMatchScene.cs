@@ -8,12 +8,13 @@ using TFTAtHome.util;
 
 public partial class ActiveMatchScene : Node2D
 {
+    [Export]
     private PackedScene cardScene = GD.Load<PackedScene>("res://scenes/models/cardScene.tscn");
-    private PackedScene playerElementScene = GD.Load<PackedScene>("res://scenes/playerElementScene.tscn");
+    private PackedScene playerElementScene = GD.Load<PackedScene>("res://scenes/models/PlayerElementSceneV2.tscn");
     private ScrollContainer cardScrollContainer;
     private ScrollContainer playerListScrollContainer;
     private GridContainer gridContainer;
-    private VBoxContainer playerListVBox;
+    private GridContainer playerListGrid;
 
 
     [Export]
@@ -42,22 +43,29 @@ public partial class ActiveMatchScene : Node2D
         playerListScrollContainer = GetNode("PlayerListContainer") as ScrollContainer;
 
         gridContainer = cardScrollContainer.GetNode("CardGrid") as GridContainer;
-        playerListVBox = GetNode("PlayerListContainer/PlayerList") as VBoxContainer;
-
+        playerListGrid = GetNode("PlayerListContainer/PlayerListGrid") as GridContainer;
+        GD.Print(playerListGrid);
 
         foreach (Card cardObj in testGame.getActiveCardPool())
         {
-            CardUtil.CreateCustomCardAndAddToContainer(cardObj.CardName, gridContainer);
+            CardUtil.CreateCustomCardAndAddToContainer(cardObj.CardName, gridContainer, 0.6f);
         }
 
         List<Card> playerHand1 = new List<Card>();
         playerHand1.Add(testGame.getActiveCardPool()[0]);
         playerHand1.Add(testGame.getActiveCardPool()[1]);
         playerHand1.Add(testGame.getActiveCardPool()[2]);
+        playerHand1.Add(testGame.getActiveCardPool()[3]);
+        playerHand1.Add(testGame.getActiveCardPool()[4]);
+        playerHand1.Add(testGame.getActiveCardPool()[5]);
+        playerHand1.Add(testGame.getActiveCardPool()[6]);
+        playerHand1.Add(testGame.getActiveCardPool()[7]);
 
         Player testPlayer = new Player(1, "Test", playerHand1);
 
-        SceneUtil.addPlayerElementToPlayerList(testPlayer, playerListVBox);
+        SceneUtil.CreatePlayerElementContainer(testPlayer, playerListGrid);
+        SceneUtil.CreatePlayerElementContainer(testPlayer, playerListGrid);
+        SceneUtil.CreatePlayerElementContainer(testPlayer, playerListGrid);
         /*
         Godot.Container container2 = new();
         container2.CustomMinimumSize = new Vector2(220, 250);
@@ -85,9 +93,9 @@ public partial class ActiveMatchScene : Node2D
     }
     
 
-    public void createCustomCard(string characterName, Container container)
+    public void createCustomCard(string characterName, Container container, float scale)
     {
-        Node card = CardUtil.CreateGodotCard(characterName);
+        Node card = CardUtil.CreateGodotCard(characterName, scale);
         container.AddChild(card);
     }
 

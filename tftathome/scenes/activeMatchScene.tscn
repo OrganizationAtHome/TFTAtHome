@@ -21,22 +21,11 @@ properties/0/replication_mode = 1
 [node name="Node2D" type="Node2D" node_paths=PackedStringArray("JoinBox", "Join", "ClientBody")]
 position = Vector2(-95, -19)
 scale = Vector2(0.99977, 1.0248)
+[node name="Node2D" type="Node2D"]
 script = ExtResource("1_g2emj")
 JoinBox = NodePath("CharacterBody2D/TextEdit")
 Join = NodePath("CharacterBody2D2/Button")
 ClientBody = NodePath("CharacterBody2D")
-
-[node name="PlayerListContainer" type="ScrollContainer" parent="."]
-offset_left = 133.0
-offset_top = 139.0
-offset_right = 662.0
-offset_bottom = 720.0
-horizontal_scroll_mode = 2
-vertical_scroll_mode = 2
-
-[node name="PlayerList" type="VBoxContainer" parent="PlayerListContainer"]
-layout_mode = 2
-size_flags_horizontal = 4
 
 [node name="CardContainer" type="ScrollContainer" parent="."]
 offset_left = 787.181
@@ -48,7 +37,6 @@ theme_override_styles/panel = SubResource("StyleBoxTexture_l3lvf")
 horizontal_scroll_mode = 2
 vertical_scroll_mode = 2
 script = ExtResource("1_4c0i4")
-metadata/_edit_use_anchors_ = true
 
 [node name="CardGrid" type="GridContainer" parent="CardContainer"]
 layout_mode = 2
@@ -78,6 +66,24 @@ offset_right = 538.082
 offset_bottom = 872.277
 placeholder_text = "Type IP / domain here"
 
+[connection signal="pressed" from="Button" to="." method="_on_join_pressed"]
+
+[node name="PlayerListContainer" type="ScrollContainer" parent="."]
+self_modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(600, 0)
+offset_left = 33.0
+offset_top = 53.0
+offset_right = 633.0
+offset_bottom = 850.0
+theme_override_styles/panel = SubResource("StyleBoxTexture_l3lvf")
+horizontal_scroll_mode = 2
+vertical_scroll_mode = 2
+script = ExtResource("1_4c0i4")
+
+[node name="PlayerListGrid" type="GridContainer" parent="PlayerListContainer"]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+theme_override_constants/v_separation = 100
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="CharacterBody2D"]
 root_path = NodePath("../TextEdit")
 replication_config = SubResource("SceneReplicationConfig_2cwpy")
