@@ -20,7 +20,16 @@ public partial class ActiveMatchScene : Node2D
     public TextEdit JoinBox { get; set; }
     [Export]
     public Button Join { get; set; }
+    [Export]
+    public CharacterBody2D ClientBody { get; set; }
     private GameManager GameManager;
+
+    [Rpc]
+    public static bool ConnectionTest()
+    {
+        GD.Print("ConnectionTest");
+        return true;
+    }
 
 
     // Called when the node enters the scene tree for the first time.

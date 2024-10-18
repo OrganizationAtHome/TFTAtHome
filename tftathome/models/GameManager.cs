@@ -19,17 +19,18 @@ namespace TFTAtHome.models
             //Upnp upnp = new();
             //SetupUpnp(upnp, 1234, "UDP");
 
-            node.Multiplayer.PeerConnected += (id) =>
-            {
-                GD.Print("Server connected to client with the ID " + id);
-            };
             var args = OS.GetCmdlineArgs();
             if (args.Contains("server"))
             {
-                node.Join.Visible = false;
-                node.JoinBox.Visible = false;
+                //node.Join.Visible = false;
+                //node.JoinBox.Visible = false;
                 ENetMultiplayerPeer server = new();
                 StartServer(server, 1234, 4);
+                server.PeerConnected += (id) =>
+                {
+                    GD.Print("client connected with the ID " + id);
+                    node.ClientBody.SetMultiplayerAuthority(((int)id), true);
+                };
 
                 node.Multiplayer.MultiplayerPeer = server;
             } 
@@ -42,6 +43,7 @@ namespace TFTAtHome.models
 
             client = new();
             Error clientError = ConnectClient(client, ip, 1234);
+            node.ClientBody.SetMultiplayerAuthority(client.GetUniqueId(), true);
 
             node.Multiplayer.MultiplayerPeer = client;
         }

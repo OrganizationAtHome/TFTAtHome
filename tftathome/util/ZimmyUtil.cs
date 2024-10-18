@@ -74,16 +74,6 @@ namespace TFTAtHome.util
             {
                 GD.Print("Server failed to start");
             }
-
-            server.PeerConnected += (id) =>
-            {
-                GD.Print("Client connected to server with the ID " + id);
-            };
-            server.PeerDisconnected += (id) =>
-            {
-                GD.Print("Client disconnected from server with the ID " + id);
-            };
-
             return serverError;
         }
 
