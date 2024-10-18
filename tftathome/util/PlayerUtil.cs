@@ -15,7 +15,7 @@ namespace TFTAtHome.util
 
         public static void AddCardToPlayerHand(Card card, Container playerHand)
         {
-          CardUtil.CreateCustomCardAndAddToContainer(card.CardName, playerHand);
+          CardUtil.CreateCustomCardAndAddToContainer(card.CardName, playerHand, 0.5f);
         }
     }
 }

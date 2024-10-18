@@ -14,7 +14,7 @@ namespace TFTAtHome.util
         private static PackedScene cardScene = GD.Load<PackedScene>("res://scenes/models/cardScene.tscn");
         
         
-        public static Node CreateGodotCard(string cardName)
+        public static Node CreateGodotCard(string cardName, float scale)
         {
                 Card cardObj = LocalStorage.getCardFromName(cardName); // ?? throw new Exception("Could not find card!");
                 string[] cardHeader = { "CardTitle", "CardName" };
@@ -24,8 +24,9 @@ namespace TFTAtHome.util
 
                 // Create the card node
                 Node card = cardScene.Instantiate();
+
                 Node2D card2D = card as Node2D;
-                card2D.ApplyScale(new Vector2(0.7f, 0.7f));
+                card2D.ApplyScale(new Vector2(scale, scale));
 
                 // Set card stats and headers
                 for (int i = 0; i < statsName.Length; i++)
@@ -76,25 +77,27 @@ namespace TFTAtHome.util
          *  CardName --> Name of the card you want to add
          *  ParentContainer --> The container you want to add the card to
          */
-        public static void CreateCustomCardAndAddToContainer(string cardName, Container parentContainer)
+        public static void CreateCustomCardAndAddToContainer(string cardName, Container parentContainer, float scale)
         {
 
             // New container to insert card into
             Godot.Container container = new();
             container.CustomMinimumSize = new Vector2(220, 250);
 
-            // Creating a 2DNode to insert the card into
-            Node card = cardScene.Instantiate();
-            Node2D card2D = card as Node2D;
-            card2D.ApplyScale(new Vector2(0.6f, 0.6f));
-
-            container.AddChild(card);
+            Node customCard = CreateGodotCard(cardName, scale);
+            container.AddChild(customCard);
 
             parentContainer.AddChild(container);
+        }
 
-            Node customCard = CreateGodotCard(cardName);
-
-            container.AddChild(customCard);
+        public static float GetCardWidth()
+        {
+            Node card = cardScene.Instantiate();
+            Node2D card2D = card as Node2D;
+            ColorRect colorRect = card2D.GetChild(0).GetChild(0) as ColorRect;
+            Vector2 vector = colorRect.GetRect().Size;
+            float width = vector.X;
+            return width;
         }
     }
 }
