@@ -7,10 +7,12 @@
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_l3lvf"]
 texture = ExtResource("2_hsfgf")
 
-[node name="Node2D" type="Node2D"]
+[node name="Node2D" type="Node2D" node_paths=PackedStringArray("JoinBox", "Join")]
 position = Vector2(-95, -19)
 scale = Vector2(0.99977, 1.0248)
 script = ExtResource("1_g2emj")
+JoinBox = NodePath("Button/TextEdit")
+Join = NodePath("Button")
 
 [node name="PlayerListContainer" type="ScrollContainer" parent="."]
 offset_left = 133.0
@@ -39,3 +41,21 @@ metadata/_edit_use_anchors_ = true
 [node name="CardGrid" type="GridContainer" parent="CardContainer"]
 layout_mode = 2
 columns = 3
+
+[node name="Button" type="Button" parent="."]
+offset_left = 168.039
+offset_top = 790.398
+offset_right = 314.039
+offset_bottom = 874.398
+text = "Join
+"
+
+[node name="TextEdit" type="TextEdit" parent="Button"]
+layout_mode = 0
+offset_left = 187.043
+offset_top = 4.87903
+offset_right = 370.043
+offset_bottom = 81.879
+placeholder_text = "Type IP / domain here"
+
+[connection signal="pressed" from="Button" to="." method="_on_join_pressed"]

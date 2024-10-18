@@ -12,8 +12,10 @@ namespace TFTAtHome.models
 {
     internal class GameManager
     {
-        public GameManager(Node2D node)
+        ActiveMatchScene node;
+        public GameManager(ActiveMatchScene node)
         {
+            this.node = node;
             //Upnp upnp = new();
             //SetupUpnp(upnp, 1234, "UDP");
 
@@ -24,33 +26,24 @@ namespace TFTAtHome.models
             var args = OS.GetCmdlineArgs();
             if (args.Contains("server"))
             {
+                node.Join.Visible = false;
+                node.JoinBox.Visible = false;
                 ENetMultiplayerPeer server = new();
                 StartServer(server, 1234, 4);
 
                 node.Multiplayer.MultiplayerPeer = server;
-            } else
-            {
-                ENetMultiplayerPeer client;
-                do
-                {
-                    client = new();
-                    Error clientError = ConnectClient(client, "localhost", 1234);
+            } 
+        }
 
-                    node.Multiplayer.MultiplayerPeer = client;
+        public void JoinServer()
+        {
+            String ip = node.JoinBox.Text;
+            ENetMultiplayerPeer client;
 
-                    Thread.Sleep(400);
+            client = new();
+            Error clientError = ConnectClient(client, ip, 1234);
 
-                } while (client.GetConnectionStatus() != MultiplayerPeer.ConnectionStatus.Connected);
-
-            }
-
-
-
-
-
-
-
-
+            node.Multiplayer.MultiplayerPeer = client;
         }
 
     }
