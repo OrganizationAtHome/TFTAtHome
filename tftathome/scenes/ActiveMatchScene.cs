@@ -57,56 +57,11 @@ public partial class ActiveMatchScene : Node2D
         SceneUtil.CreatePlayerElementContainer(testPlayer, playerListGrid);
         SceneUtil.CreatePlayerElementContainer(testPlayer, playerListGrid);
         SceneUtil.CreatePlayerElementContainer(testPlayer, playerListGrid);
-        /*
-        Godot.Container container2 = new();
-        container2.CustomMinimumSize = new Vector2(220, 250);
-        Godot.Container container3 = new();
-        container3.CustomMinimumSize = new Vector2(220, 250);
-        addCard(container2, playerListVBox);
-        addCard(container3, playerListVBox); */
     }
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
-        // addCard();
 	}
-
-    public void addCard(Container container, Container parentContainer)
-    {
-        Node card = cardScene.Instantiate();
-        Node2D card2D = card as Node2D;
-        card2D.ApplyScale(new Vector2(0.6f, 0.6f));
-
-        container.AddChild(card);
-        parentContainer.AddChild(container);
-        GD.Print(gridContainer.ToString());
-    }
-    
-
-    public void createCustomCard(string characterName, Container container, float scale)
-    {
-        Node card = CardUtil.CreateGodotCard(characterName, scale);
-        container.AddChild(card);
-    }
-
-    private static Node getNodeFromCard(Node2D card, string name)
-    {
-        Godot.Collections.Array<Node> slaves = card.GetChild(0).GetChildren();
-
-        foreach (var item in slaves)
-        {
-
-            if (item is Node node)
-            {
-                if (node.Name.Equals(name))
-                {
-                    return node;
-                }
-            }
-        }
-
-        return null;
-    }
 
 }

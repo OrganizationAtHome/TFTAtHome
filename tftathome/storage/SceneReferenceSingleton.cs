@@ -12,7 +12,8 @@ namespace TFTAtHome.storage
         private static SceneReferenceSingleton instance = null;
         public PackedScene PlayerElementScene { get; set; }
         public PackedScene CardScene { get; set; }
-        public PackedScene HomeScreen { get; set; }
+        public PackedScene HomeScreenScene { get; set; }
+        public PackedScene PreGameScene { get; set; }
 
 
         private SceneReferenceSingleton()
@@ -24,6 +25,12 @@ namespace TFTAtHome.storage
         {
             instance ??= new SceneReferenceSingleton();
             return instance;
+        }
+
+        public PackedScene GetSceneByName(string name)
+        {
+            var property = typeof(SceneReferenceSingleton).GetProperty(name);
+            return property?.GetValue(GetInstance()) as PackedScene;
         }
     }
 }

@@ -1,15 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://b73pmfdl6b0y3"]
+[gd_scene load_steps=4 format=3 uid="uid://b73pmfdl6b0y3"]
 
 [ext_resource type="Script" path="res://MainScene.cs" id="1_dvp5l"]
-[ext_resource type="PackedScene" uid="uid://d0eky62mu8c6w" path="res://scenes/phases/home_screen.tscn" id="2_ha5yj"]
+[ext_resource type="PackedScene" uid="uid://d0eky62mu8c6w" path="res://scenes/phases/HomeScreenScene.tscn" id="2_ha5yj"]
+[ext_resource type="PackedScene" uid="uid://djifwx4yfl5i4" path="res://scenes/phases/PreGameScene.tscn" id="3_ymxgu"]
 
 [node name="MainScene" type="Node2D"]
 script = ExtResource("1_dvp5l")
-HomeScreen = ExtResource("2_ha5yj")
-
-[node name="Button" type="Button" parent="."]
-offset_left = 1435.0
-offset_top = 876.0
-offset_right = 1628.0
-offset_bottom = 927.0
-text = "Next Scene"
+HomeScreenScene = ExtResource("2_ha5yj")
+PreGameScene = ExtResource("3_ymxgu")

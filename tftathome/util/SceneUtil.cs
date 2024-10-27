@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TFTAtHome.models;
+using TFTAtHome.storage;
 
 namespace TFTAtHome.util
 {
@@ -80,7 +81,7 @@ namespace TFTAtHome.util
         public static void AddButtonInCorner(Button button, Corner corner)
         {
             // Set the button's size
-            button.CustomMinimumSize = new Vector2(100, 50); // Width: 100, Height: 50 (adjust as needed)
+            button.CustomMinimumSize = new Vector2(100, 50); 
 
             // Set the button's anchor to the right side (1 for x-axis)
             button.AnchorRight = 1;
@@ -91,18 +92,36 @@ namespace TFTAtHome.util
                     // Anchor to the top-right corner
                     button.AnchorTop = 0;
                     button.AnchorBottom = 0;
-                    // button.MarginRight = -10; // Distance from the right edge (adjust as needed)
-                    // button.MarginTop = 10; // Distance from the top edge
                     break;
 
                 case Corner.BottomRight:
                     // Anchor to the bottom-right corner
                     button.AnchorTop = 1;
                     button.AnchorBottom = 1;
-                    // button.MarginRight = -10; // Distance from the right edge
-                    // button.MarginBottom = -10; // Distance from the bottom edge
                     break;
             }
         }
+
+        public static void SwitchScene(string nameOfNewScene, Node currentActiveScene, Node mainSceneRoot)
+        {
+            SceneReferenceSingleton srs = SceneReferenceSingleton.GetInstance();
+            PackedScene sceneToGet = srs.GetSceneByName(nameOfNewScene);
+            Node newActiveScene = sceneToGet.Instantiate() as Node;
+
+            if (mainSceneRoot.GetChild(0) == currentActiveScene)
+            {
+                // Remove the current active scene
+                mainSceneRoot.RemoveChild(currentActiveScene);
+
+                // Add the new active scene
+                mainSceneRoot.AddChild(newActiveScene);
+            }
+            else
+            {
+                GD.PrintErr("Error: The provided currentActiveScene is not the first child of the root node.");
+            }
+        }
+
+
     }
 }
