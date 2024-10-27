@@ -76,5 +76,32 @@ namespace TFTAtHome.util
 
             return playerHandsContainer;
         }
-    }
+
+        public static void AddButtonInCorner(Button button, Corner corner)
+        {
+            // Set the button's size
+            button.CustomMinimumSize = new Vector2(100, 50); // Width: 100, Height: 50 (adjust as needed)
+
+            // Set the button's anchor to the right side (1 for x-axis)
+            button.AnchorRight = 1;
+
+            switch (corner)
+            {
+                case Corner.TopRight:
+                    // Anchor to the top-right corner
+                    button.AnchorTop = 0;
+                    button.AnchorBottom = 0;
+                    // button.MarginRight = -10; // Distance from the right edge (adjust as needed)
+                    // button.MarginTop = 10; // Distance from the top edge
+                    break;
+
+                case Corner.BottomRight:
+                    // Anchor to the bottom-right corner
+                    button.AnchorTop = 1;
+                    button.AnchorBottom = 1;
+                    // button.MarginRight = -10; // Distance from the right edge
+                    // button.MarginBottom = -10; // Distance from the bottom edge
+                    break;
+            }
+        }
 }

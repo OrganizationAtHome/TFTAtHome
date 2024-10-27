@@ -1,31 +1,15 @@
-[gd_scene load_steps=6 format=3 uid="uid://b73pmfdl6b0y3"]
+[gd_scene load_steps=3 format=3 uid="uid://b73pmfdl6b0y3"]
 
 [ext_resource type="Script" path="res://MainScene.cs" id="1_dvp5l"]
 [ext_resource type="PackedScene" uid="uid://d0eky62mu8c6w" path="res://scenes/phases/home_screen.tscn" id="2_ha5yj"]
-[ext_resource type="Texture2D" uid="uid://dc2ar3oqwm1gl" path="res://images/textures/card-bg-texture.png" id="3_gupkr"]
-[ext_resource type="Script" path="res://scenes/ScrollContainer.cs" id="4_ymlul"]
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_n2oix"]
-texture = ExtResource("3_gupkr")
 
 [node name="MainScene" type="Node2D"]
 script = ExtResource("1_dvp5l")
 HomeScreen = ExtResource("2_ha5yj")
 
-[node name="PlayerListContainer" type="ScrollContainer" parent="."]
-self_modulate = Color(1, 1, 1, 0)
-custom_minimum_size = Vector2(600, 0)
-offset_left = 126.029
-offset_top = 63.427
-offset_right = 726.029
-offset_bottom = 860.427
-theme_override_styles/panel = SubResource("StyleBoxTexture_n2oix")
-horizontal_scroll_mode = 2
-vertical_scroll_mode = 2
-script = ExtResource("4_ymlul")
-
-[node name="PlayerListGrid" type="GridContainer" parent="PlayerListContainer"]
-self_modulate = Color(1, 1, 1, 0)
-layout_mode = 2
-theme_override_constants/h_separation = 50
-theme_override_constants/v_separation = 80
+[node name="Button" type="Button" parent="."]
+offset_left = 1435.0
+offset_top = 876.0
+offset_right = 1628.0
+offset_bottom = 927.0
+text = "Next Scene"
