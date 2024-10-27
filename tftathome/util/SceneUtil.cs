@@ -31,7 +31,6 @@ namespace TFTAtHome.util
             int numberOfCards = player.getPlayerHand().Count();
             float test = ((CardUtil.GetCardWidth()) + ((playerHandVSeperation - CardUtil.GetCardWidth()) * 2));
             float test2 = test * numberOfCards;
-            GD.Print(test2);
             playerHandGrid.CustomMinimumSize = new Vector2(test * (numberOfCards), 600);
 
             foreach (Card card in player.getPlayerHand())
@@ -102,11 +101,20 @@ namespace TFTAtHome.util
             }
         }
 
-        public static void SwitchScene(string nameOfNewScene, Node currentActiveScene, Node mainSceneRoot)
+        public static void SwitchScene(string nameOfNewScene)
         {
             SceneReferenceSingleton srs = SceneReferenceSingleton.GetInstance();
-            PackedScene sceneToGet = srs.GetSceneByName(nameOfNewScene);
-            Node newActiveScene = sceneToGet.Instantiate() as Node;
+
+            Node newActiveScene = srs.GetPhaseSceneByName(nameOfNewScene);
+
+            GD.Print(newActiveScene);
+
+            Node mainSceneRoot = srs.GetPhaseSceneByName("MainScene");
+
+            GD.Print(mainSceneRoot);
+
+            Node currentActiveScene = mainSceneRoot.GetChild(0);
+            GD.Print(currentActiveScene);
 
             if (mainSceneRoot.GetChild(0) == currentActiveScene)
             {
@@ -122,6 +130,10 @@ namespace TFTAtHome.util
             }
         }
 
+        public static void Test()
+        {
+
+        }
 
     }
 }

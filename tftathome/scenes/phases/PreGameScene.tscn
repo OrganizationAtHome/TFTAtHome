@@ -25,3 +25,10 @@ self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 theme_override_constants/h_separation = 50
 theme_override_constants/v_separation = 80
+
+[node name="StartGameBtn" type="Button" parent="."]
+offset_left = 1370.0
+offset_top = 817.0
+offset_right = 1577.0
+offset_bottom = 878.0
+text = "START GAME"

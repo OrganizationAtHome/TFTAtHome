@@ -14,8 +14,10 @@ public partial class MainScene : Node
     public override void _Ready()
 	{
         _srs = SceneReferenceSingleton.GetInstance();
-        _srs.HomeScreenScene = HomeScreenScene;
-        _srs.PreGameScene = PreGameScene;
+		_srs.MainScene = this;
+		_srs.HomeScreenScene = HomeScreenScene.Instantiate() as HomeScreen;
+        _srs.PreGameScene = PreGameScene.Instantiate() as PreGameScene;
+
         LoadHomeScreen();
 	}
 
@@ -33,7 +35,7 @@ public partial class MainScene : Node
 		Button switchSceneBtn = new Button();
 		switchSceneBtn.Text = "Switch Scene";
 
-        switchSceneBtn.Connect("pressed", Callable.From(() => SceneUtil.SwitchScene("PreGameScene", homeScreenInstance, rootNode)));
+        switchSceneBtn.Connect("pressed", Callable.From(() => SceneUtil.SwitchScene("PreGameScene")));
 
 
         homeScreenInstance.AddChild(switchSceneBtn);
