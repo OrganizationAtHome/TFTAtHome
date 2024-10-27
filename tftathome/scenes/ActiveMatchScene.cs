@@ -17,15 +17,6 @@ public partial class ActiveMatchScene : Node2D
     private GridContainer gridContainer;
     private GridContainer playerListGrid;
 
-
-    [Export]
-    public TextEdit JoinBox { get; set; }
-    [Export]
-    public Button Join { get; set; }
-    [Export]
-    public CharacterBody2D ClientBody { get; set; }
-    private GameManager GameManager;
-
     [Rpc]
     public static bool ConnectionTest()
     {
@@ -37,7 +28,6 @@ public partial class ActiveMatchScene : Node2D
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
 	{
-        this.GameManager = new GameManager(this);
         Game testGame = LocalStorage.GetGame();
         cardScrollContainer = GetNode("CardContainer") as ScrollContainer;
         gridContainer = cardScrollContainer.GetNode("CardGrid") as GridContainer;
@@ -117,11 +107,6 @@ public partial class ActiveMatchScene : Node2D
         }
 
         return null;
-    }
-
-    public void _on_join_pressed()
-    {
-        GameManager.JoinServer();
     }
 
 }

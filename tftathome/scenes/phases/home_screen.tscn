@@ -1,16 +1,26 @@
-[gd_scene load_steps=3 format=3 uid="uid://d0eky62mu8c6w"]
+[gd_scene load_steps=5 format=3 uid="uid://d0eky62mu8c6w"]
 
 [ext_resource type="Texture2D" uid="uid://byo2k8ww0aowa" path="res://images/backgrounds/homescreen_bg1.png" id="1_8nkro"]
+[ext_resource type="Script" path="res://character_body_2d_2.gd" id="2_mmd04"]
 
 [sub_resource type="SystemFont" id="SystemFont_s8q67"]
 subpixel_positioning = 0
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4l633"]
+size = Vector2(340, 28)
+
 [node name="HomeScreen" type="Node2D"]
 
-[node name="HomeScreen_Bg" type="Sprite2D" parent="."]
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="HomeScreen_Bg" type="Sprite2D" parent="StaticBody2D"]
 position = Vector2(850.864, 475.05)
 scale = Vector2(0.885275, 0.885275)
 texture = ExtResource("1_8nkro")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
+position = Vector2(620, -18)
+polygon = PackedVector2Array(-672, -28, 1133, -26, 1062, 16, -620, 17, -625, 966, 1065, 970, 1064, 20, 1131, -30, 1136, 1021, -679, 1024)
 
 [node name="HostLobby_Btn" type="Button" parent="."]
 offset_left = 697.0
@@ -28,7 +38,10 @@ offset_bottom = 606.0
 text = "Join Lobby"
 metadata/_edit_use_anchors_ = true
 
-[node name="RichTextLabel" type="RichTextLabel" parent="."]
+[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+script = ExtResource("2_mmd04")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CharacterBody2D"]
 offset_left = 702.0
 offset_top = 332.0
 offset_right = 1041.0
@@ -37,3 +50,7 @@ theme_override_fonts/normal_font = SubResource("SystemFont_s8q67")
 theme_override_font_sizes/normal_font_size = 25
 text = "WELCOME TO TFT AT HOME"
 metadata/_edit_use_anchors_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+position = Vector2(867, 349)
+shape = SubResource("RectangleShape2D_4l633")

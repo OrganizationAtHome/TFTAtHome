@@ -31,7 +31,7 @@ namespace TFTAtHome.util
             float test = ((CardUtil.GetCardWidth()) + ((playerHandVSeperation - CardUtil.GetCardWidth()) * 2));
             float test2 = test * numberOfCards;
             GD.Print(test2);
-            playerHandGrid.CustomMinimumSize = new Vector2( test * (numberOfCards), 600);
+            playerHandGrid.CustomMinimumSize = new Vector2(test * (numberOfCards), 600);
 
             foreach (Card card in player.getPlayerHand())
             {
@@ -104,4 +104,5 @@ namespace TFTAtHome.util
                     break;
             }
         }
+    }
 }

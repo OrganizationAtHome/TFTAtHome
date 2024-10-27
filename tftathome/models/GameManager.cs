@@ -6,14 +6,14 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using static TFTAtHome.util.ZimmyUtil;
+using static TFTAtHome.util.MultiplayerUtil;
 
 namespace TFTAtHome.models
 {
     internal class GameManager
     {
-        ActiveMatchScene node;
-        public GameManager(ActiveMatchScene node)
+        HomeScreen node;
+        public GameManager(HomeScreen node)
         {
             this.node = node;
             //Upnp upnp = new();
@@ -22,8 +22,6 @@ namespace TFTAtHome.models
             var args = OS.GetCmdlineArgs();
             if (args.Contains("server"))
             {
-                //node.Join.Visible = false;
-                //node.JoinBox.Visible = false;
                 ENetMultiplayerPeer server = new();
                 StartServer(server, 1234, 4);
                 server.PeerConnected += (id) =>

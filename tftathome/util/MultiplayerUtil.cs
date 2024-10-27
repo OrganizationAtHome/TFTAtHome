@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace TFTAtHome.util
 {
-    public static class ZimmyUtil
+    public static class MultiplayerUtil
     {
         public static Error ConnectClient(ENetMultiplayerPeer client, string host, int port)
         {
