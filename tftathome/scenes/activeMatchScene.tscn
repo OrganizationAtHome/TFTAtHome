@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://scenes/ActiveMatchScene.cs" id="1_g2emj"]
 [ext_resource type="PackedScene" uid="uid://228x0lttm3ug" path="res://scenes/models/cardScene.tscn" id="2_2ns8o"]
 [ext_resource type="Texture2D" uid="uid://dc2ar3oqwm1gl" path="res://images/textures/card-bg-texture.png" id="2_hsfgf"]
-[ext_resource type="Script" path="res://character_body_2d_2.gd" id="5_bc85d"]
+[ext_resource type="Script" path="res://Fun_stuff/Simple-slide-logic.gd" id="5_bc85d"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_l3lvf"]
 texture = ExtResource("2_hsfgf")

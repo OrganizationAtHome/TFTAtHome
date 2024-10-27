@@ -7,11 +7,7 @@ public partial class HomeScreen : Node2D
     // Called when the node enters the scene tree for the first time.
 
     [Export]
-    public TextEdit JoinBox { get; set; }
-    [Export]
-    public Button Join { get; set; }
-    [Export]
-    public CharacterBody2D ClientBody { get; set; }
+    public TextEdit IPBox { get; set; }
     private GameManager GameManager;
     public override void _Ready()
 	{
@@ -30,6 +26,6 @@ public partial class HomeScreen : Node2D
 
     public void _on_start_server_pressed()
     {
-        
+        GameManager.HostServer();
     }
 }

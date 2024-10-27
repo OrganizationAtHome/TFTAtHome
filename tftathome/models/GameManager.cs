@@ -27,24 +27,36 @@ namespace TFTAtHome.models
                 server.PeerConnected += (id) =>
                 {
                     GD.Print("client connected with the ID " + id);
-                    node.ClientBody.SetMultiplayerAuthority(((int)id), true);
+                    // node.ClientBody.SetMultiplayerAuthority(((int)id), true);
                 };
 
                 node.Multiplayer.MultiplayerPeer = server;
             } 
         }
 
-        public void JoinServer()
+        public Error JoinServer()
         {
-            String ip = node.JoinBox.Text;
+            String ip = node.IPBox.Text;
             ENetMultiplayerPeer client;
 
             client = new();
             Error clientError = ConnectClient(client, ip, 1234);
-            node.ClientBody.SetMultiplayerAuthority(client.GetUniqueId(), true);
+            // node.ClientBody.SetMultiplayerAuthority(client.GetUniqueId(), true);
 
             node.Multiplayer.MultiplayerPeer = client;
-        }
 
+            return clientError;
+        }
+        public Error HostServer()
+        {
+            ENetMultiplayerPeer server = new();
+            Error serverError = StartServer(server, 1234, 4);
+            server.PeerConnected += (id) =>
+            {
+                GD.Print("client connected with the ID " + id);
+            };
+            node.Multiplayer.MultiplayerPeer = server;
+            return serverError;
+        }
     }
 }

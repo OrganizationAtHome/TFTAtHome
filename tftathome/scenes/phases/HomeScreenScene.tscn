@@ -1,56 +1,84 @@
-[gd_scene load_steps=5 format=3 uid="uid://d0eky62mu8c6w"]
+[gd_scene load_steps=7 format=3 uid="uid://d0eky62mu8c6w"]
 
 [ext_resource type="Texture2D" uid="uid://byo2k8ww0aowa" path="res://images/backgrounds/homescreen_bg1.png" id="1_8nkro"]
-[ext_resource type="Script" path="res://character_body_2d_2.gd" id="2_mmd04"]
+[ext_resource type="Script" path="res://scenes/phases/HomeScreen.cs" id="1_bat73"]
+[ext_resource type="Script" path="res://Fun_stuff/Simple-slide-logic.gd" id="2_mmd04"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4l633"]
+size = Vector2(339, 56)
 
 [sub_resource type="SystemFont" id="SystemFont_s8q67"]
 subpixel_positioning = 0
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_4l633"]
-size = Vector2(340, 28)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tuh48"]
+size = Vector2(340, 26)
 
-[node name="HomeScreen" type="Node2D"]
+[node name="HomeScreen" type="Node2D" node_paths=PackedStringArray("IPBox")]
+script = ExtResource("1_bat73")
+IPBox = NodePath("TextEdit")
 
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
+[node name="HomeScreenBody" type="StaticBody2D" parent="."]
 
-[node name="HomeScreen_Bg" type="Sprite2D" parent="StaticBody2D"]
+[node name="HomeScreen_Bg" type="Sprite2D" parent="HomeScreenBody"]
 position = Vector2(850.864, 475.05)
 scale = Vector2(0.885275, 0.885275)
 texture = ExtResource("1_8nkro")
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="HomeScreenBody"]
 position = Vector2(620, -18)
 polygon = PackedVector2Array(-672, -28, 1133, -26, 1062, 16, -620, 17, -625, 966, 1065, 970, 1064, 20, 1131, -30, 1136, 1021, -679, 1024)
 
-[node name="HostLobby_Btn" type="Button" parent="."]
-offset_left = 697.0
-offset_top = 457.0
-offset_right = 1036.0
-offset_bottom = 512.0
+[node name="HostBtnBody" type="StaticBody2D" parent="."]
+
+[node name="HostLobby_Btn" type="Button" parent="HostBtnBody"]
+offset_left = 698.0
+offset_top = 469.0
+offset_right = 1037.0
+offset_bottom = 524.0
 text = "Host Lobby"
 metadata/_edit_use_anchors_ = true
 
-[node name="JoinLobby_Btn" type="Button" parent="."]
-offset_left = 693.0
-offset_top = 552.0
-offset_right = 1037.0
-offset_bottom = 606.0
+[node name="HostBtnCollision" type="CollisionShape2D" parent="HostBtnBody"]
+position = Vector2(867.5, 497)
+shape = SubResource("RectangleShape2D_4l633")
+
+[node name="JoinBtnBody" type="StaticBody2D" parent="."]
+
+[node name="JoinLobby_Btn" type="Button" parent="JoinBtnBody"]
+offset_left = 695.0
+offset_top = 571.0
+offset_right = 1039.0
+offset_bottom = 625.0
 text = "Join Lobby"
 metadata/_edit_use_anchors_ = true
 
-[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+[node name="JoinBtnCollision" type="CollisionShape2D" parent="JoinBtnBody"]
+position = Vector2(866, 599)
+shape = SubResource("RectangleShape2D_4l633")
+
+[node name="WelcomeTxtBody" type="CharacterBody2D" parent="."]
 script = ExtResource("2_mmd04")
 
-[node name="RichTextLabel" type="RichTextLabel" parent="CharacterBody2D"]
-offset_left = 702.0
-offset_top = 332.0
-offset_right = 1041.0
-offset_bottom = 391.0
+[node name="WelcomeRTL" type="RichTextLabel" parent="WelcomeTxtBody"]
+offset_left = 701.0
+offset_top = 365.0
+offset_right = 1040.0
+offset_bottom = 424.0
 theme_override_fonts/normal_font = SubResource("SystemFont_s8q67")
 theme_override_font_sizes/normal_font_size = 25
 text = "WELCOME TO TFT AT HOME"
 metadata/_edit_use_anchors_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
-position = Vector2(867, 349)
-shape = SubResource("RectangleShape2D_4l633")
+[node name="WelcomeTxtCollision" type="CollisionShape2D" parent="WelcomeTxtBody"]
+position = Vector2(866, 383)
+shape = SubResource("RectangleShape2D_tuh48")
+
+[node name="TextEdit" type="TextEdit" parent="."]
+offset_left = 780.0
+offset_top = 644.0
+offset_right = 963.0
+offset_bottom = 721.0
+placeholder_text = "Type IP / domain here"
+
+[connection signal="pressed" from="HostBtnBody/HostLobby_Btn" to="." method="_on_start_server_pressed"]
+[connection signal="pressed" from="JoinBtnBody/JoinLobby_Btn" to="." method="_on_join_pressed"]
