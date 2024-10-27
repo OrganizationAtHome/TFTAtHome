@@ -9,7 +9,8 @@ using TFTAtHome.util;
 public partial class ActiveMatchScene : Node2D
 {
     [Export]
-    private PackedScene cardScene = GD.Load<PackedScene>("res://scenes/models/cardScene.tscn");
+    private PackedScene cardScene;
+    [Export]
     private PackedScene playerElementScene = GD.Load<PackedScene>("res://scenes/models/PlayerElementSceneV2.tscn");
     private ScrollContainer cardScrollContainer;
     private ScrollContainer playerListScrollContainer;

@@ -12,12 +12,13 @@ size_flags_horizontal = 3
 size_flags_stretch_ratio = 10.78
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
-custom_minimum_size = Vector2(1600, 800)
-offset_right = 1600.0
-offset_bottom = 804.0
+custom_minimum_size = Vector2(1400, 800)
+offset_left = 7.0
+offset_right = 1607.0
+offset_bottom = 812.0
 
 [node name="PlayerInfoContainer" type="BoxContainer" parent="VBoxContainer"]
-custom_minimum_size = Vector2(1600, 200)
+custom_minimum_size = Vector2(1500, 200)
 layout_mode = 2
 size_flags_vertical = 0
 theme_override_constants/separation = 30
@@ -68,9 +69,10 @@ XX"
 horizontal_alignment = 1
 
 [node name="PlayerHandContainer" type="ScrollContainer" parent="VBoxContainer"]
-custom_minimum_size = Vector2(1600, 600)
+custom_minimum_size = Vector2(1500, 600)
 layout_mode = 2
-vertical_scroll_mode = 2
+horizontal_scroll_mode = 2
+vertical_scroll_mode = 0
 
 [node name="CardGridContainer" type="GridContainer" parent="VBoxContainer/PlayerHandContainer"]
 custom_minimum_size = Vector2(4000, 600)
@@ -78,5 +80,5 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/h_separation = 200
-theme_override_constants/v_separation = 200
+theme_override_constants/v_separation = 150
 columns = 12

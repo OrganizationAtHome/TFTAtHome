@@ -1,7 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://bu5uwkaqalaf0"]
+[gd_scene load_steps=9 format=3 uid="uid://bu5uwkaqalaf0"]
 
 [ext_resource type="Script" path="res://scenes/ScrollContainer.cs" id="1_4c0i4"]
 [ext_resource type="Script" path="res://scenes/ActiveMatchScene.cs" id="1_g2emj"]
+[ext_resource type="PackedScene" uid="uid://228x0lttm3ug" path="res://scenes/models/cardScene.tscn" id="2_2ns8o"]
 [ext_resource type="Texture2D" uid="uid://dc2ar3oqwm1gl" path="res://images/textures/card-bg-texture.png" id="2_hsfgf"]
 [ext_resource type="Script" path="res://scenes/character_body_2d_2.gd" id="4_rwbbl"]
 
@@ -22,6 +23,7 @@ properties/0/replication_mode = 1
 position = Vector2(-95, -19)
 scale = Vector2(0.99977, 1.0248)
 script = ExtResource("1_g2emj")
+cardScene = ExtResource("2_2ns8o")
 JoinBox = NodePath("CharacterBody2D/TextEdit")
 Join = NodePath("CharacterBody2D2/Button")
 ClientBody = NodePath("CharacterBody2D")
@@ -45,10 +47,10 @@ columns = 3
 script = ExtResource("4_rwbbl")
 
 [node name="Button" type="Button" parent="CharacterBody2D2"]
-offset_left = 168.039
-offset_top = 790.398
-offset_right = 314.039
-offset_bottom = 874.398
+offset_left = 1552.36
+offset_top = 803.084
+offset_right = 1698.36
+offset_bottom = 887.084
 text = "Join
 "
 
@@ -59,21 +61,23 @@ replication_config = SubResource("SceneReplicationConfig_edgw2")
 script = ExtResource("4_rwbbl")
 
 [node name="TextEdit" type="TextEdit" parent="CharacterBody2D"]
-offset_left = 355.082
-offset_top = 795.277
-offset_right = 538.082
-offset_bottom = 872.277
+offset_left = 1317.3
+offset_top = 807.963
+offset_right = 1500.3
+offset_bottom = 884.963
 placeholder_text = "Type IP / domain here"
 
-[connection signal="pressed" from="Button" to="." method="_on_join_pressed"]
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="CharacterBody2D"]
+root_path = NodePath("../TextEdit")
+replication_config = SubResource("SceneReplicationConfig_2cwpy")
 
 [node name="PlayerListContainer" type="ScrollContainer" parent="."]
 self_modulate = Color(1, 1, 1, 0)
 custom_minimum_size = Vector2(600, 0)
-offset_left = 33.0
-offset_top = 53.0
-offset_right = 633.0
-offset_bottom = 850.0
+offset_left = 126.029
+offset_top = 63.427
+offset_right = 726.029
+offset_bottom = 860.427
 theme_override_styles/panel = SubResource("StyleBoxTexture_l3lvf")
 horizontal_scroll_mode = 2
 vertical_scroll_mode = 2
@@ -82,9 +86,7 @@ script = ExtResource("1_4c0i4")
 [node name="PlayerListGrid" type="GridContainer" parent="PlayerListContainer"]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
-theme_override_constants/v_separation = 100
-[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="CharacterBody2D"]
-root_path = NodePath("../TextEdit")
-replication_config = SubResource("SceneReplicationConfig_2cwpy")
+theme_override_constants/h_separation = 50
+theme_override_constants/v_separation = 80
 
 [connection signal="pressed" from="CharacterBody2D2/Button" to="." method="_on_join_pressed"]

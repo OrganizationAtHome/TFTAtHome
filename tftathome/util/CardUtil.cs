@@ -13,7 +13,6 @@ namespace TFTAtHome.util
     {
         private static PackedScene cardScene = GD.Load<PackedScene>("res://scenes/models/cardScene.tscn");
         
-        
         public static Node CreateGodotCard(string cardName, float scale)
         {
                 Card cardObj = LocalStorage.getCardFromName(cardName); // ?? throw new Exception("Could not find card!");
