@@ -8,7 +8,7 @@ namespace TFTAtHome.models
 {
     public class Player
     {
-        public int Id { get; set; }
+        public long Id { get; set; }
         public string Name { get; set; }
         private List<Card> _playerHand = new List<Card>();
         public int Coins { get; set; }
@@ -17,7 +17,7 @@ namespace TFTAtHome.models
         public int SplitWins { get; set; }
         public int SeasonWins { get; set; }
 
-        public Player(int id, string name, List<Card> playerHand)
+        public Player(long id, string name, List<Card> playerHand)
         {
             Id = id;
             Name = name;

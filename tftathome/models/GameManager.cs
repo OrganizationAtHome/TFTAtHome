@@ -6,16 +6,25 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using TFTAtHome.storage;
 using static TFTAtHome.util.MultiplayerUtil;
 
 namespace TFTAtHome.models
 {
-    internal class GameManager
+    public class GameManager
     {
-        HomeScreen node;
-        public GameManager(HomeScreen node)
+
+        public long Id { get; set; }
+        private readonly List<Player> _players = new List<Player>();
+        private List<Card> _activeCardPool;
+        private List<Card> _inactiveCards = new List<Card>();
+        public GameState GameState { get; set; }
+
+        public GameManager(HomeScreen node, long id)
         {
-            this.node = node;
+            Id = id;
+            GameState = GameState.AWAITING_PLAYERS;
+            _activeCardPool = LocalStorage.getCards();
             //Upnp upnp = new();
             //SetupUpnp(upnp, 1234, "UDP");
 
@@ -34,29 +43,33 @@ namespace TFTAtHome.models
             } 
         }
 
-        public Error JoinServer()
+        public Error JoinServer(Node node, String IP)
         {
-            String ip = node.IPBox.Text;
-            ENetMultiplayerPeer client;
-
-            client = new();
-            Error clientError = ConnectClient(client, ip, 1234);
+            ENetMultiplayerPeer client = new();
+            Error clientError = ConnectClient(client, IP, 1234);
             // node.ClientBody.SetMultiplayerAuthority(client.GetUniqueId(), true);
 
             node.Multiplayer.MultiplayerPeer = client;
 
             return clientError;
         }
-        public Error HostServer()
+        public Error HostServer(Node node)
         {
             ENetMultiplayerPeer server = new();
             Error serverError = StartServer(server, 1234, 4);
             server.PeerConnected += (id) =>
             {
                 GD.Print("client connected with the ID " + id);
+                Player player = new(id, "Test"+id, new List<Card>());
+                _players.Add(player);
             };
             node.Multiplayer.MultiplayerPeer = server;
             return serverError;
+        }
+
+        public List<Card> GetActiveCardPool()
+        {
+            return _activeCardPool;
         }
     }
 }

@@ -10,27 +10,34 @@ public partial class HomeScreen : Node2D
 
     [Export]
     public TextEdit IPBox { get; set; }
-    private GameManager GameManager;
+    private GameManager _GameManager;
     public override void _Ready()
 	{
-        this.GameManager = new GameManager(this);
+        this._GameManager = new GameManager(this, 1);
     }
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
+    [Rpc(MultiplayerApi.RpcMode.AnyPeer)]
+    public static bool ConnectionTest()
+    {
+        GD.Print("ConnectionTest");
+        return true;
+    }
+
+    // Called every frame. 'delta' is the elapsed time since the previous frame.
+    public override void _Process(double delta)
 	{
 	}
 
     public void _on_join_pressed()
     {
-        GameManager.JoinServer();
-        SwitchScene();
+        _GameManager.JoinServer(this, this.IPBox.Text);
+        ConnectionTest();
     }
 
     public void _on_start_server_pressed()
     {
-        GameManager.HostServer();
-        SwitchScene();
+        _GameManager.HostServer(this);
+        ConnectionTest();
     }
 
     public void SwitchScene()

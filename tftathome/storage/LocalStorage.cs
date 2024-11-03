@@ -12,7 +12,7 @@ namespace TFTAtHome.storage
     public static class LocalStorage
     {
         public static List<Card> Cards = new List<Card>();
-        private static Game _testGame = new Game(1);
+        private static GameManager _GameManager;
 
         static LocalStorage()
         {
@@ -77,9 +77,19 @@ namespace TFTAtHome.storage
             return null;
         }
 
-        public static Game GetGame()
+        public static void SetGameManager(GameManager game)
         {
-            return _testGame;
+            if (game == null) return;
+
+            if (_GameManager == null)
+            {
+                _GameManager = game;
+            }
+        }
+
+        public static GameManager GetGame()
+        {
+            return _GameManager;
         }
     }
 }

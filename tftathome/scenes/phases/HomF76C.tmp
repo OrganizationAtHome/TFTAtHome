@@ -56,11 +56,8 @@ metadata/_edit_use_anchors_ = true
 position = Vector2(866, 599)
 shape = SubResource("RectangleShape2D_4l633")
 
-[node name="WelcomeTxtBody" type="CharacterBody2D" parent="." node_paths=PackedStringArray("VelocityLine", "InputLine", "WelcomeText")]
+[node name="WelcomeTxtBody" type="CharacterBody2D" parent="."]
 script = ExtResource("2_mmd04")
-VelocityLine = NodePath("VelocityVector")
-InputLine = NodePath("InputVector")
-WelcomeText = NodePath("WelcomeRTL")
 
 [node name="WelcomeRTL" type="RichTextLabel" parent="WelcomeTxtBody"]
 offset_left = 701.0
@@ -75,14 +72,6 @@ metadata/_edit_use_anchors_ = true
 [node name="WelcomeTxtCollision" type="CollisionShape2D" parent="WelcomeTxtBody"]
 position = Vector2(866, 383)
 shape = SubResource("RectangleShape2D_tuh48")
-
-[node name="InputVector" type="Line2D" parent="WelcomeTxtBody"]
-points = PackedVector2Array(0, 0, 0, 0)
-default_color = Color(0.862745, 0.596078, 0.254902, 1)
-
-[node name="VelocityVector" type="Line2D" parent="WelcomeTxtBody"]
-points = PackedVector2Array(0, 0, 0, 0)
-default_color = Color(0.345098, 0.690196, 1, 1)
 
 [node name="TextEdit" type="TextEdit" parent="."]
 offset_left = 780.0

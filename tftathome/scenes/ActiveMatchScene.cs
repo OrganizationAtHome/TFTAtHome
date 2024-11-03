@@ -17,18 +17,11 @@ public partial class ActiveMatchScene : Node2D
     private GridContainer gridContainer;
     private GridContainer playerListGrid;
 
-    [Rpc]
-    public static bool ConnectionTest()
-    {
-        GD.Print("ConnectionTest");
-        return true;
-    }
-
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
 	{
-        Game testGame = LocalStorage.GetGame();
+        GameManager testGame = LocalStorage.GetGame();
         cardScrollContainer = GetNode("CardContainer") as ScrollContainer;
         gridContainer = cardScrollContainer.GetNode("CardGrid") as GridContainer;
         playerListScrollContainer = GetNode("PlayerListContainer") as ScrollContainer;
@@ -37,20 +30,20 @@ public partial class ActiveMatchScene : Node2D
         playerListGrid = GetNode("PlayerListContainer/PlayerListGrid") as GridContainer;
         GD.Print(playerListGrid);
 
-        foreach (Card cardObj in testGame.getActiveCardPool())
+        foreach (Card cardObj in testGame.GetActiveCardPool())
         {
             CardUtil.CreateCustomCardAndAddToContainer(cardObj.CardName, gridContainer, 0.6f);
         }
 
         List<Card> playerHand1 = new List<Card>();
-        playerHand1.Add(testGame.getActiveCardPool()[0]);
-        playerHand1.Add(testGame.getActiveCardPool()[1]);
-        playerHand1.Add(testGame.getActiveCardPool()[2]);
-        playerHand1.Add(testGame.getActiveCardPool()[3]);
-        playerHand1.Add(testGame.getActiveCardPool()[4]);
-        playerHand1.Add(testGame.getActiveCardPool()[5]);
-        playerHand1.Add(testGame.getActiveCardPool()[6]);
-        playerHand1.Add(testGame.getActiveCardPool()[7]);
+        playerHand1.Add(testGame.GetActiveCardPool()[0]);
+        playerHand1.Add(testGame.GetActiveCardPool()[1]);
+        playerHand1.Add(testGame.GetActiveCardPool()[2]);
+        playerHand1.Add(testGame.GetActiveCardPool()[3]);
+        playerHand1.Add(testGame.GetActiveCardPool()[4]);
+        playerHand1.Add(testGame.GetActiveCardPool()[5]);
+        playerHand1.Add(testGame.GetActiveCardPool()[6]);
+        playerHand1.Add(testGame.GetActiveCardPool()[7]);
 
         Player testPlayer = new Player(1, "Test", playerHand1);
 
