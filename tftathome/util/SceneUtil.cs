@@ -38,12 +38,12 @@ namespace TFTAtHome.util
             Container playerHandGrid = GetPlayerHandGridFromPlayerElementScene(playerElement2D);
 
             float playerHandVSeperation = playerHandGrid.GetThemeConstant("h_separation");
-            int numberOfCards = player.getPlayerHand().Count();
+            int numberOfCards = player.GetPlayerHand().Count();
             float test = ((CardUtil.GetCardWidth()) + ((playerHandVSeperation - CardUtil.GetCardWidth()) * 2));
             float test2 = test * numberOfCards;
             playerHandGrid.CustomMinimumSize = new Vector2(test * (numberOfCards), 600);
 
-            foreach (Card card in player.getPlayerHand())
+            foreach (Card card in player.GetPlayerHand())
             {
                 CardUtil.CreateCustomCardAndAddToContainer(card.CardName, playerHandGrid, 1.3f);
             }
@@ -77,7 +77,7 @@ namespace TFTAtHome.util
             return cardGridContainer;
         }
 
-        private static Container getPlayerHandScrollContainerFromPlayerElementScene(Node node)
+        private static Container GetPlayerHandScrollContainerFromPlayerElementScene(Node node)
         {
             Node vBoxContainer = node.GetChildren()[1]; //Gets the vBox Container
 

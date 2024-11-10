@@ -7,7 +7,7 @@ public partial class CardArea2D : Area2D
 	public override void _Ready()
 	{
 		InputPickable = true;
-		// this.InputEvent += (viewport, @event, shapeIdx) => CardClicked(viewport, @event, shapeIdx);
+		this.InputEvent += (viewport, @event, shapeIdx) => CardClicked(viewport, @event, shapeIdx);
     }
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
