@@ -5,14 +5,23 @@
 [ext_resource type="Script" path="res://scenes/models/CardArea2D.cs" id="3_rtsnv"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_u0bti"]
-size = Vector2(369.642, 446)
+size = Vector2(304.529, 369)
 
 [node name="Node2D" type="Node2D"]
 scale = Vector2(0.998265, 1)
 
+[node name="Area2D" type="Area2D" parent="."]
+scale = Vector2(1, 1)
+script = ExtResource("3_rtsnv")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(153.266, 185.5)
+scale = Vector2(0.999999, 1)
+shape = SubResource("RectangleShape2D_u0bti")
+
 [node name="Card" type="Node2D" parent="."]
 
-[node name="ColorRect" type="ColorRect" parent="Card"]
+[node name="CardBackground" type="ColorRect" parent="Card"]
 anchors_preset = -1
 anchor_left = 0.036
 anchor_right = 0.036
@@ -23,14 +32,14 @@ offset_bottom = 368.0
 scale = Vector2(1, 1.00484)
 metadata/_edit_use_anchors_ = true
 
-[node name="ColorRect2" type="ColorRect" parent="Card"]
+[node name="CharacterNameBackground" type="ColorRect" parent="Card"]
 offset_left = 1.0
 offset_right = 305.0
 offset_bottom = 36.0
 color = Color(0.501961, 0.501961, 0.501961, 1)
 metadata/_edit_use_anchors_ = true
 
-[node name="ColorRect3" type="ColorRect" parent="Card"]
+[node name="CharacterTitleBackground" type="ColorRect" parent="Card"]
 offset_left = 1.0
 offset_top = 205.0
 offset_right = 305.0
@@ -38,7 +47,7 @@ offset_bottom = 241.0
 color = Color(0.501961, 0.501961, 0.501961, 1)
 metadata/_edit_use_anchors_ = true
 
-[node name="CardImgSrc" type="Sprite2D" parent="Card"]
+[node name="CardImg" type="Sprite2D" parent="Card"]
 position = Vector2(76, 120)
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("1_52fin")
@@ -165,10 +174,4 @@ text = "1"
 horizontal_alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="Area2D" type="Area2D" parent="."]
-script = ExtResource("3_rtsnv")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(185.822, 224)
-scale = Vector2(0.999999, 1)
-shape = SubResource("RectangleShape2D_u0bti")
+[connection signal="input_event" from="Area2D" to="Area2D" method="_on_input_event"]
