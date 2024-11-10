@@ -1,7 +1,11 @@
-[gd_scene load_steps=3 format=3 uid="uid://228x0lttm3ug"]
+[gd_scene load_steps=5 format=3 uid="uid://228x0lttm3ug"]
 
 [ext_resource type="Texture2D" uid="uid://d0m6opvm4r6l7" path="res://images/cardimages/eric-cartman.jpg" id="1_52fin"]
 [ext_resource type="PackedScene" uid="uid://ds00ulykonvln" path="res://scenes/miscellaneous/Stat_Label.tscn" id="2_vy0w0"]
+[ext_resource type="Script" path="res://scenes/models/CardArea2D.cs" id="3_rtsnv"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_u0bti"]
+size = Vector2(369.642, 446)
 
 [node name="Node2D" type="Node2D"]
 scale = Vector2(0.998265, 1)
@@ -160,3 +164,11 @@ scale = Vector2(0.15, 0.15)
 text = "1"
 horizontal_alignment = 1
 metadata/_edit_use_anchors_ = true
+
+[node name="Area2D" type="Area2D" parent="."]
+script = ExtResource("3_rtsnv")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(185.822, 224)
+scale = Vector2(0.999999, 1)
+shape = SubResource("RectangleShape2D_u0bti")

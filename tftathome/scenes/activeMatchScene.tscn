@@ -1,6 +1,5 @@
-[gd_scene load_steps=9 format=3 uid="uid://bu5uwkaqalaf0"]
+[gd_scene load_steps=8 format=3 uid="uid://bu5uwkaqalaf0"]
 
-[ext_resource type="Script" path="res://scenes/ScrollContainer.cs" id="1_4c0i4"]
 [ext_resource type="Script" path="res://scenes/ActiveMatchScene.cs" id="1_g2emj"]
 [ext_resource type="PackedScene" uid="uid://228x0lttm3ug" path="res://scenes/models/cardScene.tscn" id="2_2ns8o"]
 [ext_resource type="Texture2D" uid="uid://dc2ar3oqwm1gl" path="res://images/textures/card-bg-texture.png" id="2_hsfgf"]
@@ -34,7 +33,6 @@ scale = Vector2(1.03652, 1.07897)
 theme_override_styles/panel = SubResource("StyleBoxTexture_l3lvf")
 horizontal_scroll_mode = 2
 vertical_scroll_mode = 2
-script = ExtResource("1_4c0i4")
 
 [node name="CardGrid" type="GridContainer" parent="CardContainer"]
 layout_mode = 2
@@ -78,7 +76,6 @@ offset_bottom = 860.427
 theme_override_styles/panel = SubResource("StyleBoxTexture_l3lvf")
 horizontal_scroll_mode = 2
 vertical_scroll_mode = 2
-script = ExtResource("1_4c0i4")
 
 [node name="PlayerListGrid" type="GridContainer" parent="PlayerListContainer"]
 self_modulate = Color(1, 1, 1, 0)

@@ -1,7 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://djifwx4yfl5i4"]
+[gd_scene load_steps=3 format=3 uid="uid://djifwx4yfl5i4"]
 
 [ext_resource type="Texture2D" uid="uid://dc2ar3oqwm1gl" path="res://images/textures/card-bg-texture.png" id="1_xdo82"]
-[ext_resource type="Script" path="res://scenes/ScrollContainer.cs" id="2_2yuco"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_dwc7l"]
 texture = ExtResource("1_xdo82")
@@ -18,7 +17,6 @@ offset_bottom = 860.427
 theme_override_styles/panel = SubResource("StyleBoxTexture_dwc7l")
 horizontal_scroll_mode = 2
 vertical_scroll_mode = 2
-script = ExtResource("2_2yuco")
 
 [node name="PlayerListGrid" type="GridContainer" parent="PlayerListContainer"]
 self_modulate = Color(1, 1, 1, 0)

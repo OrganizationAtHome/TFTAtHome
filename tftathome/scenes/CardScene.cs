@@ -8,7 +8,6 @@ public partial class CardScene : Node2D
 	{
 		ColorRect colorRect = GetNode<ColorRect>("ColorRect");
 		Vector2 size = colorRect.Size;
-		GD.Print(size.ToString());
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.

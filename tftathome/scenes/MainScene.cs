@@ -9,14 +9,21 @@ public partial class MainScene : Node
 	public PackedScene HomeScreenScene;
     [Export]
     public PackedScene PreGameScene;
-	private SceneReferenceSingleton _srs;
+    [Export]
+    public PackedScene CardPickingScene;
+    [Export]
+    public PackedScene PreBattleScene;
+    [Export]
+    public PackedScene PlayerListScene;
+
+    private SceneReferenceSingleton _srs = SceneReferenceSingleton.GetInstance();
 
     public override void _Ready()
 	{
-        _srs = SceneReferenceSingleton.GetInstance();
-		_srs.MainScene = this;
-		_srs.HomeScreenScene = HomeScreenScene.Instantiate() as HomeScreen;
-        _srs.PreGameScene = PreGameScene.Instantiate() as PreGameScene;
+        _srs.PreGameScene = PreGameScene;
+        _srs.PlayerListScene = PlayerListScene;
+        _srs.PreBattleScene = PreBattleScene;
+        // _srs.HomeScreenScene = HomeScreenScene.Instantiate() as HomeScreen;
 
         LoadHomeScreen();
 	}
@@ -35,7 +42,7 @@ public partial class MainScene : Node
 		Button switchSceneBtn = new Button();
 		switchSceneBtn.Text = "Switch Scene";
 
-        switchSceneBtn.Connect("pressed", Callable.From(() => SceneUtil.SwitchScene("PreGameScene")));
+        switchSceneBtn.Connect("pressed", Callable.From(() => SceneUtil.SwitchScene("PreBattleScene", this)));
 
 
         homeScreenInstance.AddChild(switchSceneBtn);

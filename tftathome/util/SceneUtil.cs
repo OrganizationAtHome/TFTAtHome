@@ -13,16 +13,26 @@ namespace TFTAtHome.util
     public static class SceneUtil
     {
         private static PackedScene _playerElementScene = GD.Load<PackedScene>("res://scenes/models/PlayerElementSceneV2.tscn");
+        private static PackedScene _playerHandScene = GD.Load<PackedScene>("res://scenes/models/PlayerHandScene.tscn");
 
-        public static void CreatePlayerElementContainer(Player player, Container parentContainer)
+        public static void CreatePlayerElementContainer(Player player, Container parentContainer, bool playerhand)
         {
 
+            Node2D playerElement2D = null;
             // New container to insert card into
             Godot.Container container = new();
-            container.CustomMinimumSize = new Vector2(220, 250);
+            if (!playerhand)
+            {
+                container.CustomMinimumSize = new Vector2(220, 250);
+                Node playerElementInstance = _playerElementScene.Instantiate();
+                playerElement2D = playerElementInstance as Node2D;
 
-            Node playerElementInstance = _playerElementScene.Instantiate();
-            Node2D playerElement2D = playerElementInstance as Node2D;
+            } else
+            {
+                container.CustomMinimumSize = new Vector2(220, 50);
+                Node playerHandInstance = _playerHandScene.Instantiate();
+                playerElement2D = playerHandInstance as Node2D;
+            }
             playerElement2D.ApplyScale(new Vector2(0.35f, 0.35f));
 
             Container playerHandGrid = GetPlayerHandGridFromPlayerElementScene(playerElement2D);
@@ -63,7 +73,6 @@ namespace TFTAtHome.util
                 GD.Print("Could not find cardGridContainer");
                 throw new DirectoryNotFoundException("Could not find cardGridContainer");
             }
-            GD.Print(cardGridContainer);
 
             return cardGridContainer;
         }
@@ -101,20 +110,23 @@ namespace TFTAtHome.util
             }
         }
 
-        public static void SwitchScene(string nameOfNewScene)
+        public static void SwitchScene(string nameOfNewScene, Node mainSceneRoot)
         {
             SceneReferenceSingleton srs = SceneReferenceSingleton.GetInstance();
 
-            Node newActiveScene = srs.GetPhaseSceneByName(nameOfNewScene);
+            PackedScene newActiveScene = srs.GetPhaseSceneByName(nameOfNewScene);
 
             GD.Print(newActiveScene);
 
-            Node mainSceneRoot = srs.GetPhaseSceneByName("MainScene");
+            Node newActiveSceneNode = newActiveScene.Instantiate();
 
-            GD.Print(mainSceneRoot);
+            GD.Print("NewActiveScene: " + newActiveSceneNode.Name);
+
+
+            // GD.Print("MainSceneRoot: " + mainSceneRoot.Name);
 
             Node currentActiveScene = mainSceneRoot.GetChild(0);
-            GD.Print(currentActiveScene);
+            // GD.Print("CurrentActiveScene: " + currentActiveScene.Name);
 
             if (mainSceneRoot.GetChild(0) == currentActiveScene)
             {
@@ -122,17 +134,12 @@ namespace TFTAtHome.util
                 mainSceneRoot.RemoveChild(currentActiveScene);
 
                 // Add the new active scene
-                mainSceneRoot.AddChild(newActiveScene);
+                mainSceneRoot.AddChild(newActiveSceneNode);
             }
             else
             {
                 GD.PrintErr("Error: The provided currentActiveScene is not the first child of the root node.");
             }
-        }
-
-        public static void Test()
-        {
-
         }
 
     }

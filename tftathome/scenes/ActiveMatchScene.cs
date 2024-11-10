@@ -26,9 +26,9 @@ public partial class ActiveMatchScene : Node2D
         gridContainer = cardScrollContainer.GetNode("CardGrid") as GridContainer;
         playerListScrollContainer = GetNode("PlayerListContainer") as ScrollContainer;
 
-        gridContainer = cardScrollContainer.GetNode("CardGrid") as GridContainer;
+
+        // gridContainer = cardScrollContainer.GetNode("CardGrid") as GridContainer;
         playerListGrid = GetNode("PlayerListContainer/PlayerListGrid") as GridContainer;
-        GD.Print(playerListGrid);
 
         foreach (Card cardObj in testGame.GetActiveCardPool())
         {
@@ -47,9 +47,9 @@ public partial class ActiveMatchScene : Node2D
 
         Player testPlayer = new Player(1, "Test", playerHand1);
 
-        SceneUtil.CreatePlayerElementContainer(testPlayer, playerListGrid);
-        SceneUtil.CreatePlayerElementContainer(testPlayer, playerListGrid);
-        SceneUtil.CreatePlayerElementContainer(testPlayer, playerListGrid);
+        SceneUtil.CreatePlayerElementContainer(testPlayer, playerListGrid, false);
+        SceneUtil.CreatePlayerElementContainer(testPlayer, playerListGrid, false);
+        SceneUtil.CreatePlayerElementContainer(testPlayer, playerListGrid, false);
     }
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.

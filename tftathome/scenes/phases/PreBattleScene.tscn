@@ -1,0 +1,40 @@
+[gd_scene load_steps=3 format=3 uid="uid://b1h27hcxnfw3o"]
+
+[ext_resource type="Script" path="res://scenes/phases/PreBattleScene.cs" id="1_85yy1"]
+[ext_resource type="Texture2D" uid="uid://dloca4g7ymwgy" path="res://images/backgrounds/battlegroundnew.jpg" id="1_skx8a"]
+
+[node name="PreBattleScene" type="Node2D"]
+script = ExtResource("1_85yy1")
+
+[node name="PlayerBattleContainer" type="GridContainer" parent="."]
+offset_left = 666.0
+offset_top = 15.0
+offset_right = 1366.0
+offset_bottom = 853.0
+
+[node name="P1VBox" type="VBoxContainer" parent="PlayerBattleContainer"]
+custom_minimum_size = Vector2(700, 180)
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="PlayerBattleContainer"]
+layout_mode = 2
+theme_override_constants/margin_top = 60
+theme_override_constants/margin_bottom = 10
+
+[node name="TextureRect" type="TextureRect" parent="PlayerBattleContainer/MarginContainer"]
+clip_contents = true
+custom_minimum_size = Vector2(700, 350)
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("1_skx8a")
+expand_mode = 1
+
+[node name="BattleFieldContainer" type="GridContainer" parent="PlayerBattleContainer/MarginContainer/TextureRect"]
+layout_mode = 2
+offset_top = 4.0
+offset_bottom = 4.0
+columns = 3
+
+[node name="P2VBox" type="VBoxContainer" parent="PlayerBattleContainer"]
+custom_minimum_size = Vector2(700, 150)
+layout_mode = 2
