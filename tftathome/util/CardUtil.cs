@@ -43,7 +43,7 @@ namespace TFTAtHome.util
             Texture2D newTexture = (Texture2D)GD.Load($"res://{cardObj.CardImgSrc}");
             Texture2D scaledTexture = RenderUtil.ResizeTexture(newTexture, 300f, 300f);
 
-            Sprite2D sprite2D = (Sprite2D)GetNodeFromCard(card2D, "CardImgSrc");
+            Sprite2D sprite2D = (Sprite2D)GetNodeFromCard(card2D, "CardImg");
             
             sprite2D.Texture = scaledTexture;
             return card;
@@ -54,7 +54,7 @@ namespace TFTAtHome.util
      */
         private static Node GetNodeFromCard(Node2D card, string name)
         {
-            Godot.Collections.Array<Node> slaves = card.GetChild(0).GetChildren();
+            Godot.Collections.Array<Node> slaves = card.GetNode("Card").GetChildren();
 
             foreach (var item in slaves)
             {
@@ -93,7 +93,7 @@ namespace TFTAtHome.util
         {
             Node card = cardScene.Instantiate();
             Node2D card2D = card as Node2D;
-            ColorRect colorRect = card2D.GetChild(0).GetChild(0) as ColorRect;
+            ColorRect colorRect = card2D.GetNode("Card").GetNode("CardBackground") as ColorRect;
             Vector2 vector = colorRect.GetRect().Size;
             float width = vector.X;
             return width;
