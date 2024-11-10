@@ -14,6 +14,7 @@ public partial class HomeScreen : Node2D
     public override void _Ready()
 	{
         this._GameManager = new GameManager(this, 1);
+        LocalStorage.SetGameManager(this._GameManager);
     }
 
     [Rpc(MultiplayerApi.RpcMode.AnyPeer)]
@@ -42,6 +43,6 @@ public partial class HomeScreen : Node2D
 
     public void SwitchScene()
     {
-        SceneUtil.SwitchScene("PreGameScene");
+        SceneUtil.SwitchScene("PreGameScene", this);
     }
 }

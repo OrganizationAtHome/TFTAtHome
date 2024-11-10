@@ -18,18 +18,18 @@ public partial class PlayerListScene : Node
 
     public override void _Ready()
 	{
-        Game testGame = LocalStorage.GetGame();
+        GameManager testGame = LocalStorage.GetGame();
         playerListGrid = GetNode("PlayerListContainer/PlayerListGrid") as GridContainer;
         playerListScrollContainer = GetNode("PlayerListContainer") as ScrollContainer;
         List<Card> playerHand1 = new List<Card>();
-        playerHand1.Add(testGame.getActiveCardPool()[0]);
-        playerHand1.Add(testGame.getActiveCardPool()[1]);
-        playerHand1.Add(testGame.getActiveCardPool()[2]);
-        playerHand1.Add(testGame.getActiveCardPool()[3]);
-        playerHand1.Add(testGame.getActiveCardPool()[4]);
-        playerHand1.Add(testGame.getActiveCardPool()[5]);
-        playerHand1.Add(testGame.getActiveCardPool()[6]);
-        playerHand1.Add(testGame.getActiveCardPool()[7]);
+        playerHand1.Add(testGame.GetActiveCardPool()[0]);
+        playerHand1.Add(testGame.GetActiveCardPool()[1]);
+        playerHand1.Add(testGame.GetActiveCardPool()[2]);
+        playerHand1.Add(testGame.GetActiveCardPool()[3]);
+        playerHand1.Add(testGame.GetActiveCardPool()[4]);
+        playerHand1.Add(testGame.GetActiveCardPool()[5]);
+        playerHand1.Add(testGame.GetActiveCardPool()[6]);
+        playerHand1.Add(testGame.GetActiveCardPool()[7]);
 
         Player testPlayer = new Player(1, "Test", playerHand1);
 

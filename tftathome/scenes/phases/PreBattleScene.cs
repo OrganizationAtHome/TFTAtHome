@@ -16,18 +16,18 @@ public partial class PreBattleScene : Node2D
 	{
         Node root = GetTree().Root.GetChild(0);
         GD.Print(root);
-        Game testGame = LocalStorage.GetGame();
+        GameManager testGame = LocalStorage.GetGame();
         _p1Vbox = GetNode("PlayerBattleContainer/P1VBox") as VBoxContainer;
         _p2Vbox = GetNode("PlayerBattleContainer/P2VBox") as VBoxContainer;
         List<Card> playerHand1 = new List<Card>();
-        playerHand1.Add(testGame.getActiveCardPool()[0]);
-        playerHand1.Add(testGame.getActiveCardPool()[1]);
-        playerHand1.Add(testGame.getActiveCardPool()[2]);
-        playerHand1.Add(testGame.getActiveCardPool()[3]);
-        playerHand1.Add(testGame.getActiveCardPool()[4]);
-        playerHand1.Add(testGame.getActiveCardPool()[5]);
-        playerHand1.Add(testGame.getActiveCardPool()[6]);
-        playerHand1.Add(testGame.getActiveCardPool()[7]);
+        playerHand1.Add(testGame.GetActiveCardPool()[0]);
+        playerHand1.Add(testGame.GetActiveCardPool()[1]);
+        playerHand1.Add(testGame.GetActiveCardPool()[2]);
+        playerHand1.Add(testGame.GetActiveCardPool()[3]);
+        playerHand1.Add(testGame.GetActiveCardPool()[4]);
+        playerHand1.Add(testGame.GetActiveCardPool()[5]);
+        playerHand1.Add(testGame.GetActiveCardPool()[6]);
+        playerHand1.Add(testGame.GetActiveCardPool()[7]);
 
         Player testPlayer = new Player(1, "Test", playerHand1);
 
