@@ -4,14 +4,9 @@ var acc: float = 20.0
 var deacc: float = 20.0
 var MaxSpeed: float = 400
 var MaxCrouchSpeed: float = 150
-@export var VelocityLine: Line2D;
-@export var InputLine: Line2D;
-@export var WelcomeText: RichTextLabel;
  
 
 func _physics_process(_delta):
-	VelocityLine.set_point_position(0, WelcomeText.get_screen_position())
-	VelocityLine.set_point_position(1, WelcomeText.get_screen_position()*velocity)
 	if is_multiplayer_authority():
 		var inputVector = Input.get_vector("ui_left","ui_right","ui_up","ui_down");
 		var inputLength = inputVector.length()
