@@ -30,6 +30,6 @@ namespace TFTAtHome.models
             _playerHand.Add(card);
         }
 
-        public List<Card> getPlayerHand() { return _playerHand; }
+        public List<Card> GetPlayerHand() { return _playerHand; }
     }
 }

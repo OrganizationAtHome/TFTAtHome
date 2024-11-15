@@ -33,7 +33,14 @@ namespace TFTAtHome.models
             IsFictional = isFictional;
         }
 
-        public string[] getStatsValuesAsString()
+        public void SetCardStats(int early, int mid, int late)
+        {
+            Early = early;
+            Mid = mid;
+            Late = late;
+        }
+
+        public string[] GetStatsValuesAsString()
         {
             string[] values = new string[5];
             values[0] = "" + Early;
