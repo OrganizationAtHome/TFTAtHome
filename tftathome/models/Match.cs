@@ -47,24 +47,25 @@ namespace TFTAtHome.models
 
         public void SetCardStatsForMatchForPlayer(Player player)
         {
-            bool leaderBonus = 
+
+            bool leaderBonus = false; 
             if (player == Player1)
             {
                 foreach (Card card in CurrentCardsOnBoardP1)
                 {
                     var result = card.Trait switch
                     {
-                        "Politician" => DoStuff(),
-                        "Leader" => DoStuff(),
-                        "TV-Famous" => DoStuff(),
-                        "MovieHero" => DoStuff(),
-                        "CartonCharacter" => DoStuff(),
-                        "Le" => DoStuff(),
-                        "Queen" => DoStuff(),
-                        "Early peaker" => DoStuff(),
-                        "Musician" => DoStuff(),
-                        "Genius" => DoStuff(),
-                        "" => DoStuff()
+                        "Politician" => CheckPoliticianBonus(),
+                        "Leader" => CheckPoliticianBonus(),
+                        "TV-Famous" => CheckPoliticianBonus(),
+                        "MovieHero" => CheckPoliticianBonus(),
+                        "CartonCharacter" => CheckPoliticianBonus(),
+                        "Le" => CheckPoliticianBonus(),
+                        "Queen" => CheckPoliticianBonus(),
+                        "Early peaker" => CheckPoliticianBonus(),
+                        "Musician" => CheckPoliticianBonus(),
+                        "Genius" => CheckPoliticianBonus(),
+                        "" => CheckPoliticianBonus()
                     };
                     // card.SetCardStats(player);
                 }
@@ -88,6 +89,7 @@ namespace TFTAtHome.models
         private bool CheckLeaderBonus(bool player1)
         {
             bool test = Player2.GetPlayerHand().Any(c => c.Trait == "Leader");
+            return false;
         }
 
     }
