@@ -31,8 +31,8 @@ public partial class PreBattleScene : Node2D
 
         Player testPlayer = new Player(1, "Test", playerHand1);
 
-        SceneUtil.CreatePlayerElementContainer(testPlayer, _p1Vbox, true);
-        SceneUtil.CreatePlayerElementContainer(testPlayer, _p2Vbox, true);
+        SceneUtil.CreatePlayerElementContainer(testPlayer, _p1Vbox, true, "PlayerContainer1");
+        SceneUtil.CreatePlayerElementContainer(testPlayer, _p2Vbox, true, "PlayerContainer2");
 
         PlayerUtil.AddPlayerListSceneToScene(root);
     }
