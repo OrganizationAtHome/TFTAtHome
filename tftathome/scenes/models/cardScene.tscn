@@ -11,7 +11,6 @@ size = Vector2(305.531, 371)
 scale = Vector2(0.998265, 1)
 
 [node name="Card" type="Node2D" parent="."]
-scale = Vector2(1, 1)
 
 [node name="CardBackground" type="ColorRect" parent="Card"]
 anchors_preset = -1
@@ -172,7 +171,6 @@ horizontal_alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="Area2D" type="Area2D" parent="Card"]
-scale = Vector2(1, 1)
 script = ExtResource("3_rtsnv")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Card/Area2D"]
