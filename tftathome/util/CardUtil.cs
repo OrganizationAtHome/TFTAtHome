@@ -19,7 +19,7 @@ namespace TFTAtHome.util
                 string[] cardHeader = { "CardTitle", "CardName" };
                 string[] cardHeaderValues = { cardObj.CardTitle, cardObj.CardName };
                 string[] statsName = { "Early", "Mid", "Late", "Trait", "Cost" };
-                string[] statValues = cardObj.getStatsValuesAsString();
+                string[] statValues = cardObj.GetStatsValuesAsString();
 
                 // Create the card node
                 Node card = cardScene.Instantiate();

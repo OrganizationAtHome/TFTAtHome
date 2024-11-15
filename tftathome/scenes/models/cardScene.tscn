@@ -11,7 +11,6 @@ size = Vector2(304.529, 369)
 scale = Vector2(0.998265, 1)
 
 [node name="Area2D" type="Area2D" parent="."]
-scale = Vector2(1, 1)
 script = ExtResource("3_rtsnv")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
