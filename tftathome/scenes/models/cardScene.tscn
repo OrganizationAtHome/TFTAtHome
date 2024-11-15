@@ -5,20 +5,13 @@
 [ext_resource type="Script" path="res://scenes/models/CardArea2D.cs" id="3_rtsnv"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_u0bti"]
-size = Vector2(304.529, 369)
+size = Vector2(305.531, 371)
 
 [node name="Node2D" type="Node2D"]
 scale = Vector2(0.998265, 1)
 
-[node name="Area2D" type="Area2D" parent="."]
-script = ExtResource("3_rtsnv")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(153.266, 185.5)
-scale = Vector2(0.999999, 1)
-shape = SubResource("RectangleShape2D_u0bti")
-
 [node name="Card" type="Node2D" parent="."]
+scale = Vector2(1, 1)
 
 [node name="CardBackground" type="ColorRect" parent="Card"]
 anchors_preset = -1
@@ -29,12 +22,14 @@ offset_left = 1.0
 offset_right = 305.0
 offset_bottom = 368.0
 scale = Vector2(1, 1.00484)
+mouse_filter = 2
 metadata/_edit_use_anchors_ = true
 
 [node name="CharacterNameBackground" type="ColorRect" parent="Card"]
 offset_left = 1.0
 offset_right = 305.0
 offset_bottom = 36.0
+mouse_filter = 2
 color = Color(0.501961, 0.501961, 0.501961, 1)
 metadata/_edit_use_anchors_ = true
 
@@ -43,6 +38,7 @@ offset_left = 1.0
 offset_top = 205.0
 offset_right = 305.0
 offset_bottom = 241.0
+mouse_filter = 2
 color = Color(0.501961, 0.501961, 0.501961, 1)
 metadata/_edit_use_anchors_ = true
 
@@ -55,6 +51,7 @@ texture = ExtResource("1_52fin")
 offset_top = 3.0
 offset_right = 305.0
 offset_bottom = 43.0
+mouse_filter = 2
 bbcode_enabled = true
 text = "[center] CHARACTER NAME [/center]"
 metadata/_edit_use_anchors_ = true
@@ -64,6 +61,7 @@ offset_left = 1.0
 offset_top = 207.0
 offset_right = 306.0
 offset_bottom = 247.0
+mouse_filter = 2
 bbcode_enabled = true
 text = "[center] CHARACTER TITLE [/center]"
 metadata/_edit_use_anchors_ = true
@@ -173,4 +171,13 @@ text = "1"
 horizontal_alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[connection signal="input_event" from="Area2D" to="Area2D" method="_on_input_event"]
+[node name="Area2D" type="Area2D" parent="Card"]
+scale = Vector2(1, 1)
+script = ExtResource("3_rtsnv")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Card/Area2D"]
+position = Vector2(153.767, 186.5)
+scale = Vector2(0.999999, 1)
+shape = SubResource("RectangleShape2D_u0bti")
+
+[connection signal="input_event" from="Card/Area2D" to="Card/Area2D" method="_on_input_event"]

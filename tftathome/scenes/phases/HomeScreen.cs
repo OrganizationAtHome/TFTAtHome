@@ -45,4 +45,16 @@ public partial class HomeScreen : Node2D
     {
         SceneUtil.SwitchScene("PreGameScene", this);
     }
+
+    public void _on_home_screen_body_input_event(Viewport viewport, InputEvent @event, int shapeIdx)
+    {
+        if (@event is InputEventMouseButton mouseEvent && mouseEvent.Pressed && mouseEvent.ButtonIndex == MouseButton.Left)
+        {
+            GD.Print("You clicked me correctly" + @event.GetInstanceId);
+        }
+        if (@event is InputEventMouseButton mouseEvent2 && mouseEvent2.Pressed && mouseEvent2.ButtonIndex == MouseButton.Right)
+        {
+            GD.Print("YEEET");
+        }
+    }
 }
