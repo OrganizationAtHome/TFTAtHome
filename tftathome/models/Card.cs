@@ -40,6 +40,11 @@ namespace TFTAtHome.models
             Late = late;
         }
 
+        public Card Clone()
+        {
+            return (Card)this.MemberwiseClone();
+        }
+
         public string[] GetStatsValuesAsString()
         {
             string[] values = new string[5];
@@ -50,6 +55,11 @@ namespace TFTAtHome.models
             values[4] = "" + Cost;
 
             return values;
+        }
+
+        public override string ToString()
+        {
+            return "{ " + Id + ", " + CardName + " }";
         }
     }
 }

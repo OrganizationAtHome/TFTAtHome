@@ -17,11 +17,10 @@ namespace TFTAtHome.models
         public int SplitWins { get; set; }
         public int SeasonWins { get; set; }
 
-        public Player(long id, string name, List<Card> playerHand)
+        public Player(long id, string name)
         {
             Id = id;
             Name = name;
-            _playerHand = playerHand;
             Coins = 5;
         }
 
@@ -31,5 +30,16 @@ namespace TFTAtHome.models
         }
 
         public List<Card> GetPlayerHand() { return _playerHand; }
+        public void SetPlayerHand(List<Card> playerHand) { _playerHand = playerHand; }
+
+        public List<Card> GetCopyOfPlayerHand()
+        {
+            List<Card> copyOfHand = new List<Card>();
+            foreach (Card card in _playerHand)
+            {
+                copyOfHand.Add(card.Clone());
+            }
+            return copyOfHand;
+        }
     }
 }

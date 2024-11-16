@@ -31,7 +31,8 @@ public partial class PlayerListScene : Node
         playerHand1.Add(testGame.GetActiveCardPool()[6]);
         playerHand1.Add(testGame.GetActiveCardPool()[7]);
 
-        Player testPlayer = new Player(1, "Test", playerHand1);
+        Player testPlayer = new Player(1, "Test");
+        testPlayer.SetPlayerHand(playerHand1);
 
         SceneUtil.CreatePlayerElementContainer(testPlayer, playerListGrid, false);
         SceneUtil.CreatePlayerElementContainer(testPlayer, playerListGrid, false);

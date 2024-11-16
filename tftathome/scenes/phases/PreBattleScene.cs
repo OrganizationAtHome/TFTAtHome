@@ -29,7 +29,8 @@ public partial class PreBattleScene : Node2D
         playerHand1.Add(testGame.GetActiveCardPool()[6]);
         playerHand1.Add(testGame.GetActiveCardPool()[7]);
 
-        Player testPlayer = new Player(1, "Test", playerHand1);
+        Player testPlayer = new Player(1, "Test");
+        testPlayer.SetPlayerHand(playerHand1);
 
         SceneUtil.CreatePlayerElementContainer(testPlayer, _p1Vbox, true);
         SceneUtil.CreatePlayerElementContainer(testPlayer, _p2Vbox, true);

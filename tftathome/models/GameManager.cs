@@ -60,7 +60,7 @@ namespace TFTAtHome.models
             server.PeerConnected += (id) =>
             {
                 GD.Print("client connected with the ID " + id);
-                Player player = new(id, "Test"+id, new List<Card>());
+                Player player = new(id, "Test"+id);
                 _players.Add(player);
             };
             node.Multiplayer.MultiplayerPeer = server;
