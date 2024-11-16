@@ -15,12 +15,13 @@ namespace TFTAtHome.util
         private static PackedScene _playerElementScene = GD.Load<PackedScene>("res://scenes/models/PlayerElementSceneV2.tscn");
         private static PackedScene _playerHandScene = GD.Load<PackedScene>("res://scenes/models/PlayerHandScene.tscn");
 
-        public static void CreatePlayerElementContainer(Player player, Container parentContainer, bool playerhand)
+        public static void CreatePlayerElementContainer(Player player, Container parentContainer, bool playerhand, string name)
         {
 
             Node2D playerElement2D = null;
             // New container to insert card into
             Godot.Container container = new();
+            container.Name = name;
             if (!playerhand)
             {
                 container.CustomMinimumSize = new Vector2(220, 250);

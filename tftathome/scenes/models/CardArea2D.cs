@@ -17,7 +17,7 @@ public partial class CardArea2D : Area2D
     {
         if (@event is InputEventMouseButton mouseEvent && mouseEvent.Pressed && mouseEvent.ButtonIndex == MouseButton.Left)
         {
-            GD.Print("You clicked me correctly" + @event.GetInstanceId);
+            this.GetTree().CallGroup("cardMovePhysics", "ZimmyTest");
         }
         if (@event is InputEventMouseButton mouseEvent2 && mouseEvent2.Pressed && mouseEvent2.ButtonIndex == MouseButton.Right)
         {

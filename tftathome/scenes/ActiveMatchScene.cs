@@ -48,9 +48,9 @@ public partial class ActiveMatchScene : Node2D
         Player testPlayer = new Player(1, "Test");
         testPlayer.SetPlayerHand(playerHand1);
 
-        SceneUtil.CreatePlayerElementContainer(testPlayer, playerListGrid, false);
-        SceneUtil.CreatePlayerElementContainer(testPlayer, playerListGrid, false);
-        SceneUtil.CreatePlayerElementContainer(testPlayer, playerListGrid, false);
+        SceneUtil.CreatePlayerElementContainer(testPlayer, playerListGrid, false, "fok");
+        SceneUtil.CreatePlayerElementContainer(testPlayer, playerListGrid, false, "NavngivningV2");
+        SceneUtil.CreatePlayerElementContainer(testPlayer, playerListGrid, false, "WAAAAAAA");
     }
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.

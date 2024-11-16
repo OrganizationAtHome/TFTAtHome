@@ -23,3 +23,7 @@ window/size/viewport_height=950
 [dotnet]
 
 project/assembly_name="TFTAtHome"
+
+[global_group]
+
+cardMovePhysics=""

@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://b1h27hcxnfw3o"]
+[gd_scene load_steps=4 format=3 uid="uid://b1h27hcxnfw3o"]
 
 [ext_resource type="Script" path="res://scenes/phases/PreBattleScene.cs" id="1_85yy1"]
 [ext_resource type="Texture2D" uid="uid://dloca4g7ymwgy" path="res://images/backgrounds/battlegroundnew.jpg" id="1_skx8a"]
+[ext_resource type="Script" path="res://scenes/phases/P2vBox.cs" id="2_ans6b"]
 
 [node name="PreBattleScene" type="Node2D"]
 script = ExtResource("1_85yy1")
@@ -12,9 +13,10 @@ offset_top = 15.0
 offset_right = 1366.0
 offset_bottom = 853.0
 
-[node name="P1VBox" type="VBoxContainer" parent="PlayerBattleContainer"]
+[node name="P1VBox" type="VBoxContainer" parent="PlayerBattleContainer" groups=["cardMovePhysics"]]
 custom_minimum_size = Vector2(700, 180)
 layout_mode = 2
+script = ExtResource("2_ans6b")
 
 [node name="MarginContainer" type="MarginContainer" parent="PlayerBattleContainer"]
 layout_mode = 2
@@ -35,6 +37,7 @@ offset_top = 4.0
 offset_bottom = 4.0
 columns = 3
 
-[node name="P2VBox" type="VBoxContainer" parent="PlayerBattleContainer"]
+[node name="P2VBox" type="VBoxContainer" parent="PlayerBattleContainer" groups=["cardMovePhysics"]]
 custom_minimum_size = Vector2(700, 150)
 layout_mode = 2
+script = ExtResource("2_ans6b")

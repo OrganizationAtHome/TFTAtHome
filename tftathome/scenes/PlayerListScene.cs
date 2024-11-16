@@ -34,9 +34,9 @@ public partial class PlayerListScene : Node
         Player testPlayer = new Player(1, "Test");
         testPlayer.SetPlayerHand(playerHand1);
 
-        SceneUtil.CreatePlayerElementContainer(testPlayer, playerListGrid, false);
-        SceneUtil.CreatePlayerElementContainer(testPlayer, playerListGrid, false);
-        SceneUtil.CreatePlayerElementContainer(testPlayer, playerListGrid, false);
+        SceneUtil.CreatePlayerElementContainer(testPlayer, playerListGrid, false, "Fok");
+        SceneUtil.CreatePlayerElementContainer(testPlayer, playerListGrid, false, "navngivning");
+        SceneUtil.CreatePlayerElementContainer(testPlayer, playerListGrid, false, "AAAAH");
 
 
         /* TODO
