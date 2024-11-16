@@ -2,180 +2,189 @@
 
 [ext_resource type="Texture2D" uid="uid://d0m6opvm4r6l7" path="res://images/cardimages/eric-cartman.jpg" id="1_52fin"]
 [ext_resource type="PackedScene" uid="uid://ds00ulykonvln" path="res://scenes/miscellaneous/Stat_Label.tscn" id="2_vy0w0"]
-[ext_resource type="Script" path="res://scenes/models/CardArea2D.cs" id="3_rtsnv"]
+[ext_resource type="Script" path="res://scenes/models/CardBody.cs" id="3_fg45v"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_u0bti"]
-size = Vector2(305.531, 371)
+size = Vector2(304.529, 370)
 
-[node name="Node2D" type="Node2D"]
+[node name="Card" type="Node2D"]
+position = Vector2(152, 185)
 scale = Vector2(0.998265, 1)
 
-[node name="Card" type="Node2D" parent="."]
+[node name="CardVisuals" type="Node2D" parent="."]
+position = Vector2(-6.10352e-05, 7.62939e-06)
 
-[node name="CardBackground" type="ColorRect" parent="Card"]
+[node name="CardBackground" type="ColorRect" parent="CardVisuals"]
 anchors_preset = -1
 anchor_left = 0.036
 anchor_right = 0.036
 anchor_bottom = 0.028
-offset_left = 1.0
-offset_right = 305.0
-offset_bottom = 368.0
+offset_left = -152.266
+offset_top = -185.0
+offset_right = 151.734
+offset_bottom = 183.0
 scale = Vector2(1, 1.00484)
 mouse_filter = 2
 metadata/_edit_use_anchors_ = true
 
-[node name="CharacterNameBackground" type="ColorRect" parent="Card"]
-offset_left = 1.0
-offset_right = 305.0
-offset_bottom = 36.0
+[node name="CharacterNameBackground" type="ColorRect" parent="CardVisuals"]
+offset_left = -152.266
+offset_top = -185.0
+offset_right = 151.734
+offset_bottom = -149.0
 mouse_filter = 2
 color = Color(0.501961, 0.501961, 0.501961, 1)
 metadata/_edit_use_anchors_ = true
 
-[node name="CharacterTitleBackground" type="ColorRect" parent="Card"]
-offset_left = 1.0
-offset_top = 205.0
-offset_right = 305.0
-offset_bottom = 241.0
+[node name="CharacterTitleBackground" type="ColorRect" parent="CardVisuals"]
+offset_left = -152.266
+offset_top = 20.0
+offset_right = 151.734
+offset_bottom = 56.0
 mouse_filter = 2
 color = Color(0.501961, 0.501961, 0.501961, 1)
 metadata/_edit_use_anchors_ = true
 
-[node name="CardImg" type="Sprite2D" parent="Card"]
-position = Vector2(76, 120)
+[node name="CardImg" type="Sprite2D" parent="CardVisuals"]
+position = Vector2(-77.2659, -65)
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("1_52fin")
 
-[node name="CardName" type="RichTextLabel" parent="Card"]
-offset_top = 3.0
-offset_right = 305.0
-offset_bottom = 43.0
+[node name="CardName" type="RichTextLabel" parent="CardVisuals"]
+offset_left = -153.266
+offset_top = -182.0
+offset_right = 151.734
+offset_bottom = -142.0
 mouse_filter = 2
 bbcode_enabled = true
 text = "[center] CHARACTER NAME [/center]"
 metadata/_edit_use_anchors_ = true
 
-[node name="CardTitle" type="RichTextLabel" parent="Card"]
-offset_left = 1.0
-offset_top = 207.0
-offset_right = 306.0
-offset_bottom = 247.0
+[node name="CardTitle" type="RichTextLabel" parent="CardVisuals"]
+offset_left = -152.266
+offset_top = 22.0
+offset_right = 152.734
+offset_bottom = 62.0
 mouse_filter = 2
 bbcode_enabled = true
 text = "[center] CHARACTER TITLE [/center]"
 metadata/_edit_use_anchors_ = true
 
-[node name="Mid_Label_Name" parent="Card" instance=ExtResource("2_vy0w0")]
-offset_left = 154.0
-offset_top = 99.0
-offset_right = 603.0
-offset_bottom = 304.0
+[node name="Mid_Label_Name" parent="CardVisuals" instance=ExtResource("2_vy0w0")]
+offset_left = 0.734087
+offset_top = -86.0
+offset_right = 449.734
+offset_bottom = 119.0
 scale = Vector2(0.15, 0.15)
 text = "MID"
 horizontal_alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="Early_Label_Name" parent="Card" instance=ExtResource("2_vy0w0")]
-offset_left = 156.0
-offset_top = 68.0
-offset_right = 605.0
-offset_bottom = 273.0
+[node name="Early_Label_Name" parent="CardVisuals" instance=ExtResource("2_vy0w0")]
+offset_left = 2.73409
+offset_top = -117.0
+offset_right = 451.734
+offset_bottom = 88.0
 scale = Vector2(0.15, 0.15)
 text = "EARLY"
 horizontal_alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="Late_Label_Name" parent="Card" instance=ExtResource("2_vy0w0")]
-offset_left = 155.0
-offset_top = 133.0
-offset_right = 604.0
-offset_bottom = 338.0
+[node name="Late_Label_Name" parent="CardVisuals" instance=ExtResource("2_vy0w0")]
+offset_left = 1.73409
+offset_top = -52.0
+offset_right = 450.734
+offset_bottom = 153.0
 scale = Vector2(0.15, 0.15)
 text = "LATE"
 horizontal_alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="Early" parent="Card" instance=ExtResource("2_vy0w0")]
-offset_left = 225.0
-offset_top = 67.0
-offset_right = 674.0
-offset_bottom = 272.0
+[node name="Early" parent="CardVisuals" instance=ExtResource("2_vy0w0")]
+offset_left = 71.7341
+offset_top = -118.0
+offset_right = 520.734
+offset_bottom = 87.0
 scale = Vector2(0.15, 0.15)
 text = "10"
 horizontal_alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="Mid" parent="Card" instance=ExtResource("2_vy0w0")]
-offset_left = 225.0
-offset_top = 100.0
-offset_right = 674.0
-offset_bottom = 305.0
+[node name="Mid" parent="CardVisuals" instance=ExtResource("2_vy0w0")]
+offset_left = 71.7341
+offset_top = -85.0
+offset_right = 520.734
+offset_bottom = 120.0
 scale = Vector2(0.15, 0.15)
 text = "10"
 horizontal_alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="Late" parent="Card" instance=ExtResource("2_vy0w0")]
-offset_left = 225.0
-offset_top = 134.0
-offset_right = 674.0
-offset_bottom = 339.0
+[node name="Late" parent="CardVisuals" instance=ExtResource("2_vy0w0")]
+offset_left = 71.7341
+offset_top = -51.0
+offset_right = 520.734
+offset_bottom = 154.0
 scale = Vector2(0.15, 0.15)
 text = "10"
 horizontal_alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="Class_Label_Name" parent="Card" instance=ExtResource("2_vy0w0")]
-offset_left = 52.0
-offset_top = 256.0
-offset_right = 501.0
-offset_bottom = 461.0
+[node name="Class_Label_Name" parent="CardVisuals" instance=ExtResource("2_vy0w0")]
+offset_left = -101.266
+offset_top = 71.0
+offset_right = 347.734
+offset_bottom = 276.0
 scale = Vector2(0.15, 0.15)
 text = "CLASS"
 horizontal_alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="Trait" parent="Card" instance=ExtResource("2_vy0w0")]
+[node name="Trait" parent="CardVisuals" instance=ExtResource("2_vy0w0")]
 anchors_preset = -1
 anchor_left = -1.61
 anchor_top = -2.031
 anchor_right = 3.16333
 anchor_bottom = 5.26341
-offset_left = 148.0
-offset_top = 256.0
-offset_right = 968.0
-offset_bottom = 461.0
+offset_left = -5.26591
+offset_top = 71.0
+offset_right = 814.734
+offset_bottom = 276.0
 scale = Vector2(0.15, 0.15)
 text = "UNKNOWN"
 horizontal_alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="CardCost_Label_Name" parent="Card" instance=ExtResource("2_vy0w0")]
-offset_left = 52.8
-offset_top = 294.4
-offset_right = 501.8
-offset_bottom = 499.4
+[node name="CardCost_Label_Name" parent="CardVisuals" instance=ExtResource("2_vy0w0")]
+offset_left = -100.466
+offset_top = 109.4
+offset_right = 348.534
+offset_bottom = 314.4
 scale = Vector2(0.15, 0.15)
 text = "COST"
 horizontal_alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="Cost" parent="Card" instance=ExtResource("2_vy0w0")]
-offset_left = 173.0
-offset_top = 293.0
-offset_right = 622.0
-offset_bottom = 498.0
+[node name="Cost" parent="CardVisuals" instance=ExtResource("2_vy0w0")]
+offset_left = 19.7341
+offset_top = 108.0
+offset_right = 468.734
+offset_bottom = 313.0
 scale = Vector2(0.15, 0.15)
 text = "1"
 horizontal_alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="Area2D" type="Area2D" parent="Card"]
-script = ExtResource("3_rtsnv")
+[node name="CardBody" type="Area2D" parent="CardVisuals"]
+position = Vector2(1.52588e-05, 0)
+script = ExtResource("3_fg45v")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Card/Area2D"]
-position = Vector2(153.767, 186.5)
+[node name="CardCollision" type="CollisionShape2D" parent="CardVisuals/CardBody"]
+position = Vector2(6.10352e-05, 0)
 scale = Vector2(0.999999, 1)
 shape = SubResource("RectangleShape2D_u0bti")
 
-[connection signal="input_event" from="Card/Area2D" to="Card/Area2D" method="_on_input_event"]
+[connection signal="body_entered" from="CardVisuals/CardBody" to="CardVisuals/CardBody" method="OnArea2DBodyEntered"]
+[connection signal="body_exited" from="CardVisuals/CardBody" to="CardVisuals/CardBody" method="OnArea2DBodyExited"]
+[connection signal="mouse_entered" from="CardVisuals/CardBody" to="CardVisuals/CardBody" method="OnArea2DMouseEntered"]
+[connection signal="mouse_exited" from="CardVisuals/CardBody" to="CardVisuals/CardBody" method="OnArea2DMouseExited"]

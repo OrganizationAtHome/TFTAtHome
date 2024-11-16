@@ -54,7 +54,7 @@ namespace TFTAtHome.util
      */
         private static Node GetNodeFromCard(Node2D card, string name)
         {
-            Godot.Collections.Array<Node> slaves = card.GetNode("Card").GetChildren();
+            Godot.Collections.Array<Node> slaves = card.GetNode("CardVisuals").GetChildren();
 
             foreach (var item in slaves)
             {
@@ -93,7 +93,7 @@ namespace TFTAtHome.util
         {
             Node card = cardScene.Instantiate();
             Node2D card2D = card as Node2D;
-            ColorRect colorRect = card2D.GetNode("Card").GetNode("CardBackground") as ColorRect;
+            ColorRect colorRect = card2D.GetNode("CardVisuals").GetNode("CardBackground") as ColorRect;
             Vector2 vector = colorRect.GetRect().Size;
             float width = vector.X;
             return width;

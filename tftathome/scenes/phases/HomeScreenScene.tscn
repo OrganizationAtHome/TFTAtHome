@@ -84,7 +84,7 @@ text = "localhost"
 placeholder_text = "Type IP / domain here"
 
 [node name="Node2D" parent="." instance=ExtResource("4_frwcy")]
-position = Vector2(71.0002, 99)
+position = Vector2(290, 277)
 
 [connection signal="pressed" from="HostBtnBody/HostLobby_Btn" to="." method="_on_start_server_pressed"]
 [connection signal="pressed" from="JoinBtnBody/JoinLobby_Btn" to="." method="_on_join_pressed"]
