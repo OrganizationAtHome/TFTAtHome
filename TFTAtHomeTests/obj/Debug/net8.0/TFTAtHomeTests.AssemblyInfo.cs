@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("TFTAtHomeTests")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6d18c84f732800c1067ddbe63a0e51cc37b8def9")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+49e74f7e5f40951011e803e9810dfa5d8c908385")]
 [assembly: System.Reflection.AssemblyProductAttribute("TFTAtHomeTests")]
 [assembly: System.Reflection.AssemblyTitleAttribute("TFTAtHomeTests")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

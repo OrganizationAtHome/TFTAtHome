@@ -2,14 +2,24 @@
 
 [ext_resource type="Texture2D" uid="uid://d0m6opvm4r6l7" path="res://images/cardimages/eric-cartman.jpg" id="1_52fin"]
 [ext_resource type="PackedScene" uid="uid://ds00ulykonvln" path="res://scenes/miscellaneous/Stat_Label.tscn" id="2_vy0w0"]
-[ext_resource type="Script" path="res://scenes/models/CardBody.cs" id="3_fg45v"]
+[ext_resource type="Script" path="res://models/CardLogic.cs" id="3_mt7nv"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_u0bti"]
 size = Vector2(304.529, 370)
 
 [node name="Card" type="Node2D"]
-position = Vector2(152, 185)
+position = Vector2(0, 4.23516e-22)
 scale = Vector2(0.998265, 1)
+
+[node name="CardBody" type="Area2D" parent="."]
+position = Vector2(-4.57764e-05, 7.62939e-06)
+scale = Vector2(1, 1)
+script = ExtResource("3_mt7nv")
+
+[node name="CardCollision" type="CollisionShape2D" parent="CardBody"]
+position = Vector2(6.10352e-05, 0)
+scale = Vector2(0.999999, 1)
+shape = SubResource("RectangleShape2D_u0bti")
 
 [node name="CardVisuals" type="Node2D" parent="."]
 position = Vector2(-6.10352e-05, 7.62939e-06)
@@ -24,7 +34,7 @@ offset_top = -185.0
 offset_right = 151.734
 offset_bottom = 183.0
 scale = Vector2(1, 1.00484)
-mouse_filter = 2
+mouse_filter = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="CharacterNameBackground" type="ColorRect" parent="CardVisuals"]
@@ -175,16 +185,7 @@ text = "1"
 horizontal_alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="CardBody" type="Area2D" parent="CardVisuals"]
-position = Vector2(1.52588e-05, 0)
-script = ExtResource("3_fg45v")
-
-[node name="CardCollision" type="CollisionShape2D" parent="CardVisuals/CardBody"]
-position = Vector2(6.10352e-05, 0)
-scale = Vector2(0.999999, 1)
-shape = SubResource("RectangleShape2D_u0bti")
-
-[connection signal="body_entered" from="CardVisuals/CardBody" to="CardVisuals/CardBody" method="OnArea2DBodyEntered"]
-[connection signal="body_exited" from="CardVisuals/CardBody" to="CardVisuals/CardBody" method="OnArea2DBodyExited"]
-[connection signal="mouse_entered" from="CardVisuals/CardBody" to="CardVisuals/CardBody" method="OnArea2DMouseEntered"]
-[connection signal="mouse_exited" from="CardVisuals/CardBody" to="CardVisuals/CardBody" method="OnArea2DMouseExited"]
+[connection signal="body_entered" from="CardBody" to="CardBody" method="OnArea2DBodyEntered"]
+[connection signal="body_exited" from="CardBody" to="CardBody" method="OnArea2DBodyExited"]
+[connection signal="mouse_entered" from="CardBody" to="CardBody" method="OnArea2DMouseEntered"]
+[connection signal="mouse_exited" from="CardBody" to="CardBody" method="OnArea2DMouseExited"]

@@ -9,7 +9,10 @@ public partial class PreBattleScene : Node2D
 {
     private VBoxContainer _p1Vbox;
     private VBoxContainer _p2Vbox;
-
+    [Export]
+    public PackedScene CardScene { get; set; }
+    [Export]
+    public PackedScene CardPlatformScene { get; set; }
 
 
     public override void _Ready()
@@ -36,6 +39,30 @@ public partial class PreBattleScene : Node2D
         SceneUtil.CreatePlayerElementContainer(testPlayer, _p2Vbox, true, "PlayerContainer2");
 
         PlayerUtil.AddPlayerListSceneToScene(root);
+    }
+
+    public void zimmer()
+    {
+        GD.Print("Zimmer");
+        Node center = this.GetNode("CenterPoint1");
+
+        var CardPlatform = CardPlatformScene.Instantiate();
+        var Card = CardScene.Instantiate();
+        CardPlatform.AddChild(Card);
+        center.AddChild(CardPlatform);
+        GD.Print(CardPlatform.Name);
+        GD.Print(CardPlatform.GetChildren());
+
+        var platforms = center.GetChildren();
+
+        for (int i = 0; i < platforms.Count; i++)
+        {
+            var platform = platforms[i] as Node2D;
+            platform.Scale = new Vector2(0.5f, 0.5f);
+            platform.Position = new Vector2(100*i, 0);
+            platform.RotationDegrees = 0;
+
+        }
     }
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.

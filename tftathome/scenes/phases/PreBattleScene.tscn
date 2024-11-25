@@ -3,13 +3,13 @@
 [ext_resource type="Script" path="res://scenes/phases/PreBattleScene.cs" id="1_85yy1"]
 [ext_resource type="Texture2D" uid="uid://dloca4g7ymwgy" path="res://images/backgrounds/battlegroundnew.jpg" id="1_skx8a"]
 [ext_resource type="Script" path="res://scenes/phases/P2vBox.cs" id="2_ans6b"]
-[ext_resource type="Script" path="res://scenes/phases/CardPlatform.cs" id="4_5dq4r"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_spjcx"]
-size = Vector2(304.529, 370)
+[ext_resource type="PackedScene" uid="uid://228x0lttm3ug" path="res://scenes/models/cardScene.tscn" id="2_irqvl"]
+[ext_resource type="PackedScene" uid="uid://dloqhavm42vma" path="res://scenes/models/CardPlatformScene.tscn" id="3_6f4ro"]
 
 [node name="PreBattleScene" type="Node2D"]
 script = ExtResource("1_85yy1")
+CardScene = ExtResource("2_irqvl")
+CardPlatformScene = ExtResource("3_6f4ro")
 
 [node name="PlayerBattleContainer" type="GridContainer" parent="."]
 offset_left = 666.0
@@ -17,7 +17,7 @@ offset_top = 15.0
 offset_right = 1366.0
 offset_bottom = 853.0
 
-[node name="P1VBox" type="VBoxContainer" parent="PlayerBattleContainer" groups=["cardMovePhysics"]]
+[node name="P2VBox" type="VBoxContainer" parent="PlayerBattleContainer" groups=["cardMovePhysics"]]
 custom_minimum_size = Vector2(700, 180)
 layout_mode = 2
 script = ExtResource("2_ans6b")
@@ -41,25 +41,19 @@ offset_top = 4.0
 offset_bottom = 4.0
 columns = 3
 
-[node name="StaticBody2D" type="StaticBody2D" parent="PlayerBattleContainer/MarginContainer"]
-position = Vector2(180, 325)
-script = ExtResource("4_5dq4r")
-
-[node name="CardCollision" type="CollisionShape2D" parent="PlayerBattleContainer/MarginContainer/StaticBody2D"]
-position = Vector2(-6.10352e-05, 0)
-scale = Vector2(0.4, 0.4)
-shape = SubResource("RectangleShape2D_spjcx")
-
-[node name="ColorRect" type="ColorRect" parent="PlayerBattleContainer/MarginContainer/StaticBody2D/CardCollision"]
-offset_left = -152.5
-offset_top = -185.0
-offset_right = 152.5
-offset_bottom = 185.0
-mouse_filter = 2
-color = Color(0.670588, 0.458824, 0.294118, 0.490196)
-metadata/_edit_use_anchors_ = true
-
-[node name="P2VBox" type="VBoxContainer" parent="PlayerBattleContainer" groups=["cardMovePhysics"]]
+[node name="P1VBox" type="VBoxContainer" parent="PlayerBattleContainer" groups=["cardMovePhysics"]]
 custom_minimum_size = Vector2(700, 150)
 layout_mode = 2
 script = ExtResource("2_ans6b")
+
+[node name="Button" type="Button" parent="."]
+offset_left = 1215.0
+offset_top = 797.0
+offset_right = 1453.0
+offset_bottom = 900.0
+text = "Zimmer's magiske knap"
+
+[node name="CenterPoint1" type="Node2D" parent="."]
+position = Vector2(883, 832)
+
+[connection signal="pressed" from="Button" to="." method="zimmer"]
