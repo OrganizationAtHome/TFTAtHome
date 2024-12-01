@@ -2,58 +2,40 @@
 
 [ext_resource type="Script" path="res://scenes/phases/PreBattleScene.cs" id="1_85yy1"]
 [ext_resource type="Texture2D" uid="uid://dloca4g7ymwgy" path="res://images/backgrounds/battlegroundnew.jpg" id="1_skx8a"]
-[ext_resource type="Script" path="res://scenes/phases/P2vBox.cs" id="2_ans6b"]
 [ext_resource type="PackedScene" uid="uid://228x0lttm3ug" path="res://scenes/models/cardScene.tscn" id="2_irqvl"]
 [ext_resource type="PackedScene" uid="uid://dloqhavm42vma" path="res://scenes/models/CardPlatformScene.tscn" id="3_6f4ro"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_quxlf"]
+size = Vector2(1766.06, 396.375)
 
 [node name="PreBattleScene" type="Node2D"]
 script = ExtResource("1_85yy1")
 CardScene = ExtResource("2_irqvl")
 CardPlatformScene = ExtResource("3_6f4ro")
 
-[node name="PlayerBattleContainer" type="GridContainer" parent="."]
-offset_left = 666.0
-offset_top = 15.0
-offset_right = 1366.0
-offset_bottom = 853.0
-
-[node name="P2VBox" type="VBoxContainer" parent="PlayerBattleContainer" groups=["cardMovePhysics"]]
-custom_minimum_size = Vector2(700, 180)
-layout_mode = 2
-script = ExtResource("2_ans6b")
-
-[node name="MarginContainer" type="MarginContainer" parent="PlayerBattleContainer"]
-layout_mode = 2
-theme_override_constants/margin_top = 60
-theme_override_constants/margin_bottom = 10
-
-[node name="TextureRect" type="TextureRect" parent="PlayerBattleContainer/MarginContainer"]
+[node name="TextureRect" type="TextureRect" parent="."]
 clip_contents = true
 custom_minimum_size = Vector2(700, 350)
-layout_mode = 2
+offset_left = 673.0
+offset_top = 253.0
+offset_right = 1561.0
+offset_bottom = 613.0
 size_flags_horizontal = 4
 texture = ExtResource("1_skx8a")
 expand_mode = 1
 
-[node name="BattleFieldContainer" type="GridContainer" parent="PlayerBattleContainer/MarginContainer/TextureRect"]
-layout_mode = 2
-offset_top = 4.0
-offset_bottom = 4.0
-columns = 3
-
-[node name="P1VBox" type="VBoxContainer" parent="PlayerBattleContainer" groups=["cardMovePhysics"]]
-custom_minimum_size = Vector2(700, 150)
-layout_mode = 2
-script = ExtResource("2_ans6b")
-
 [node name="Button" type="Button" parent="."]
-offset_left = 1215.0
-offset_top = 797.0
-offset_right = 1453.0
-offset_bottom = 900.0
+offset_left = 370.0
+offset_top = 844.0
+offset_right = 608.0
+offset_bottom = 947.0
 text = "Zimmer's magiske knap"
 
-[node name="CenterPoint1" type="Node2D" parent="."]
-position = Vector2(883, 832)
+[node name="CardHand1" type="StaticBody2D" parent="."]
+position = Vector2(1115, 722)
+
+[node name="CardSpace1" type="CollisionShape2D" parent="CardHand1"]
+scale = Vector2(0.5, 0.5)
+shape = SubResource("RectangleShape2D_quxlf")
 
 [connection signal="pressed" from="Button" to="." method="zimmer"]

@@ -13,7 +13,6 @@ scale = Vector2(0.998265, 1)
 
 [node name="CardBody" type="Area2D" parent="."]
 position = Vector2(-4.57764e-05, 7.62939e-06)
-scale = Vector2(1, 1)
 script = ExtResource("3_mt7nv")
 
 [node name="CardCollision" type="CollisionShape2D" parent="CardBody"]
