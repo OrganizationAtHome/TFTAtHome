@@ -2,7 +2,7 @@ using Godot;
 using System;
 using System.ComponentModel;
 
-public partial class CardBody : Area2D
+public partial class CardLogic : Area2D
 {
     public static bool isDragging = false;
     public static int printCount = 0;
@@ -19,25 +19,35 @@ public partial class CardBody : Area2D
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
-        Node2D parent = GetParent() as Node2D;
+        Node2D card = GetParent() as Node2D;
         if (isDraggable) {
             if (Input.IsActionJustPressed("click")) {
-                initialPos = parent.Position;
+                initialPos = card.Position;
                 isDragging = true;
             } if (Input.IsActionPressed("click")) {
                 Vector2 mousePos = GetGlobalMousePosition();
-                parent.GlobalPosition = mousePos;
+                card.GlobalPosition = mousePos;
             } else if (Input.IsActionJustReleased("click")) {
                 isDragging = false;
                 Tween tween = GetTree().CreateTween();
                 if (isInsideDroppable) {
-                    tween.TweenProperty(parent, "position", bodyRef.Position, 0.2).SetEase(Tween.EaseType.Out);
+                    tween.TweenProperty(card, "position", bodyRef.Position, 0.2).SetEase(Tween.EaseType.Out);
                 } else {
-                    tween.TweenProperty(parent, "position", initialPos, 0.2).SetEase(Tween.EaseType.Out);
+                    Node2D parent = card.GetParent() as Node2D;
+                    if (IsParentCardPlatform())
+                    {
+                        tween.TweenProperty(card, "position", parent.Position, 0.2).SetEase(Tween.EaseType.Out);
+                    } else
+                    {
+                        tween.TweenProperty(card, "position", initialPos, 0.2).SetEase(Tween.EaseType.Out);
+                        GD.PushWarning("CardPlatform not found: " + card.GetParent().Name);
+                        
+                    }
                 }
             }
         }
     }
+
 	public void OnArea2DMouseEntered()
     {
         if (!isDragging)
@@ -45,7 +55,7 @@ public partial class CardBody : Area2D
             Node2D parent = GetParent() as Node2D;
             isDraggable = true;
             Vector2 parentScale = parent.Scale;
-            Vector2 vector2 = new Vector2(parentScale.X + 0.05f, parentScale.Y + 0.05f);
+            Vector2 vector2 = new Vector2(1.05f, 1.05f);
             parent.Scale = vector2;
         }
 
@@ -57,8 +67,7 @@ public partial class CardBody : Area2D
         {
             Node2D parent = GetParent() as Node2D;
             isDraggable = false;
-            Vector2 parentScale = parent.Scale;
-            Vector2 vector2 = new Vector2(parentScale.X - 0.05f, parentScale.Y - 0.05f);
+            Vector2 vector2 = new Vector2(1f, 1f);
             parent.Scale = vector2;
         }
     }
@@ -88,5 +97,10 @@ public partial class CardBody : Area2D
         GD.Print("isDragging: ", isDragging);
         GD.Print("isDraggable: ", isDraggable);
         GD.Print("isInsideDroppable: ", isInsideDroppable);
+    }
+
+    private bool IsParentCardPlatform()
+    {
+        return GetParent().GetParent().Name == "CardPlatform";
     }
 }

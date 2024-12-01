@@ -2,3 +2,7 @@
 tftathome/.vs
 
 tftathome/Properties/launchSettings.json
+TFTAtHomeTests/obj/Debug/net8.0/TFTAtHomeTests.GeneratedMSBuildEditorConfig.editorconfig
+TFTAtHomeTests/obj/Debug/net8.0/TFTAtHomeTests.csproj.AssemblyReference.cache
+TFTAtHomeTests/obj/Debug/net8.0/TFTAtHomeTests.assets.cache
+TFTAtHomeTests/bin/Debug/net8.0/CoverletSourceRootsMapping_TFTAtHomeTests
