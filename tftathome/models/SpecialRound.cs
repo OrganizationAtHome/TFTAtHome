@@ -20,6 +20,7 @@ namespace TFTAtHome.models
 
         public bool UseEffect(string effect, Player player)
         {
+            /*
             if (player == match.Player1)
             {
                 if (match.Player1Effects.ContainsKey(effect))
@@ -41,14 +42,14 @@ namespace TFTAtHome.models
                 {
                     return false;
                 }
-            }
+            } */
             return true;
         }
 
         public List<string> GetUseableEffectsForPlayerThisRound(Player player)
         {
             List<string> effects = new List<string>();
-
+            /*
             if (player == match.Player1)
             {
                 if (Phase == EFFECTSPREGAMEP1)
@@ -87,7 +88,7 @@ namespace TFTAtHome.models
                         effects.Add(EarlyPeaker);
                     }
                 }
-            }
+            } */
             return effects;
         }
 
