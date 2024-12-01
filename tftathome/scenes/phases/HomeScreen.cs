@@ -15,6 +15,7 @@ public partial class HomeScreen : Node2D
 	{
         this._GameManager = new GameManager(this, 1);
         LocalStorage.SetGameManager(this._GameManager);
+        testGame();
     }
 
     [Rpc(MultiplayerApi.RpcMode.AnyPeer)]
@@ -56,5 +57,12 @@ public partial class HomeScreen : Node2D
         {
             GD.Print("YEEET");
         }
+    }
+
+    public void testGame()
+    {
+       
+
+        
     }
 }

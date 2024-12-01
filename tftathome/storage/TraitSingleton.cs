@@ -15,7 +15,10 @@ namespace TFTAtHome.storage
         public const string Drawing = "Drawing";
         public const string Queen = "Queen";
         public const string MovieHero = "Movie-Hero";
+        public const string Musician = "Musician";
         public const string TVCelebrity = "TV-Celebrity";
+        public const string EarlyPeaker = "Early-Peaker";
+        public const string Le = "Le";
 
         public TraitSingleton() 
         { 

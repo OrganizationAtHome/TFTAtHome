@@ -19,33 +19,33 @@ namespace TFTAtHome.storage
         {
             Card card1 = new Card(1, "LIGHT YAGAMI", "THE FIRST KIRA", "images/cardimages/light-yagami.jpeg", 6, 12, 1, Genius, 3, true);
 
-            Card card2 = new Card(2, "ADOLF HITLER", "THE FÜHRER", "images/cardimages/adolf-hitler.jpg", 9, 9, 1, Politician, 4, true);
+            Card card2 = new Card(2, "ADOLF HITLER", "THE FÜHRER", "images/cardimages/adolf-hitler.jpg", 9, 9, 1, Politician, 4, false);
 
-            Card card3 = new Card(3, "CHUCK NORRIS", "THE TEXAS RANGER", "images/cardimages/chuck-norris.jpg", 7, 8, 3, TVCelebrity, 3, true);
+            Card card3 = new Card(3, "CHUCK NORRIS", "THE TEXAS RANGER", "images/cardimages/chuck-norris.jpg", 7, 8, 3, TVCelebrity, 3, false);
 
-            Card card4 = new Card(4, "DEADPOOL", "THE SUPERHERO REJECT", "images/cardimages/deadpool.jpg", 5, 1, 11, MovieHero, 1, false);
+            Card card4 = new Card(4, "DEADPOOL", "THE SUPERHERO REJECT", "images/cardimages/deadpool.jpg", 5, 1, 11, MovieHero, 1, true);
 
-            Card card5 = new Card(5, "DONALD TRUMP", "THE 45TH PRESIDENT", "images/cardimages/donald-trump.jpg", 6, 8, 4, Politician, 3, true);
+            Card card5 = new Card(5, "DONALD TRUMP", "THE 45TH PRESIDENT", "images/cardimages/donald-trump.jpg", 6, 8, 4, Politician, 3, false);
 
-            Card card6 = new Card(6, "EGON OLSEN", "THE MASTER PLANNER", "images/cardimages/egon-olsen.jpg", 1, 17, 1, Genius, 5, false);
+            Card card6 = new Card(6, "EGON OLSEN", "THE MASTER PLANNER", "images/cardimages/egon-olsen.jpg", 1, 17, 1, Genius, 5, true);
 
-            Card card7 = new Card(7, "ELIZABETH II", "THE QUEEN OF ENGLAND", "images/cardimages/elizabeth-2.jpg", 3, 7, 7, Queen, 3, true);
+            Card card7 = new Card(7, "ELIZABETH II", "THE QUEEN OF ENGLAND", "images/cardimages/elizabeth-2.jpg", 3, 7, 7, Queen, 3, false);
 
-            Card card8 = new Card(8, "ELON MUSK", "THE CEO", "images/cardimages/elon-musk.jpg", 5, 7, 6, Leader, 3, true);
+            Card card8 = new Card(8, "ELON MUSK", "THE CEO", "images/cardimages/elon-musk.jpg", 5, 7, 6, Leader, 3, false);
 
-            Card card9 = new Card(9, "ERIC CARTMAN", "THE FAT KID", "images/cardimages/eric-cartman.jpg", 5, 8, 5, Drawing, 1, false);
+            Card card9 = new Card(9, "ERIC CARTMAN", "THE FAT KID", "images/cardimages/eric-cartman.jpg", 5, 8, 5, Drawing, 1, true);
 
-            Card card10 = new Card(10, "FIE LAURSEN", "THE BULLIED BLOGGER", "images/cardimages/fie-laursen.jpg", 10, 6, 3, TVCelebrity, 1, true);
+            Card card10 = new Card(10, "FIE LAURSEN", "THE BULLIED BLOGGER", "images/cardimages/fie-laursen.jpg", 10, 6, 3, TVCelebrity, 1, false);
 
-            Card card11 = new Card(11, "GORDON RAMSAY", "THE INTERNATIONAL CHEF", "images/cardimages/gordon-ramsay.jpg", 4, 8, 6, TVCelebrity, 2, true);
+            Card card11 = new Card(11, "GORDON RAMSAY", "THE INTERNATIONAL CHEF", "images/cardimages/gordon-ramsay.jpg", 4, 8, 6, TVCelebrity, 2, false);
 
-            Card card12 = new Card(12, "HARRY POTTER", "THE BOY WHO LIVED", "images/cardimages/harry-potter.jpg", 5, 5, 7, MovieHero, 4, false);
+            Card card12 = new Card(12, "HARRY POTTER", "THE BOY WHO LIVED", "images/cardimages/harry-potter.jpg", 5, 5, 7, MovieHero, 4, true);
 
-            Card card13 = new Card(13, "JESUS CHRIST", "THE SON OF GOD", "images/cardimages/jesus-christ.jpg", 12, 1, 6, Leader, 4, true);
+            Card card13 = new Card(13, "JESUS CHRIST", "THE SON OF GOD", "images/cardimages/jesus-christ.jpg", 12, 1, 6, Leader, 4, false);
 
-            Card card14 = new Card(14, "JOE EXOTIC", "THE TIGER KING", "images/cardimages/joe-exotic.jpg", 14, 1, 4, TVCelebrity, 2, true);
+            Card card14 = new Card(14, "JOE EXOTIC", "THE TIGER KING", "images/cardimages/joe-exotic.jpg", 14, 1, 4, TVCelebrity, 2, false);
 
-            Card card15 = new Card(15, "L", "THE DETECTIVE", "images/cardimages/l.png", 12, 6, 1, Genius, 2, false);
+            Card card15 = new Card(15, "L", "THE DETECTIVE", "images/cardimages/l.png", 12, 6, 1, Genius, 2, true);
 
             Cards.Add(card1);
             Cards.Add(card2);

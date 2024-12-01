@@ -26,7 +26,7 @@ namespace TFTAtHome.models
 
         public void AddCard(Card card)
         {
-            _playerHand.Add(card);
+            this._playerHand.Add(card);
         }
 
         public List<Card> GetPlayerHand() { return _playerHand; }

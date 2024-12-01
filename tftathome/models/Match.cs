@@ -3,13 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TFTAtHome.models.Effect;
+using TFTAtHome.storage;
 using TFTAtHome.util.ExtensionMethods;
 using static TFTAtHome.storage.TraitSingleton;
- 
+
 namespace TFTAtHome.models
 {
     public class Match
     {
+
+        // TODO --> Implement logic for MovieHero -> Card needs to get +3 on all stages after a match
         public Player Player1 { get; set; }
         public Player Player2 { get; set; }
 
@@ -17,8 +21,8 @@ namespace TFTAtHome.models
         public List<Card> Player2Hand { get; set; }
         public List<Card> CurrentCardsOnBoardP1 { get; set; }
         public List<Card> CurrentCardsOnBoardP2 { get; set; }
-        // public List<Effect> Player1Effects { get; set; }
-        // public List<Effect> Player2Effects { get; set; }
+        public PlayerCardEffects Player1Effects { get; set; }
+        public PlayerCardEffects Player2Effects { get; set; }
         public int RoundNumber { get; set; }
         // public List<Round> Rounds  { get; set; }
 
@@ -35,7 +39,7 @@ namespace TFTAtHome.models
 
         public void AddCardToBoard(Card card, Player player)
         {
-            if (player == Player1)
+            if (player.Id == Player1.Id)
             {
                 Player1Hand.Remove(card);
                 CurrentCardsOnBoardP1.Add(card);
@@ -72,10 +76,27 @@ namespace TFTAtHome.models
                SetCardStats(CurrentCardsOnBoardP2, false);
             }
         }
+
+        //  FIX ME GENERALKOCH
+        public void SetupPlayerEffects(Player player)
+        {
+            if (player == Player1)
+            {
+                // var allEffects = GetEffectCountForCardOnBoardList(CurrentCardsOnBoardP1);
+
+            }
+            else
+            {
+                // Player2Effects = GetEffectCountForCardOnBoardList(CurrentCardsOnBoardP2);
+            }
+        }
+
         private void SetCardStats(List<Card> currentPlayerCardsOnBoard, bool p1)
         {
 
-            bool leaderBonus = CheckLeaderBonus(currentPlayerCardsOnBoard, p1);
+            bool leaderBonus = currentPlayerCardsOnBoard.GetAllCardsWithTraitOnList(Leader).Count != 0 ? 
+                CheckLeaderBonus(currentPlayerCardsOnBoard, p1): false;
+
             Dictionary<string, int> cardBonuses = new Dictionary<string, int>();
             List<Card> opponentPlayerActiveBoard = p1 ? CurrentCardsOnBoardP2 : CurrentCardsOnBoardP1;
 
@@ -95,6 +116,11 @@ namespace TFTAtHome.models
                 if (leaderBonus)
                 {
                     cardBonuses["Politician"]++;
+                }
+                List<Card> politicianCards = currentPlayerCardsOnBoard.GetAllCardsWithTraitOnList(Politician);
+                foreach (Card card in politicianCards)
+                {
+                    card.SetPoliticianBonusOnCard(cardBonuses["Politician"]);
                 }
             }
             if (currentPlayerCardsOnBoard.CheckTraitIsOnList(TVCelebrity))
@@ -124,12 +150,50 @@ namespace TFTAtHome.models
                     card.SetDrawingBonusOnCard(fictionalAndDrawingCount);
                 }
             }
-
-
         }
+
+        public bool ShouldUseQueenEffectWithIndex(Card cardToUseEffectOn)
+        {
+            return cardToUseEffectOn.GetSecondBestPhaseOnCard()[1].Length != 0;
+        }
+
+        public void UseQueenEffectWithoutIndex(Player player, Card cardToUseEffectOn)
+        {
+            var bestPhaseProperty = cardToUseEffectOn.GetType().GetProperty(cardToUseEffectOn.GetBestPhaseOnCard());
+
+            if (bestPhaseProperty == null || bestPhaseProperty.PropertyType != typeof(int)) return;
+            int bestPhaseValueOnCard = (int)bestPhaseProperty.GetValue(cardToUseEffectOn);
+            string secondBestPhase = cardToUseEffectOn.GetSecondBestPhaseOnCard()[0];
+
+            cardToUseEffectOn.GetType().GetProperty(secondBestPhase).SetValue(cardToUseEffectOn, bestPhaseValueOnCard);
+        }
+
+        public void UseQueenEffectWithIndex(Player player, Card cardToUseEffectOn, int indexOfSecondBestPhase)
+        {
+            var bestPhaseProperty = cardToUseEffectOn.GetType().GetProperty(cardToUseEffectOn.GetBestPhaseOnCard());
+            if (bestPhaseProperty == null || bestPhaseProperty.PropertyType != typeof(int)) return;
+            int bestPhaseValueOnCard = (int)bestPhaseProperty.GetValue(cardToUseEffectOn);
+
+            string secondBestPhase = "";
+            switch (indexOfSecondBestPhase)
+            {
+                case 0: secondBestPhase = "Early";
+                break;
+                case 1: secondBestPhase = "Mid";
+                break;
+                case 2: secondBestPhase = "Late";
+                break;
+                default: return;
+            }
+
+            cardToUseEffectOn.GetType().GetProperty(secondBestPhase).SetValue(cardToUseEffectOn, bestPhaseValueOnCard);
+        }
+
+
+        // HELPER METHODS
         private int CheckPoliticianCount(bool p1)
         {
-            return p1 ? Player1.GetPlayerHand().Count: Player2.GetPlayerHand().Count;
+            return p1 ? Player1Hand.Count: Player2Hand.Count;
         }
 
         private bool CheckLeaderBonus(List<Card> currentBoardPlayer, bool p1)
@@ -143,5 +207,75 @@ namespace TFTAtHome.models
             } 
         }
 
+        private Dictionary<string, int> GetEffectPersistentEffectsFromCardList(List<Card> currentCardsOnBoard)
+        {
+
+            var playerEffects = new Dictionary<string, int>();
+            if (currentCardsOnBoard.CheckTraitIsOnList(Queen))
+            {
+                int count = currentCardsOnBoard.GetAllCardsWithTraitOnList(Queen).Count;
+                playerEffects.Add("Queen", count);
+            }
+            if (currentCardsOnBoard.CheckTraitIsOnList(EarlyPeaker))
+            {
+                int count = currentCardsOnBoard.GetAllCardsWithTraitOnList(EarlyPeaker).Count;
+                playerEffects.Add("Early-peaker", count);
+            }
+            if (currentCardsOnBoard.CheckTraitIsOnList(MovieHero))
+            {
+                int count = currentCardsOnBoard.GetAllCardsWithTraitOnList(MovieHero).Count;
+                playerEffects.Add("Movie-Hero", count);
+            }
+            if (currentCardsOnBoard.CheckTraitIsOnList(Genius))
+            {
+                int count = currentCardsOnBoard.GetAllCardsWithTraitOnList(Genius).Count;
+                playerEffects.Add("Genius", count);
+            }
+            if (currentCardsOnBoard.CheckTraitIsOnList(Le)) {
+                playerEffects.Add("Le", 1);
+            }
+
+            return playerEffects;
+        }
+    }
+
+
+    public class PlayerCardEffects
+    {
+        public Dictionary<MatchEffect, int> MatchEffects { get; } = new Dictionary<MatchEffect, int>();
+        public Player Player { get; set; }
+        
+        public PlayerCardEffects(Player player) 
+        {
+        Player = player;
+        }
+
+        private void SetupMatchEffects(List<Card> currentCardsOnBoard)
+        {
+            if (currentCardsOnBoard.CheckTraitIsOnList(Queen))
+            {
+                int count = currentCardsOnBoard.GetAllCardsWithTraitOnList(Queen).Count;
+                MatchEffects.Add(new MatchEffect(Queen, true), count);
+            }
+            if (currentCardsOnBoard.CheckTraitIsOnList(EarlyPeaker))
+            {
+                int count = currentCardsOnBoard.GetAllCardsWithTraitOnList(EarlyPeaker).Count;
+                MatchEffects.Add(new MatchEffect(EarlyPeaker, false), count);
+            }
+            if (currentCardsOnBoard.CheckTraitIsOnList(Genius))
+            {
+                int count = currentCardsOnBoard.GetAllCardsWithTraitOnList(Genius).Count;
+                MatchEffects.Add(new MatchEffect(EarlyPeaker, true), count);
+            }
+            if (currentCardsOnBoard.CheckTraitIsOnList(Musician))
+            {
+                int count = currentCardsOnBoard.GetAllCardsWithTraitOnList(Musician).Count;
+                MatchEffects.Add(new MatchEffect(Musician, true), count);
+            }
+            if (currentCardsOnBoard.CheckTraitIsOnList(Le))
+            {
+                MatchEffects.Add(new MatchEffect(Le, true), 1);
+            }
+        }
     }
 }

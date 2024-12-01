@@ -5,7 +5,7 @@ VisualStudioVersion = 17.11.35219.272
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TFTAtHome", "TFTAtHome.csproj", "{DEB18911-A99B-40B8-A2AE-A19AFE7A9278}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TFTAtHomeTests", "..\TFTAtHomeTests\TFTAtHomeTests.csproj", "{F6ECF571-8411-4C3A-9E1B-1201FCF8D358}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TFTAtHomeTests", "..\TFTAtHomeTests\TFTAtHomeTests.csproj", "{F6ECF571-8411-4C3A-9E1B-1201FCF8D358}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
