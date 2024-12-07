@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\danie\\Documents\\GitHub\\TFTAtHome\\TFTAtHomeTests\\TFTAtHomeTests.csproj": {}
+    "C:\\USERS\\ZIMMER\\DOCUMENTS\\GITHUB\\TFTATHOME\\TFTAtHomeTests\\TFTAtHomeTests.csproj": {}
   },
   "projects": {
-    "C:\\Users\\danie\\Documents\\GitHub\\TFTAtHome\\TFTAtHomeTests\\TFTAtHomeTests.csproj": {
+    "C:\\USERS\\ZIMMER\\DOCUMENTS\\GITHUB\\TFTATHOME\\TFTAtHomeTests\\TFTAtHomeTests.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\danie\\Documents\\GitHub\\TFTAtHome\\TFTAtHomeTests\\TFTAtHomeTests.csproj",
+        "projectUniqueName": "C:\\USERS\\ZIMMER\\DOCUMENTS\\GITHUB\\TFTATHOME\\TFTAtHomeTests\\TFTAtHomeTests.csproj",
         "projectName": "TFTAtHomeTests",
-        "projectPath": "C:\\Users\\danie\\Documents\\GitHub\\TFTAtHome\\TFTAtHomeTests\\TFTAtHomeTests.csproj",
-        "packagesPath": "C:\\Users\\danie\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\danie\\Documents\\GitHub\\TFTAtHome\\TFTAtHomeTests\\obj\\",
+        "projectPath": "C:\\USERS\\ZIMMER\\DOCUMENTS\\GITHUB\\TFTATHOME\\TFTAtHomeTests\\TFTAtHomeTests.csproj",
+        "packagesPath": "C:\\Users\\Zimmer\\.nuget\\packages\\",
+        "outputPath": "C:\\USERS\\ZIMMER\\DOCUMENTS\\GITHUB\\TFTATHOME\\TFTAtHomeTests\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\danie\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Zimmer\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -29,8 +29,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\danie\\Documents\\GitHub\\TFTAtHome\\TFTATHOME\\TFTAtHome.csproj": {
-                "projectPath": "C:\\Users\\danie\\Documents\\GitHub\\TFTAtHome\\TFTATHOME\\TFTAtHome.csproj"
+              "C:\\USERS\\ZIMMER\\DOCUMENTS\\GITHUB\\TFTATHOME\\TFTATHOME\\TFTAtHome.csproj": {
+                "projectPath": "C:\\USERS\\ZIMMER\\DOCUMENTS\\GITHUB\\TFTATHOME\\TFTATHOME\\TFTAtHome.csproj"
               }
             }
           }
@@ -87,17 +87,17 @@
         }
       }
     },
-    "C:\\Users\\danie\\Documents\\GitHub\\TFTAtHome\\tftathome\\TFTAtHome.csproj": {
+    "C:\\USERS\\ZIMMER\\DOCUMENTS\\GITHUB\\TFTATHOME\\TFTATHOME\\TFTAtHome.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\danie\\Documents\\GitHub\\TFTAtHome\\tftathome\\TFTAtHome.csproj",
+        "projectUniqueName": "C:\\USERS\\ZIMMER\\DOCUMENTS\\GITHUB\\TFTATHOME\\TFTATHOME\\TFTAtHome.csproj",
         "projectName": "TFTAtHome",
-        "projectPath": "C:\\Users\\danie\\Documents\\GitHub\\TFTAtHome\\tftathome\\TFTAtHome.csproj",
-        "packagesPath": "C:\\Users\\danie\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\danie\\Documents\\GitHub\\TFTAtHome\\tftathome\\.godot\\mono\\temp\\obj\\",
+        "projectPath": "C:\\USERS\\ZIMMER\\DOCUMENTS\\GITHUB\\TFTATHOME\\TFTATHOME\\TFTAtHome.csproj",
+        "packagesPath": "C:\\Users\\Zimmer\\.nuget\\packages\\",
+        "outputPath": "C:\\USERS\\ZIMMER\\DOCUMENTS\\GITHUB\\TFTATHOME\\TFTATHOME\\.godot\\mono\\temp\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\danie\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Zimmer\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -153,6 +153,20 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[6.0.33, 6.0.33]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[6.0.33, 6.0.33]"
+            },
+            {
+              "name": "Microsoft.WindowsDesktop.App.Ref",
+              "version": "[6.0.33, 6.0.33]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"

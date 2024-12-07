@@ -40,7 +40,7 @@ public partial class PreBattleScene : Node2D
         var cardBody = card.GetNode("CardBody").GetNode("CardCollision") as CollisionShape2D;
 
         var platforms = center.GetChildren();
-        var amplitudeWeight = 6;
+        var amplitudeWeight = 2;
 
 
         if (platforms.Count == 0)
@@ -63,11 +63,11 @@ public partial class PreBattleScene : Node2D
                 var verticalPlacement = 0f;
                 if (i < platforms.Count /2)
                 {
-                    verticalPlacement = halfCount * -1 * verticalAmplitude - verticalAmplitude * i;
-                } else if (i >= platforms.Count / 2)
+                    verticalPlacement = (halfCount - i) * -1 * verticalAmplitude + verticalAmplitude;
+                } else if (i > platforms.Count / 2)
                 {
-                    verticalPlacement = halfCount * -1 * verticalAmplitude + verticalAmplitude * i;
-                }
+                    verticalPlacement = -1 * verticalAmplitude * i + verticalAmplitude;
+                } 
 
                 platform.Position = new Vector2((float) horizontalPlacement, verticalPlacement);
                 var totalAngle = amplitudeWeight/2*platforms.Count;
@@ -75,8 +75,6 @@ public partial class PreBattleScene : Node2D
                 platform.RotationDegrees = angle;
             }
         }
-
-
     }
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
