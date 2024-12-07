@@ -32,7 +32,7 @@ public partial class PreBattleScene : Node2D
         CollisionShape2D center = this.GetNode("CardHand1/CardSpace1") as CollisionShape2D;
 
         var cardPlatform = CardPlatformScene.Instantiate() as Node2D;
-        var  card = CardScene.Instantiate() as Node2D;
+        var card = CardScene.Instantiate() as Node2D;
         cardPlatform.AddChild(card);
         center.AddChild(cardPlatform);
         GD.Print(cardPlatform.Name);
@@ -40,7 +40,7 @@ public partial class PreBattleScene : Node2D
         var cardBody = card.GetNode("CardBody").GetNode("CardCollision") as CollisionShape2D;
 
         var platforms = center.GetChildren();
-        var amplitudeWeight = 2;
+        var amplitudeWeight = 4;
 
 
         if (platforms.Count == 0)
@@ -50,29 +50,33 @@ public partial class PreBattleScene : Node2D
         } else
         {
             // Place many cards
-            for (int i = 0; i < platforms.Count; i++)
+            for (int cardIndex = 0; cardIndex < platforms.Count; cardIndex++)
             {
-                var platform = platforms[i] as Node2D;
+                var cardCount = platforms.Count;
+                var platform = platforms[cardIndex] as Node2D;
                 var cardWidth = cardBody.Shape.GetRect().Size.X / 2 * platform.Scale.X;
-                var halfCount = platforms.Count / 2;
+                // Dynamically increases the hand width based on the number of cards to eleminate big gaps between the cards
                 var handWidth = center.Shape.GetRect().Size.X * (1 - 1 / Math.Pow(1.15, platforms.Count));
-                var newSpacing = handWidth / platforms.Count;
-                var interpolatedWeight = (i + 1f) / platforms.Count;
+                // Interpolates the relative placement of the card between 0 and 1
+                var interpolatedWeight = (cardIndex + 1f) / platforms.Count;
+                float alignResult = 0.5f;
+                if (cardCount >= 2) alignResult = cardIndex / (cardCount - 1f);
+                GD.Print("Align1: " + alignResult);
+                // Calculates the horizontal with cardWidth as spacing and handWidth as the total width of the area the cards are placed in. 
                 var horizontalPlacement = cardWidth / 2 + handWidth / 2 - handWidth * interpolatedWeight;
-                var verticalAmplitude = amplitudeWeight*2 * cardBody.Scale.Y;
-                var verticalPlacement = 0f;
-                if (i < platforms.Count /2)
-                {
-                    verticalPlacement = (halfCount - i) * -1 * verticalAmplitude + verticalAmplitude;
-                } else if (i > platforms.Count / 2)
-                {
-                    verticalPlacement = -1 * verticalAmplitude * i + verticalAmplitude;
-                } 
+                var verticalAmplitude = amplitudeWeight * cardBody.Scale.Y;
 
-                platform.Position = new Vector2((float) horizontalPlacement, verticalPlacement);
+                if (alignResult > 0.5) alignResult = 1 - alignResult;
+                GD.Print("Align2; " + alignResult);
+                alignResult *= 2;
+                GD.Print("Align3: " + alignResult);
+                var verticalPlacement = Mathf.Lerp(-verticalAmplitude*cardCount, verticalAmplitude*cardCount, alignResult);
+
+                platform.Position = new Vector2((float) horizontalPlacement, verticalPlacement*-1);
+
                 var totalAngle = amplitudeWeight/2*platforms.Count;
-                var angle = totalAngle / 2 - 3 * i;
-                platform.RotationDegrees = angle;
+                var angle = totalAngle / 2 - 3 * cardIndex;
+                platform.RotationDegrees = angle;  
             }
         }
     }
