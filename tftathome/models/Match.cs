@@ -24,7 +24,7 @@ namespace TFTAtHome.models
         public PlayerCardEffects Player1Effects { get; set; }
         public PlayerCardEffects Player2Effects { get; set; }
         public int RoundNumber { get; set; }
-        // public List<Round> Rounds  { get; set; }
+        public List<Round> Rounds  { get; set; }
 
         public Match(Player player1, Player player2)
         {
@@ -34,6 +34,7 @@ namespace TFTAtHome.models
             Player2Hand = player2.GetCopyOfPlayerHand();
             CurrentCardsOnBoardP1 = new List<Card>();
             CurrentCardsOnBoardP2 = new List<Card>();
+            Rounds = new List<Round>();
             RoundNumber = 1;
         }
 
@@ -65,6 +66,58 @@ namespace TFTAtHome.models
             }
         }
 
+        public void RunInitialRound()
+        {
+            Round initialRound = new SpecialRound(this, "Initial");
+            Rounds.Add(initialRound);
+            SetCardStatsForMatchForPlayer(Player1);
+            SetCardStatsForMatchForPlayer(Player2);
+            Player1Effects = new PlayerCardEffects(Player1);
+            Player2Effects = new PlayerCardEffects(Player2);
+            Player1Effects.SetupMatchEffects(CurrentCardsOnBoardP1);
+            Player1Effects.SetupMatchEffects(CurrentCardsOnBoardP2);
+
+            if (Player1Effects.MatchEffects.Count > 0)
+            {
+                // Kald metode der fortæller spilleren at de skal udføre en action
+            }
+        }
+
+
+        /*  THIS METHOD SHOULD TELL GODOT TO ASK THE PLAYER TO TAKE AN ACTION */
+        public void Player1RequestUseEffect(MatchEffect matchEffect, int count)
+        {
+            switch (matchEffect.TraitName)
+            {
+                case Queen:
+                    // Pick any card except itself
+                    break;
+                case Genius:
+                    // Pick any card except itself
+                    break;
+                case Musician:
+                    // Ask player to Pick only opponent card
+                    break;
+            }
+            Player1Effects.MatchEffects[matchEffect]--;
+        }
+        public void Player2RequestUseEffect(MatchEffect matchEffect, int count)
+        {
+            switch (matchEffect.TraitName)
+            {
+                case Queen:
+                    // Pick any card except itself
+                    break;
+                case Genius:
+                    // Pick any card except itself
+                    break;
+                case Musician:
+                    // Ask player to Pick only opponent card
+                    break;
+            }
+            Player2Effects.MatchEffects[matchEffect]--;
+        }
+
         public void SetCardStatsForMatchForPlayer(Player player)
         {
             if (player == Player1)
@@ -82,7 +135,7 @@ namespace TFTAtHome.models
         {
             if (player == Player1)
             {
-                // var allEffects = GetEffectCountForCardOnBoardList(CurrentCardsOnBoardP1);
+                
 
             }
             else
@@ -93,7 +146,6 @@ namespace TFTAtHome.models
 
         private void SetCardStats(List<Card> currentPlayerCardsOnBoard, bool p1)
         {
-
             bool leaderBonus = currentPlayerCardsOnBoard.GetAllCardsWithTraitOnList(Leader).Count != 0 ? 
                 CheckLeaderBonus(currentPlayerCardsOnBoard, p1): false;
 
@@ -250,7 +302,7 @@ namespace TFTAtHome.models
         Player = player;
         }
 
-        private void SetupMatchEffects(List<Card> currentCardsOnBoard)
+        public void SetupMatchEffects(List<Card> currentCardsOnBoard)
         {
             if (currentCardsOnBoard.CheckTraitIsOnList(Queen))
             {
@@ -274,7 +326,7 @@ namespace TFTAtHome.models
             }
             if (currentCardsOnBoard.CheckTraitIsOnList(Le))
             {
-                MatchEffects.Add(new MatchEffect(Le, true), 1);
+                MatchEffects.Add(new MatchEffect(Le, false), 1);
             }
         }
     }

@@ -49,6 +49,53 @@ namespace TFTAtHome.util
             return card;
         }
 
+        public static Node CreateGodotCard(Card cardInput, float scale)
+        {
+            string[] cardHeader = { "CardTitle", "CardName" };
+            string[] cardHeaderValues = { cardInput.CardTitle, cardInput.CardName };
+            string[] statsName = { "Early", "Mid", "Late", "Trait", "Cost" };
+            string[] statValues = cardInput.GetStatsValuesAsString();
+
+            // Create the card node
+            Node card = cardScene.Instantiate();
+
+            Node2D card2D = card as Node2D;
+            card2D.ApplyScale(new Vector2(scale, scale));
+
+            // Set card stats and headers
+            for (int i = 0; i < statsName.Length; i++)
+            {
+                Label node = (Label)GetNodeFromCard(card2D, statsName[i]);
+                node.Text = statValues[i];
+            }
+
+            for (int i = 0; i < cardHeader.Length; i++)
+            {
+                RichTextLabel node = (RichTextLabel)GetNodeFromCard(card2D, cardHeader[i]);
+                node.Text = "[center]" + cardHeaderValues[i] + "[/center]";
+            }
+
+            Texture2D newTexture = (Texture2D)GD.Load($"res://{cardInput.CardImgSrc}");
+            Texture2D scaledTexture = RenderUtil.ResizeTexture(newTexture, 300f, 300f);
+
+            Sprite2D sprite2D = (Sprite2D)GetNodeFromCard(card2D, "CardImg");
+
+            sprite2D.Texture = scaledTexture;
+            return card;
+        }
+
+        public static void UpdateCardStats(Node2D card, int early, int mid, int late)
+        {
+            string[] statValues = { early.ToString(), mid.ToString(), late.ToString() };
+            string[] statsName = { "Early", "Mid", "Late" };
+
+            for (int i = 0; i < statValues.Length; i++)
+            {
+                Label node = (Label)GetNodeFromCard(card, statsName[i]);
+                node.Text = statValues[i];
+            }
+        }
+
         /**
      * RETURNS A Node OR NULL
      */
@@ -78,14 +125,38 @@ namespace TFTAtHome.util
          */
         public static void CreateCustomCardAndAddToContainer(string cardName, Container parentContainer, float scale)
         {
-
-            // New container to insert card into
+            /*
             Godot.Container container = new();
             container.CustomMinimumSize = new Vector2(220, 250);
 
             Node customCard = CreateGodotCard(cardName, scale);
             container.AddChild(customCard);
 
+            parentContainer.AddChild(container); */
+        }
+
+        public static void CreateCardForGameBoardAndAddToContainer(Card card, Container parentContainer, float scale)
+        {
+            // Create a new container for the card
+            Control container = new Control();
+
+            // Create the card
+            Node customCard = CreateGodotCard(card, scale);
+            Node2D card2D = customCard as Node2D;
+
+            // Get the size of the card
+            Vector2 cardSize = GetCardSize(card2D);
+
+            // Set the container's minimum size to the card's size
+            container.CustomMinimumSize = cardSize;
+
+            // Adjust the card's position to align with the container's top-left corner
+            card2D.Position = new Vector2(cardSize.X / 2, cardSize.Y / 2);
+
+            // Add the card to the container
+            container.AddChild(customCard);
+
+            // Add the container to the parent container
             parentContainer.AddChild(container);
         }
 
@@ -97,6 +168,13 @@ namespace TFTAtHome.util
             Vector2 vector = colorRect.GetRect().Size;
             float width = vector.X;
             return width;
+        }
+
+        private static Vector2 GetCardSize(Node2D card2D)
+        {
+            // Get the ColorRect or background element to determine the card's size
+            ColorRect colorRect = card2D.GetNode("CardVisuals").GetNode("CardBackground") as ColorRect;
+            return colorRect.GetRect().Size * card2D.Scale;
         }
     }
 }
