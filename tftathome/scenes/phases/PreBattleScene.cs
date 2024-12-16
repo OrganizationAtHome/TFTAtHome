@@ -14,31 +14,37 @@ public partial class PreBattleScene : Node2D
     [Export]
     public PackedScene CardPlatformScene { get; set; }
     private int platformCount = 0;
+    ulong center1Id;
+    ulong center2Id;
+    public static ulong PreBattleSceneId;
 
 
     public override void _Ready()
 	{
+        PreBattleSceneId = this.GetInstanceId();
         Node root = GetTree().Root.GetChild(0);
         GD.Print(root);
+        center1Id = this.GetNode("CardHand1/CardSpace1").GetInstanceId();
 
         Player testPlayer = new Player(1, "Test");
     }
 
     public void zimmer()
     {
-        CollisionShape2D center = this.GetNode("CardHand1/CardSpace1") as CollisionShape2D;
 
+        CollisionShape2D center = InstanceFromId(center1Id) as CollisionShape2D;
         var cardPlatform = CardPlatformScene.Instantiate() as Node2D;
         var card = CardScene.Instantiate() as Node2D;
         cardPlatform.AddChild(card);
         cardPlatform.Name = "CardPlatform" + platformCount;
+        cardPlatform.AddToGroup("handPlatform");
 
         center.AddChild(cardPlatform);
 
-        ReshuffleHand(center);
+        ReshuffleHands();
     }
 
-    private void printRecursive(Node node)
+    public void printRecursive(Node node)
     {
         GD.Print(node.Name);
         foreach (Node child in node.GetChildren())
@@ -47,8 +53,10 @@ public partial class PreBattleScene : Node2D
         }
     }
 
-    public void ReshuffleHand(CollisionShape2D center)
+    public void ReshuffleHands()
     {
+
+        CollisionShape2D center = InstanceFromId(center1Id) as CollisionShape2D;
         var platforms = center.GetChildren();
 
         var amplitudeWeight = 4;

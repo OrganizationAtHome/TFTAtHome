@@ -32,11 +32,20 @@ public partial class CardLogic : Area2D
                 Tween tween = GetTree().CreateTween();
                 if (isInsideDroppable) {
                     var body = InstanceFromId(bodyRef) as Node2D;
-                    card.GetParent().RemoveChild(card);
+                    Node2D cardParent = card.GetParent() as Node2D;
+
+                    cardParent.RemoveChild(card);
                     body.AddChild(card);
                     card.Position = new Vector2(0, 0);
                     tween.TweenProperty(card, "position", new Vector2(0, 0), 0.2).SetEase(Tween.EaseType.Out);
-
+                    body.RemoveFromGroup("droppable");
+                    if (cardParent.GetGroups().Contains("handPlatform")) {
+                        cardParent.GetParent().RemoveChild(cardParent);
+                        (InstanceFromId(PreBattleScene.PreBattleSceneId) as PreBattleScene).ReshuffleHands();// reshuffle hands
+                    } else
+                    {
+                        cardParent.AddToGroup("droppable");
+                    }
                 } else {
                     Node2D parent = card.GetParent() as Node2D;
                     if (IsParentCardPlatform())
