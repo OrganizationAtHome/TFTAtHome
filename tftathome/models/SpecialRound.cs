@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TFTAtHome.models.Effect;
 using TFTAtHome.util.ExtensionMethods;
 using static TFTAtHome.storage.PhaseSingleton;
 using static TFTAtHome.storage.TraitSingleton;
@@ -16,6 +17,15 @@ namespace TFTAtHome.models
         public SpecialRound(Match match, string phase) : base(match)
         {
             Phase = phase;
+        }
+
+        public void RunPreEarlyRound()
+        {
+            bool playersDoneUsingEffects = false;
+            while (!playersDoneUsingEffects)
+            {
+
+            }
         }
 
         public bool UseEffect(string effect, Player player)
@@ -45,52 +55,48 @@ namespace TFTAtHome.models
             } */
             return true;
         }
-
+        /*
         public List<string> GetUseableEffectsForPlayerThisRound(Player player)
         {
-            List<string> effects = new List<string>();
-            /*
-            if (player == match.Player1)
+            if (match.RoundNumber == 0)
             {
-                if (Phase == EFFECTSPREGAMEP1)
+              List<String> useableEffects = new List<string> { "Queen", "Genius", "Musician" };
+
+            } else
+            {
+                return null;
+            }
+        } */
+
+        /*
+        public void ProcessMatchEffects()
+        {
+            var allEffects = new List<(PlayerCardEffects PlayerEffects, MatchEffect Effect, int Count)>();
+
+            foreach (var effect in Player1Effects.MatchEffects)
+            {
+                allEffects.Add((Player1Effects, effect.Key, effect.Value));
+            }
+
+            foreach (var effect in Player2Effects.MatchEffects)
+            {
+                allEffects.Add((Player2Effects, effect.Key, effect.Value));
+            }
+
+            var sortedEffects = allEffects.OrderBy(e => e.Effect.WeightedIndex).ToList();
+
+            foreach (var entry in sortedEffects)
+            {
+                if (entry.PlayerEffects == Player1Effects)
                 {
-                    foreach (var effect in match.Player1Effects)
-                    {
-                        if (effect.Value > 0 && effect.Key != EarlyPeaker)
-                        {
-                            effects.Add(effect.Key);
-                        }
-                    }
-                } else if (Phase == EFFECTSTRANSITIONP1)
+                    Player1RequestUseEffect(entry.Effect, entry.Count);
+                }
+                else if (entry.PlayerEffects == Player2Effects)
                 {
-                    for (int i = 0; i < match.Player1Effects[EarlyPeaker]; i++)
-                    {
-                        effects.Add(EarlyPeaker);
-                    }
+                    Player2RequestUseEffect(entry.Effect, entry.Count);
                 }
             }
-            else
-            {
-                if (Phase == EFFECTSPREGAMEP2)
-                {
-                    foreach (var effect in match.Player2Effects)
-                    {
-                        if (effect.Value > 0 && effect.Key != EarlyPeaker)
-                        {
-                            effects.Add(effect.Key);
-                        }
-                    }
-                }
-                else if (Phase == EFFECTSTRANSITIONP2)
-                {
-                    for (int i = 0; i < match.Player2Effects[EarlyPeaker]; i++)
-                    {
-                        effects.Add(EarlyPeaker);
-                    }
-                }
-            } */
-            return effects;
-        }
+        } */
 
 
     }

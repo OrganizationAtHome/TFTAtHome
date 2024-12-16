@@ -7,5 +7,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="scenes\models\" />
+    <Folder Include="scenes\testing\" />
   </ItemGroup>
 </Project>

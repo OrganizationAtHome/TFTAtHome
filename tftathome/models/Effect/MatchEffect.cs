@@ -35,6 +35,8 @@ namespace TFTAtHome.models.Effect
                 break;
                 case Musician:
                     return 3;
+                case EarlyPeaker:
+                    return 4;
                 default:
                     return -1;
             }

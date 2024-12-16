@@ -18,6 +18,7 @@ namespace TFTAtHome.models
         private readonly List<Player> _players = new List<Player>();
         private List<Card> _activeCardPool;
         private List<Card> _inactiveCards = new List<Card>();
+        private List<Match> matches = new List<Match>();
         public GameState GameState { get; set; }
 
         public GameManager(HomeScreen node, long id)
