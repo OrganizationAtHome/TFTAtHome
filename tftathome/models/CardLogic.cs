@@ -8,7 +8,7 @@ public partial class CardLogic : Area2D
     public static int printCount = 0;
     bool isDraggable = false;
 	bool isInsideDroppable = false;
-	Node2D bodyRef;
+    ulong bodyRef;
     Vector2 initialPos;
 
     // Called when the node enters the scene tree for the first time.
@@ -31,17 +31,21 @@ public partial class CardLogic : Area2D
                 isDragging = false;
                 Tween tween = GetTree().CreateTween();
                 if (isInsideDroppable) {
-                    tween.TweenProperty(card, "position", bodyRef.Position, 0.2).SetEase(Tween.EaseType.Out);
+                    var body = InstanceFromId(bodyRef) as Node2D;
+                    card.GetParent().RemoveChild(card);
+                    body.AddChild(card);
+                    card.Position = new Vector2(0, 0);
+                    tween.TweenProperty(card, "position", new Vector2(0, 0), 0.2).SetEase(Tween.EaseType.Out);
+
                 } else {
                     Node2D parent = card.GetParent() as Node2D;
                     if (IsParentCardPlatform())
                     {
-                        tween.TweenProperty(card, "position", parent.Position, 0.2).SetEase(Tween.EaseType.Out);
+                        tween.TweenProperty(card, "position", new Vector2(0, 0), 0.2).SetEase(Tween.EaseType.Out);
                     } else
                     {
                         tween.TweenProperty(card, "position", initialPos, 0.2).SetEase(Tween.EaseType.Out);
-                        GD.PushWarning("CardPlatform not found: " + card.GetParent().Name);
-                        
+                        GD.PushWarning("CardPlatform not found: " + card.GetParent().Name + " " + card.GetParent().GetType());
                     }
                 }
             }
@@ -75,17 +79,18 @@ public partial class CardLogic : Area2D
     {
         if (body.IsInGroup("droppable"))
         {
+            GD.Print("Body entered");
             isInsideDroppable = true;
-            bodyRef = body;
+            bodyRef = body.GetInstanceId();
         }
     }
 
     public void OnArea2DBodyExited(Node2D body)
     {
-        if (body.IsInGroup("droppable"))
+        if (body.IsInGroup("droppable") && body.GetInstanceId() == bodyRef)
         {
+            GD.Print("Body exited");
             isInsideDroppable = false;
-            bodyRef = null;
         }
 
     }
@@ -101,6 +106,6 @@ public partial class CardLogic : Area2D
 
     private bool IsParentCardPlatform()
     {
-        return GetParent().GetParent().Name == "CardPlatform";
+        return GetParent().GetParent().Name.ToString().Contains("CardPlatform");
     }
 }

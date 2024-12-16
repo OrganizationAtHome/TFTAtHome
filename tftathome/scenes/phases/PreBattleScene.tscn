@@ -38,4 +38,26 @@ position = Vector2(1115, 722)
 scale = Vector2(0.5, 0.5)
 shape = SubResource("RectangleShape2D_quxlf")
 
+[node name="CardHand2" type="StaticBody2D" parent="CardHand1"]
+position = Vector2(2, -577)
+rotation = 1.5708
+
+[node name="CardSpace2" type="CollisionShape2D" parent="CardHand1/CardHand2"]
+rotation = 1.5708
+scale = Vector2(0.5, 0.5)
+shape = SubResource("RectangleShape2D_quxlf")
+debug_color = Color(0.936741, 0.234543, 0.242137, 0.42)
+
+[node name="CardPlatform" parent="." groups=["droppable"] instance=ExtResource("3_6f4ro")]
+position = Vector2(826, 534)
+scale = Vector2(0.425, 0.425)
+
+[node name="CardPlatform2" parent="." groups=["droppable"] instance=ExtResource("3_6f4ro")]
+position = Vector2(1122, 534)
+scale = Vector2(0.425, 0.425)
+
+[node name="CardPlatform3" parent="." groups=["droppable"] instance=ExtResource("3_6f4ro")]
+position = Vector2(1453, 531)
+scale = Vector2(0.425, 0.425)
+
 [connection signal="pressed" from="Button" to="." method="zimmer"]
