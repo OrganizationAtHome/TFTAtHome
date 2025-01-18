@@ -32,17 +32,17 @@ offset_bottom = 947.0
 text = "Zimmer's magiske knap"
 
 [node name="CardHand1" type="StaticBody2D" parent="."]
-position = Vector2(1115, 722)
+position = Vector2(1118, 747)
 
 [node name="CardSpace1" type="CollisionShape2D" parent="CardHand1"]
 scale = Vector2(0.5, 0.5)
 shape = SubResource("RectangleShape2D_quxlf")
 
-[node name="CardHand2" type="StaticBody2D" parent="CardHand1"]
-position = Vector2(2, -577)
+[node name="CardHand2" type="StaticBody2D" parent="."]
+position = Vector2(1117, 145)
 rotation = 1.5708
 
-[node name="CardSpace2" type="CollisionShape2D" parent="CardHand1/CardHand2"]
+[node name="CardSpace2" type="CollisionShape2D" parent="CardHand2"]
 rotation = 1.5708
 scale = Vector2(0.5, 0.5)
 shape = SubResource("RectangleShape2D_quxlf")
@@ -61,3 +61,4 @@ position = Vector2(1453, 531)
 scale = Vector2(0.425, 0.425)
 
 [connection signal="pressed" from="Button" to="." method="zimmer"]
+[connection signal="mouse_entered" from="CardHand1" to="." method="IDKHOWTONAMETHINGS"]

@@ -63,6 +63,7 @@ public partial class CardLogic : Area2D
 
 	public void OnArea2DMouseEntered()
     {
+        
         if (!isDragging)
         {
             Node2D parent = GetParent() as Node2D;
