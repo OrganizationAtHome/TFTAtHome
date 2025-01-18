@@ -59,7 +59,7 @@ public partial class PreBattleScene : Node2D
         CollisionShape2D center = InstanceFromId(center1Id) as CollisionShape2D;
         var platforms = center.GetChildren();
 
-        var amplitudeWeight = 4;
+        var amplitudeWeight = 5;
 
 
         if (platforms.Count == 0)
@@ -80,7 +80,6 @@ public partial class PreBattleScene : Node2D
                 var handWidth = fuckingYeet(center.Shape.GetRect().Size.X, platforms.Count);
                 // Interpolates the relative placement of the card between 0 and 1
                 var interpolatedWeight = (cardIndex + 1f) / platforms.Count;
-
                 // Calculates the horizontal with cardWidth as spacing and handWidth as the total width of the area the cards are placed in. 
                 var horizontalPlacement = cardWidth / 2 + handWidth / 2 - handWidth * interpolatedWeight;
                 var verticalAmplitude = amplitudeWeight * cardBody.Scale.Y;
@@ -147,6 +146,11 @@ public partial class PreBattleScene : Node2D
     }
 
     public void IDKHOWTONAMETHINGS()
+    {
+
+    }
+
+    private void EVENBETTERNAMETHATIKNOWTHINGS()
     {
 
     }
