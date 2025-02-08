@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using TFTAtHome.models;
 using TFTAtHome.storage;
 using TFTAtHome.util;
@@ -31,7 +32,6 @@ public partial class PreBattleScene : Node2D
 
     public void zimmer()
     {
-
         CollisionShape2D center = InstanceFromId(center1Id) as CollisionShape2D;
         var cardPlatform = CardPlatformScene.Instantiate() as Node2D;
         var card = CardScene.Instantiate() as Node2D;
@@ -39,6 +39,8 @@ public partial class PreBattleScene : Node2D
         cardPlatform.Name = "CardPlatform" + platformCount;
         cardPlatform.AddToGroup("handPlatform");
 
+        CardLogic yeet = card as CardLogic;
+        
         center.AddChild(cardPlatform);
 
         ReshuffleHands();
@@ -108,9 +110,6 @@ public partial class PreBattleScene : Node2D
     {
         var platforms = center.GetChildren();
 
-        var amplitudeWeight = 4;
-
-
         if (platforms.Count == 0)
         {
             GD.Print("No platforms found");
@@ -147,6 +146,42 @@ public partial class PreBattleScene : Node2D
 
     public void IDKHOWTONAMETHINGS()
     {
+        GD.Print("STart");
+        CollisionShape2D center = InstanceFromId(center1Id) as CollisionShape2D;
+        var platforms = center.GetChildren().Cast<Node2D>().ToList();
+        
+        var moooooooose = center.GetGlobalMousePosition().X;
+        GD.Print("Moose: " + moooooooose);
+        Node2D found;
+        var lastindex = 0;
+        for (int i = 0; i < platforms.Count; i++)
+        {
+            var platformX = platforms[i].GlobalPosition.X;
+            GD.Print("Platform: " + platformX);
+            if (i == platforms.Count) {
+                found = platforms[i];
+                GD.Print("Found: " + i);
+            } else if (platformX.CompareTo(moooooooose) < 0) {
+                var lastPlat = platforms[lastindex].GlobalPosition.X;
+                var currentPlat = platforms[i].GlobalPosition.X;
+                var currentMooCompare = Math.Abs(currentPlat - moooooooose);
+                var lastMooCompare = Math.Abs(lastPlat - moooooooose);
+                if (currentMooCompare.CompareTo(lastMooCompare) < 0)
+                {
+                    found = platforms[i];
+                    GD.Print("Found: " + i);
+                    break;
+                }
+                else
+                {
+                    found = platforms[lastindex];
+                    GD.Print("Found: " + lastindex);
+                    break;
+                }
+            } else {
+                lastindex = i;
+            }
+        }
 
     }
 

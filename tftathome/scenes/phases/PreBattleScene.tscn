@@ -33,6 +33,7 @@ text = "Zimmer's magiske knap"
 
 [node name="CardHand1" type="StaticBody2D" parent="."]
 position = Vector2(1118, 747)
+input_pickable = true
 
 [node name="CardSpace1" type="CollisionShape2D" parent="CardHand1"]
 scale = Vector2(0.5, 0.5)

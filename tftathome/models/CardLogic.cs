@@ -72,7 +72,6 @@ public partial class CardLogic : Area2D
             Vector2 vector2 = new Vector2(1.05f, 1.05f);
             parent.Scale = vector2;
         }
-
     }
 
 	public void OnArea2DMouseExited() {
