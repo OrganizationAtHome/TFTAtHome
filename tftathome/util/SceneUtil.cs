@@ -5,15 +5,15 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TFTAtHome.models;
-using TFTAtHome.storage;
+using TFTAtHome.Backend.models;
+using TFTAtHome.Backend.storage;
 
 namespace TFTAtHome.util
 {
     public static class SceneUtil
     {
-        private static PackedScene _playerElementScene = GD.Load<PackedScene>("res://scenes/models/PlayerElementSceneV2.tscn");
-        private static PackedScene _playerHandScene = GD.Load<PackedScene>("res://scenes/models/PlayerHandScene.tscn");
+        private static PackedScene _playerElementScene = GD.Load<PackedScene>("res://Frontend/Player/PlayerElementSceneV2.tscn");
+        private static PackedScene _playerHandScene = GD.Load<PackedScene>("res://Frontend/Player/PlayerHandScene.tscn");
 
         public static void CreatePlayerElementContainer(Player player, Container parentContainer, bool playerhand, string name)
         {

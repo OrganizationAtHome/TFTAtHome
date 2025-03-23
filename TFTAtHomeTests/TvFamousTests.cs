@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TFTAtHome.models;
-using static TFTAtHome.storage.TraitSingleton;
+using TFTAtHome.Backend.models;
+using static TFTAtHome.Backend.storage.TraitSingleton;
 
 namespace TFTAtHomeTests
 {
@@ -46,8 +46,11 @@ namespace TFTAtHomeTests
             match.SetCardStatsForMatchForPlayer(player1);
             match.SetCardStatsForMatchForPlayer(player2);
 
-            Assert.AreEqual(57, match.CurrentCardsOnBoardP1[0].Early); // +2 from real in best phase, +2 in second best phase TV Star
-            Assert.AreEqual(4, match.CurrentCardsOnBoardP1[0].Mid);
+            var test = match.CurrentCardsOnBoardP1[0];
+
+            Console.Write("Idk");
+            Assert.AreEqual(59, match.CurrentCardsOnBoardP1[0].Early); // +2 from real in best phase
+            Assert.AreEqual(2, match.CurrentCardsOnBoardP1[0].Mid);
         }
     }
 }

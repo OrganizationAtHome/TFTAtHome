@@ -6,7 +6,13 @@
     <EnableDynamicLoading>true</EnableDynamicLoading>
   </PropertyGroup>
   <ItemGroup>
-    <Folder Include="scenes\models\" />
+    <Folder Include="Frontend\" />
     <Folder Include="scenes\testing\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="scenes\miscellaneous\Stat_Label.tscn" />
+    <None Include="scenes\phases\Hom36FF.tmp" />
+    <None Include="scenes\phases\HomEFC.tmp" />
+    <None Include="scenes\phases\HomF76C.tmp" />
   </ItemGroup>
 </Project>
