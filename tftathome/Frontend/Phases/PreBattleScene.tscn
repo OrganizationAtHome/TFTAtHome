@@ -61,5 +61,21 @@ scale = Vector2(0.425, 0.425)
 position = Vector2(1453, 531)
 scale = Vector2(0.425, 0.425)
 
+[node name="FoundCounter" type="Label" parent="."]
+offset_left = 147.0
+offset_top = 187.0
+offset_right = 299.0
+offset_bottom = 284.0
+theme_override_font_sizes/font_size = 71
+text = "Yeet"
+
+[node name="Moose" type="Label" parent="."]
+offset_left = 160.0
+offset_top = 315.0
+offset_right = 312.0
+offset_bottom = 412.0
+theme_override_font_sizes/font_size = 71
+text = "Yeet"
+
 [connection signal="pressed" from="Button" to="." method="zimmer"]
-[connection signal="mouse_entered" from="CardHand1" to="." method="IDKHOWTONAMETHINGS"]
+[connection signal="mouse_entered" from="CardHand1" to="." method="CardTargettingSystem"]
