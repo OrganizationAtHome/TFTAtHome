@@ -2,34 +2,40 @@ using Godot;
 using System;
 using System.ComponentModel;
 
-public partial class CardLogic : Area2D
-{
+public partial class CardLogic : Area2D {
     public static bool isDragging = false;
     public static int printCount = 0;
     bool isDraggable = false;
-	bool isInsideDroppable = false;
+    bool isInsideDroppable = false;
     ulong bodyRef;
     Vector2 initialPos;
 
     // Called when the node enters the scene tree for the first time.
-    public override void _Ready()
-	{
-	}
+    public override void _Ready() {
+    }
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
+    // Called every frame. 'delta' is the elapsed time since the previous frame.
+    public override void _Process(double delta) {
         Node2D card = GetParent() as Node2D;
+        Node2D platform = card.GetParent() as Node2D;
+        if (platform.IsInGroup("handPlatform")) {
+            PreBattleScene preBattleScene = InstanceFromId(PreBattleScene.PreBattleSceneId) as PreBattleScene;
+            Node2D handPlatform = preBattleScene.cardTargetted;
+            if (handPlatform != null)
+                card = preBattleScene.cardTargetted as Node2D;
+        }
+
         if (isDraggable) {
             if (Input.IsActionJustPressed("click")) {
                 initialPos = card.Position;
                 isDragging = true;
-            } if (Input.IsActionPressed("click")) {
+            }
+            if (Input.IsActionPressed("click")) {       
                 Vector2 mousePos = GetGlobalMousePosition();
                 card.GlobalPosition = mousePos;
             } else if (Input.IsActionJustReleased("click")) {
-                isDragging = false;
                 Tween tween = GetTree().CreateTween();
+                tween.Connect("finished", Callable.From(() => { isDragging = false; }));
                 if (isInsideDroppable) {
                     var body = InstanceFromId(bodyRef) as Node2D;
                     Node2D cardParent = card.GetParent() as Node2D;
@@ -37,22 +43,19 @@ public partial class CardLogic : Area2D
                     cardParent.RemoveChild(card);
                     body.AddChild(card);
                     card.Position = new Vector2(0, 0);
-                    tween.TweenProperty(card, "position", new Vector2(0, 0), 0.2).SetEase(Tween.EaseType.Out);
+                    tween.TweenProperty(card, "position", new Vector2(0, 0), 0.15).SetEase(Tween.EaseType.Out);
+
                     body.RemoveFromGroup("droppable");
                     if (cardParent.GetGroups().Contains("handPlatform")) {
                         cardParent.GetParent().RemoveChild(cardParent);
                         (InstanceFromId(PreBattleScene.PreBattleSceneId) as PreBattleScene).ReshuffleHands();// reshuffle hands
-                    } else
-                    {
+                    } else {
                         cardParent.AddToGroup("droppable");
                     }
                 } else {
-                    Node2D parent = card.GetParent() as Node2D;
-                    if (IsParentCardPlatform())
-                    {
+                    if (IsParentCardPlatform()) {
                         tween.TweenProperty(card, "position", new Vector2(0, 0), 0.2).SetEase(Tween.EaseType.Out);
-                    } else
-                    {
+                    } else {
                         tween.TweenProperty(card, "position", initialPos, 0.2).SetEase(Tween.EaseType.Out);
                         GD.PushWarning("CardPlatform not found: " + card.GetParent().Name + " " + card.GetParent().GetType());
                     }
@@ -61,52 +64,50 @@ public partial class CardLogic : Area2D
         }
     }
 
-	public void OnArea2DMouseEntered()
-    {
-        Node2D parent = GetParent() as Node2D;
 
-        if (!isDragging && !parent.IsInGroup("handPlatform"))
-        {
-            
-            isDraggable = true;
-            Vector2 parentScale = parent.Scale;
+
+    public void OnArea2DMouseEntered() {
+
+        Node2D cardRoot = GetParent() as Node2D;
+        Node2D parent = cardRoot.GetParent() as Node2D;
+        if (!parent.IsInGroup("handPlatform")) {
+
             Vector2 vector2 = new Vector2(1.05f, 1.05f);
-            parent.Scale = vector2;
+            cardRoot.Scale = vector2;
+        }
+        if (!isDragging) {
+            isDraggable = true;
         }
     }
 
-	public void OnArea2DMouseExited() {
-
-        if (!isDragging)
-        {
-            Node2D parent = GetParent() as Node2D;
-            isDraggable = false;
+    public void OnArea2DMouseExited() {
+        Node2D cardRoot = GetParent() as Node2D;
+        Node2D parent = cardRoot.GetParent() as Node2D;
+        if (!parent.IsInGroup("handPlatform")) {
             Vector2 vector2 = new Vector2(1f, 1f);
-            parent.Scale = vector2;
+            cardRoot.Scale = vector2;
+        }
+        if (!isDragging) {
+            isDraggable = false;
         }
     }
-	public void OnArea2DBodyEntered(Node2D body) 
-    {
-        if (body.IsInGroup("droppable"))
-        {
+    public void OnArea2DBodyEntered(Node2D body) {
+        if (body.IsInGroup("droppable")) {
             GD.Print("Body entered");
             isInsideDroppable = true;
             bodyRef = body.GetInstanceId();
         }
     }
 
-    public void OnArea2DBodyExited(Node2D body)
-    {
-        if (body.IsInGroup("droppable") && body.GetInstanceId() == bodyRef)
-        {
+    public void OnArea2DBodyExited(Node2D body) {
+        if (body.IsInGroup("droppable") && body.GetInstanceId() == bodyRef) {
             GD.Print("Body exited");
             isInsideDroppable = false;
         }
 
     }
 
-    public void Print()
-    {
+    public void Print() {
         printCount++;
         GD.Print("printCount: ", printCount);
         GD.Print("isDragging: ", isDragging);
@@ -114,8 +115,7 @@ public partial class CardLogic : Area2D
         GD.Print("isInsideDroppable: ", isInsideDroppable);
     }
 
-    private bool IsParentCardPlatform()
-    {
+    private bool IsParentCardPlatform() {
         return GetParent().GetParent().Name.ToString().Contains("CardPlatform");
     }
 }

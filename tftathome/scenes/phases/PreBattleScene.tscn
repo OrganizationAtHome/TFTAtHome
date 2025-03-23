@@ -78,4 +78,3 @@ theme_override_font_sizes/font_size = 71
 text = "Yeet"
 
 [connection signal="pressed" from="Button" to="." method="zimmer"]
-[connection signal="mouse_entered" from="CardHand1" to="." method="CardTargettingSystem"]

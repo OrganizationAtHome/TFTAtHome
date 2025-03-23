@@ -18,6 +18,7 @@ public partial class PreBattleScene : Node2D
     ulong center1Id;
     ulong center2Id;
     public static ulong PreBattleSceneId;
+    public Node2D cardTargetted = null;
 
 
     public override void _Ready()
@@ -33,7 +34,20 @@ public partial class PreBattleScene : Node2D
     // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process(double delta)
     {
-        //CardTargettingSystem();
+        if (!CardLogic.isDragging)
+        {
+            if (cardTargetted != null)
+                cardTargetted.Scale = new Vector2(1f, 1f);
+            Node2D platformtarget = PlatformTargettingSystem();
+            if (platformtarget != null)
+            {
+                cardTargetted = platformtarget.GetNode("Card") as Node2D;
+                cardTargetted.Scale = new Vector2(1.2f, 1.2f);
+            }
+        }
+
+
+
     }
 
     public void zimmer()
@@ -81,7 +95,7 @@ public partial class PreBattleScene : Node2D
             // Place many cards
             for (int cardIndex = 0; cardIndex < platforms.Count; cardIndex++)
             {
-                var cardCount = platforms.Count;
+                var platformCount = platforms.Count;
                 var platform = platforms[cardIndex] as Node2D;
                 var cardWidth = cardBody.Shape.GetRect().Size.X / 2 * platform.Scale.X;
                 // Dynamically increases the hand width based on the number of cards to eleminate big gaps between the cards
@@ -95,11 +109,11 @@ public partial class PreBattleScene : Node2D
 
                 // Here goes the vertical shit
                 float alignResult = 0.5f;
-                if (cardCount >= 2) alignResult = cardIndex / (cardCount - 1f);
+                if (platformCount >= 2) alignResult = cardIndex / (platformCount - 1f);
                 // makes alignResult (thereafter defined as x) revert from increasing in size to decreasing in size as to make the card fan look. 
                 if (alignResult > 0.5) alignResult = 1 - alignResult;
                 alignResult *= 2;
-                var verticalPlacement = Mathf.Lerp(-verticalAmplitude * cardCount, verticalAmplitude * cardCount, alignResult);
+                var verticalPlacement = Mathf.Lerp(-verticalAmplitude * platformCount, verticalAmplitude * platformCount, alignResult);
 
                 // Apply the calculated values
                 platform.Position = new Vector2((float)horizontalPlacement, verticalPlacement * -1);
@@ -150,7 +164,7 @@ public partial class PreBattleScene : Node2D
         return x * (1 - 1 / Math.Pow(1.15, cardCount));
     }
 
-    public Node2D CardTargettingSystem()
+    public Node2D PlatformTargettingSystem()
     {
         CollisionShape2D center = InstanceFromId(center1Id) as CollisionShape2D;
         var platforms = center.GetChildren().Cast<Node2D>().ToList();
