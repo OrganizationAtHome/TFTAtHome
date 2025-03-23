@@ -4,14 +4,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TFTAtHome.models;
-using TFTAtHome.storage;
+using TFTAtHome.Backend.models;
+using TFTAtHome.Backend.storage;
 
 namespace TFTAtHome.util
 {
     public class PlayerUtil
     {
-        private static PackedScene cardScene = GD.Load<PackedScene>("res://scenes/models/cardScene.tscn");
+        private static PackedScene cardScene = GD.Load<PackedScene>("res://Frontend/Card/cardScene.tscn");
         private static SceneReferenceSingleton _srs = SceneReferenceSingleton.GetInstance();
 
         public static void AddCardToPlayerHand(Card card, Container playerHand)

@@ -4,14 +4,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TFTAtHome.storage;
-using TFTAtHome.models;
+using TFTAtHome.Backend.storage;
+using TFTAtHome.Backend.models;
 
 namespace TFTAtHome.util
 {
     public static class CardUtil
     {
-        private static PackedScene cardScene = GD.Load<PackedScene>("res://scenes/models/cardScene.tscn");
+        private static PackedScene cardScene = GD.Load<PackedScene>("res://Frontend/Card/cardScene.tscn");
         
         public static Node CreateGodotCard(string cardName, float scale)
         {
@@ -92,6 +92,7 @@ namespace TFTAtHome.util
             for (int i = 0; i < statValues.Length; i++)
             {
                 Label node = (Label)GetNodeFromCard(card, statsName[i]);
+                var goDotNodesErLort = node.Text;
                 node.Text = statValues[i];
             }
         }

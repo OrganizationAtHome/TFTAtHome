@@ -1,0 +1,202 @@
+[gd_scene load_steps=6 format=3 uid="uid://228x0lttm3ug"]
+
+[ext_resource type="Texture2D" uid="uid://d0m6opvm4r6l7" path="res://images/cardimages/eric-cartman.jpg" id="1_52fin"]
+[ext_resource type="Script" path="res://Frontend/Card/CardVisuals.cs" id="2_1yo14"]
+[ext_resource type="PackedScene" uid="uid://ds00ulykonvln" path="res://scenes/miscellaneous/Stat_Label.tscn" id="2_vy0w0"]
+[ext_resource type="Script" path="res://Frontend/Card/CardLogic.cs" id="3_mt7nv"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_u0bti"]
+size = Vector2(304.529, 370)
+
+[node name="Card" type="Node2D"]
+position = Vector2(0, 4.23516e-22)
+scale = Vector2(0.998265, 1)
+
+[node name="CardBody" type="Area2D" parent="."]
+position = Vector2(-4.57764e-05, 7.62939e-06)
+script = ExtResource("3_mt7nv")
+
+[node name="CardCollision" type="CollisionShape2D" parent="CardBody"]
+position = Vector2(6.10352e-05, 0)
+scale = Vector2(0.999999, 1)
+shape = SubResource("RectangleShape2D_u0bti")
+
+[node name="CardVisuals" type="Node2D" parent="."]
+position = Vector2(-6.10352e-05, 7.62939e-06)
+script = ExtResource("2_1yo14")
+
+[node name="CardBackground" type="ColorRect" parent="CardVisuals"]
+anchors_preset = -1
+anchor_left = 0.036
+anchor_right = 0.036
+anchor_bottom = 0.028
+offset_left = -152.266
+offset_top = -185.0
+offset_right = 151.734
+offset_bottom = 183.0
+scale = Vector2(1, 1.00484)
+mouse_filter = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="CharacterNameBackground" type="ColorRect" parent="CardVisuals"]
+offset_left = -152.266
+offset_top = -185.0
+offset_right = 151.734
+offset_bottom = -149.0
+mouse_filter = 2
+color = Color(0.501961, 0.501961, 0.501961, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="CharacterTitleBackground" type="ColorRect" parent="CardVisuals"]
+offset_left = -152.266
+offset_top = 20.0
+offset_right = 151.734
+offset_bottom = 56.0
+mouse_filter = 2
+color = Color(0.501961, 0.501961, 0.501961, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="CardImg" type="Sprite2D" parent="CardVisuals"]
+position = Vector2(-77.2659, -65)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_52fin")
+
+[node name="CardName" type="RichTextLabel" parent="CardVisuals"]
+offset_left = -153.266
+offset_top = -182.0
+offset_right = 151.734
+offset_bottom = -142.0
+mouse_filter = 2
+bbcode_enabled = true
+text = "[center] CHARACTER NAME [/center]"
+metadata/_edit_use_anchors_ = true
+
+[node name="CardTitle" type="RichTextLabel" parent="CardVisuals"]
+offset_left = -152.266
+offset_top = 22.0
+offset_right = 152.734
+offset_bottom = 62.0
+mouse_filter = 2
+bbcode_enabled = true
+text = "[center] CHARACTER TITLE [/center]"
+metadata/_edit_use_anchors_ = true
+
+[node name="Mid_Label_Name" parent="CardVisuals" instance=ExtResource("2_vy0w0")]
+offset_left = 2.00354
+offset_top = -90.0
+offset_right = 492.004
+offset_bottom = 252.0
+scale = Vector2(0.15, 0.15)
+theme_override_font_sizes/font_size = 250
+text = "MID"
+horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Early_Label_Name" parent="CardVisuals" instance=ExtResource("2_vy0w0")]
+offset_left = 2.00354
+offset_top = -123.0
+offset_right = 600.004
+offset_bottom = 150.0
+scale = Vector2(0.15, 0.15)
+theme_override_font_sizes/font_size = 200
+text = "EARLY"
+horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Late_Label_Name" parent="CardVisuals" instance=ExtResource("2_vy0w0")]
+offset_left = 1.73409
+offset_top = -52.0
+offset_right = 450.734
+offset_bottom = 153.0
+scale = Vector2(0.15, 0.15)
+theme_override_font_sizes/font_size = 250
+text = "LATE"
+horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Early" parent="CardVisuals" instance=ExtResource("2_vy0w0")]
+offset_left = 88.153
+offset_top = -124.0
+offset_right = 537.153
+offset_bottom = 149.0
+scale = Vector2(0.15, 0.15)
+theme_override_font_sizes/font_size = 200
+text = "10"
+horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Mid" parent="CardVisuals" instance=ExtResource("2_vy0w0")]
+offset_left = 87.1513
+offset_top = -83.0
+offset_right = 536.151
+offset_bottom = 190.0
+scale = Vector2(0.15, 0.15)
+theme_override_font_sizes/font_size = 200
+text = "10"
+horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Late" parent="CardVisuals" instance=ExtResource("2_vy0w0")]
+offset_left = 86.1495
+offset_top = -48.0
+offset_right = 535.149
+offset_bottom = 225.0
+scale = Vector2(0.15, 0.15)
+theme_override_font_sizes/font_size = 200
+text = "10"
+horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Class_Label_Name" parent="CardVisuals" instance=ExtResource("2_vy0w0")]
+offset_left = -136.236
+offset_top = 69.0
+offset_right = 450.764
+offset_bottom = 342.0
+scale = Vector2(0.15, 0.15)
+theme_override_font_sizes/font_size = 200
+text = "CLASS"
+horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Trait" parent="CardVisuals" instance=ExtResource("2_vy0w0")]
+anchors_preset = -1
+anchor_left = -1.61
+anchor_top = -2.031
+anchor_right = 3.16333
+anchor_bottom = 5.26341
+offset_left = -26.0451
+offset_top = 69.0
+offset_right = 1066.95
+offset_bottom = 342.0
+scale = Vector2(0.15, 0.15)
+theme_override_font_sizes/font_size = 200
+text = "UNKNOWN"
+horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="CardCost_Label_Name" parent="CardVisuals" instance=ExtResource("2_vy0w0")]
+offset_left = -142.247
+offset_top = 122.0
+offset_right = 491.753
+offset_bottom = 464.0
+scale = Vector2(0.15, 0.15)
+theme_override_font_sizes/font_size = 200
+text = "COST"
+horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Cost" parent="CardVisuals" instance=ExtResource("2_vy0w0")]
+offset_left = 20.0348
+offset_top = 125.0
+offset_right = 469.035
+offset_bottom = 467.0
+scale = Vector2(0.15, 0.15)
+theme_override_font_sizes/font_size = 200
+text = "1"
+horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[connection signal="body_entered" from="CardBody" to="CardBody" method="OnArea2DBodyEntered"]
+[connection signal="body_exited" from="CardBody" to="CardBody" method="OnArea2DBodyExited"]
+[connection signal="mouse_entered" from="CardBody" to="CardBody" method="OnArea2DMouseEntered"]
+[connection signal="mouse_exited" from="CardBody" to="CardBody" method="OnArea2DMouseExited"]

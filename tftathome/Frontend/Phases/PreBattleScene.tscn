@@ -1,0 +1,65 @@
+[gd_scene load_steps=6 format=3 uid="uid://b1h27hcxnfw3o"]
+
+[ext_resource type="Script" path="res://Frontend/Phases/PreBattleScene.cs" id="1_85yy1"]
+[ext_resource type="Texture2D" uid="uid://dloca4g7ymwgy" path="res://images/backgrounds/battlegroundnew.jpg" id="1_skx8a"]
+[ext_resource type="PackedScene" uid="uid://228x0lttm3ug" path="res://Frontend/Card/cardScene.tscn" id="2_irqvl"]
+[ext_resource type="PackedScene" uid="uid://dloqhavm42vma" path="res://Frontend/Card/CardPlatformScene.tscn" id="3_6f4ro"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_quxlf"]
+size = Vector2(1766.06, 396.375)
+
+[node name="PreBattleScene" type="Node2D"]
+script = ExtResource("1_85yy1")
+CardScene = ExtResource("2_irqvl")
+CardPlatformScene = ExtResource("3_6f4ro")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+clip_contents = true
+custom_minimum_size = Vector2(700, 350)
+offset_left = 673.0
+offset_top = 253.0
+offset_right = 1561.0
+offset_bottom = 613.0
+size_flags_horizontal = 4
+texture = ExtResource("1_skx8a")
+expand_mode = 1
+
+[node name="Button" type="Button" parent="."]
+offset_left = 370.0
+offset_top = 844.0
+offset_right = 608.0
+offset_bottom = 947.0
+text = "Zimmer's magiske knap"
+
+[node name="CardHand1" type="StaticBody2D" parent="."]
+position = Vector2(1118, 747)
+input_pickable = true
+
+[node name="CardSpace1" type="CollisionShape2D" parent="CardHand1"]
+scale = Vector2(0.5, 0.5)
+shape = SubResource("RectangleShape2D_quxlf")
+
+[node name="CardHand2" type="StaticBody2D" parent="."]
+position = Vector2(1117, 145)
+rotation = 1.5708
+
+[node name="CardSpace2" type="CollisionShape2D" parent="CardHand2"]
+rotation = 1.5708
+scale = Vector2(0.5, 0.5)
+shape = SubResource("RectangleShape2D_quxlf")
+debug_color = Color(0.936741, 0.234543, 0.242137, 0.42)
+
+[node name="CardPlatform" parent="." groups=["droppable"] instance=ExtResource("3_6f4ro")]
+position = Vector2(826, 534)
+scale = Vector2(0.425, 0.425)
+
+[node name="CardPlatform2" parent="." groups=["droppable"] instance=ExtResource("3_6f4ro")]
+position = Vector2(1122, 534)
+scale = Vector2(0.425, 0.425)
+
+[node name="CardPlatform3" parent="." groups=["droppable"] instance=ExtResource("3_6f4ro")]
+position = Vector2(1453, 531)
+scale = Vector2(0.425, 0.425)
+
+[connection signal="pressed" from="Button" to="." method="zimmer"]
+[connection signal="mouse_entered" from="CardHand1" to="." method="IDKHOWTONAMETHINGS"]

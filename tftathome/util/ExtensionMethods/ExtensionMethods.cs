@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TFTAtHome.models;
-using static TFTAtHome.storage.TraitSingleton;
+using TFTAtHome.Backend.models;
+using static TFTAtHome.Backend.storage.TraitSingleton;
 
 namespace TFTAtHome.util.ExtensionMethods
 {
@@ -118,8 +118,7 @@ namespace TFTAtHome.util.ExtensionMethods
             int drawingCount = cards.GetTraitCountOnListAndOpponent(Drawing, opponentList);
             int fictionalCount = GetFictionalCardCountOnListAndOpponent(cards, opponentList);
 
-            Console.WriteLine(drawingCount);
-            Console.WriteLine(fictionalCount);
+            fictionalCount -= drawingCount;
 
             counts[0] = fictionalCount;
             counts[1] = drawingCount;
@@ -172,8 +171,12 @@ namespace TFTAtHome.util.ExtensionMethods
 
             if (card.Trait == "TV-Celebrity")
             {
-                card.GetType().GetProperty(bestPhase).SetValue(card, phases[bestPhase] + ((realCount / 2) * 2));
-                card.GetType().GetProperty(secondBestPhase).SetValue(card, phases[secondBestPhase] + ((tvCelebrityCount) * 2));
+                // We divide by 2 to ensure we only count every second card (For example with 3 cards we only get +2 from the first pair)
+
+                phases[bestPhase] = phases[bestPhase] + ((realCount / 2) * 2);
+                phases[secondBestPhase] = phases[secondBestPhase] + ((tvCelebrityCount) * 2);
+
+                card.SetCardStats(phases["Early"], phases["Mid"], phases["Late"]);
             }
         }
 
@@ -234,7 +237,7 @@ namespace TFTAtHome.util.ExtensionMethods
 
             public static void SetDrawingBonusOnCard(this Card card, int[] counts)
         {
-            int bonus = (counts[0] / 2) + (counts[1] * 2);
+            int bonus = (counts[0] / 2) + ((counts[1] / 2) * 2);
             card.Early += bonus;
             card.Mid += bonus;
             card.Late += bonus;

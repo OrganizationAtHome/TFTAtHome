@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TFTAtHome.models;
-using static TFTAtHome.storage.TraitSingleton;
+using TFTAtHome.Backend.models;
+using static TFTAtHome.Backend.storage.TraitSingleton;
 
 namespace TFTAtHomeTests
 {
@@ -21,7 +21,6 @@ namespace TFTAtHomeTests
         private Card card7 = new Card(7, "ELIZABETH II", "THE QUEEN OF ENGLAND", "images/cardimages/elizabeth-2.jpg", 3, 7, 7, Queen, 3, false);
         private Card card9 = new Card(9, "ERIC CARTMAN", "THE FAT KID", "images/cardimages/eric-cartman.jpg", 5, 8, 5, Drawing, 1, true);
 
-        /*
         [TestMethod]
         public void TestMatchWithSingleLeaderCard()
         {
@@ -166,7 +165,7 @@ namespace TFTAtHomeTests
             match.SetCardStatsForMatchForPlayer(player1);
             Assert.AreEqual(9, match.CurrentCardsOnBoardP1[0].Early); 
         }
-        */
+        
         [TestMethod]
         public void TestBothPlayersGetEricCartman()
         {

@@ -1,0 +1,14 @@
+[gd_scene load_steps=6 format=3 uid="uid://b73pmfdl6b0y3"]
+
+[ext_resource type="Script" path="res://Frontend/MainScene.cs" id="1_dvp5l"]
+[ext_resource type="PackedScene" uid="uid://d0eky62mu8c6w" path="res://Frontend/Phases/HomeScreenScene.tscn" id="2_ha5yj"]
+[ext_resource type="PackedScene" uid="uid://djifwx4yfl5i4" path="res://Frontend/Phases/PreGameScene.tscn" id="3_ymxgu"]
+[ext_resource type="PackedScene" uid="uid://b1h27hcxnfw3o" path="res://Frontend/Phases/PreBattleScene.tscn" id="4_vmof6"]
+[ext_resource type="PackedScene" uid="uid://ctd0wl5ymruf5" path="res://Frontend/Player/PlayerListScene.tscn" id="5_cp8dn"]
+
+[node name="MainScene" type="Node2D"]
+script = ExtResource("1_dvp5l")
+HomeScreenScene = ExtResource("2_ha5yj")
+PreGameScene = ExtResource("3_ymxgu")
+PreBattleScene = ExtResource("4_vmof6")
+PlayerListScene = ExtResource("5_cp8dn")
