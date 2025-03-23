@@ -1097,11 +1097,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\danie\\Documents\\GitHub\\TFTAtHome\\TFTAtHomeTests\\TFTAtHomeTests.csproj",
+      "projectUniqueName": "C:\\USERS\\DANIE\\DOCUMENTS\\GITHUB\\TFTATHOME\\TFTAtHomeTests\\TFTAtHomeTests.csproj",
       "projectName": "TFTAtHomeTests",
-      "projectPath": "C:\\Users\\danie\\Documents\\GitHub\\TFTAtHome\\TFTAtHomeTests\\TFTAtHomeTests.csproj",
+      "projectPath": "C:\\USERS\\DANIE\\DOCUMENTS\\GITHUB\\TFTATHOME\\TFTAtHomeTests\\TFTAtHomeTests.csproj",
       "packagesPath": "C:\\Users\\danie\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\danie\\DOCUMENTS\\GITHUB\\TFTATHOME\\TFTAtHomeTests\\obj\\",
+      "outputPath": "C:\\USERS\\DANIE\\DOCUMENTS\\GITHUB\\TFTATHOME\\TFTAtHomeTests\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\danie\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -1119,8 +1119,8 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "C:\\Users\\danie\\Documents\\GitHub\\TFTAtHome\\TFTATHOME\\TFTAtHome.csproj": {
-              "projectPath": "C:\\Users\\danie\\Documents\\GitHub\\TFTAtHome\\TFTATHOME\\TFTAtHome.csproj"
+            "C:\\USERS\\DANIE\\DOCUMENTS\\GITHUB\\TFTATHOME\\TFTATHOME\\TFTAtHome.csproj": {
+              "projectPath": "C:\\USERS\\DANIE\\DOCUMENTS\\GITHUB\\TFTATHOME\\TFTATHOME\\TFTAtHome.csproj"
             }
           }
         }

@@ -143,8 +143,7 @@ public partial class PlayerMatchTest : Node
         Card elizabeth = LocalStorage.getCardFromName("ELIZABETH II");
         Card redfoo = LocalStorage.getCardFromName("REDFOO");
 
-        // player1.SetPlayerHand(new List<Card> { elizabeth, redfoo, card1 });
-        player1.SetPlayerHand(new List<Card> { elizabeth, redfoo, elizabeth });
+        player1.SetPlayerHand(new List<Card> { elizabeth, redfoo, card1 });
         player2.SetPlayerHand(new List<Card> { card9, card8, card3 });
 
         match = new Match(player1, player2);

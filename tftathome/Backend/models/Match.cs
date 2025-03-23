@@ -240,7 +240,6 @@ namespace TFTAtHome.Backend.models
         }
     }
 
-
     public class PlayerCardEffects
     {
         public Dictionary<MatchEffect, int> MatchEffects { get; } = new Dictionary<MatchEffect, int>();

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TFTAtHome.Backend.models;
 using static TFTAtHome.Backend.storage.TraitSingleton;
 
 namespace TFTAtHome.Backend.models.Effect
@@ -41,7 +42,5 @@ namespace TFTAtHome.Backend.models.Effect
                     return -1;
             }
         }
-
-        public bool 
     }
 }
