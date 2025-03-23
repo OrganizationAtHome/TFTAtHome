@@ -63,10 +63,11 @@ public partial class CardLogic : Area2D
 
 	public void OnArea2DMouseEntered()
     {
-        
-        if (!isDragging)
+        Node2D parent = GetParent() as Node2D;
+
+        if (!isDragging && !parent.IsInGroup("handPlatform"))
         {
-            Node2D parent = GetParent() as Node2D;
+            
             isDraggable = true;
             Vector2 parentScale = parent.Scale;
             Vector2 vector2 = new Vector2(1.05f, 1.05f);

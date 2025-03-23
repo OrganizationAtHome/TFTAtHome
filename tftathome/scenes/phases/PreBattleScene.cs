@@ -30,13 +30,19 @@ public partial class PreBattleScene : Node2D
         Player testPlayer = new Player(1, "Test");
     }
 
+    // Called every frame. 'delta' is the elapsed time since the previous frame.
+    public override void _Process(double delta)
+    {
+        //CardTargettingSystem();
+    }
+
     public void zimmer()
     {
         CollisionShape2D center = InstanceFromId(center1Id) as CollisionShape2D;
         var cardPlatform = CardPlatformScene.Instantiate() as Node2D;
         var card = CardScene.Instantiate() as Node2D;
         cardPlatform.AddChild(card);
-        cardPlatform.Name = "CardPlatform" + platformCount;
+        cardPlatform.Name = "CardPlatform" + platformCount++;
         cardPlatform.AddToGroup("handPlatform");
 
         CardLogic yeet = card as CardLogic;
@@ -79,7 +85,7 @@ public partial class PreBattleScene : Node2D
                 var platform = platforms[cardIndex] as Node2D;
                 var cardWidth = cardBody.Shape.GetRect().Size.X / 2 * platform.Scale.X;
                 // Dynamically increases the hand width based on the number of cards to eleminate big gaps between the cards
-                var handWidth = fuckingYeet(center.Shape.GetRect().Size.X, platforms.Count);
+                var handWidth = CalcRealisticHandWidthSize(center.Shape.GetRect().Size.X, platforms.Count);
                 // Interpolates the relative placement of the card between 0 and 1
                 var interpolatedWeight = (cardIndex + 1f) / platforms.Count;
                 // Calculates the horizontal with cardWidth as spacing and handWidth as the total width of the area the cards are placed in. 
@@ -139,28 +145,30 @@ public partial class PreBattleScene : Node2D
         }
     }
 
-    public double fuckingYeet(float x, int cardCount)
+    public double CalcRealisticHandWidthSize(float x, int cardCount)
     {
         return x * (1 - 1 / Math.Pow(1.15, cardCount));
     }
 
-    public void IDKHOWTONAMETHINGS()
+    public Node2D CardTargettingSystem()
     {
-        GD.Print("STart");
         CollisionShape2D center = InstanceFromId(center1Id) as CollisionShape2D;
         var platforms = center.GetChildren().Cast<Node2D>().ToList();
         
         var moooooooose = center.GetGlobalMousePosition().X;
-        GD.Print("Moose: " + moooooooose);
-        Node2D found;
+        (this.GetNode("Moose") as Label).Text = moooooooose.ToString();
+        Node2D found = null;
         var lastindex = 0;
         for (int i = 0; i < platforms.Count; i++)
         {
+            var platform = platforms[i];
+            foreach (var group in platform.GetGroups())
+            {
+                GD.Print(group);
+            }
             var platformX = platforms[i].GlobalPosition.X;
-            GD.Print("Platform: " + platformX);
             if (i == platforms.Count) {
                 found = platforms[i];
-                GD.Print("Found: " + i);
             } else if (platformX.CompareTo(moooooooose) < 0) {
                 var lastPlat = platforms[lastindex].GlobalPosition.X;
                 var currentPlat = platforms[i].GlobalPosition.X;
@@ -169,29 +177,29 @@ public partial class PreBattleScene : Node2D
                 if (currentMooCompare.CompareTo(lastMooCompare) < 0)
                 {
                     found = platforms[i];
-                    GD.Print("Found: " + i);
+                    (this.GetNode("FoundCounter") as Label).Text = i.ToString();
                     break;
                 }
                 else
                 {
                     found = platforms[lastindex];
-                    GD.Print("Found: " + lastindex);
+                    (this.GetNode("FoundCounter") as Label).Text = lastindex.ToString();
                     break;
                 }
             } else {
                 lastindex = i;
             }
         }
-
+        if (found == null && platformCount > 0)
+        {
+            found = platforms[platforms.Count - 1];
+            (this.GetNode("FoundCounter") as Label).Text = (platforms.Count - 1).ToString();
+        }
+        return found;
     }
 
     private void EVENBETTERNAMETHATIKNOWTHINGS()
     {
 
     }
-
-    // Called every frame. 'delta' is the elapsed time since the previous frame.
-    public override void _Process(double delta)
-	{
-	}
 }
