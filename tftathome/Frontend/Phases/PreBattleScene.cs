@@ -86,7 +86,7 @@ public partial class PreBattleScene : Node2D
 
         if (platforms.Count == 0)
         {
-            GD.Print("No platforms found");
+            GD.PushWarning("No platforms found");
             return;
         }
         else
@@ -132,7 +132,7 @@ public partial class PreBattleScene : Node2D
 
         if (platforms.Count == 0)
         {
-            GD.Print("No platforms found");
+            GD.PushWarning("No platforms found: Flatshuffle edition");
             return;
         }
         else
@@ -176,10 +176,6 @@ public partial class PreBattleScene : Node2D
         for (int i = 0; i < platforms.Count; i++)
         {
             var platform = platforms[i];
-            foreach (var group in platform.GetGroups())
-            {
-                GD.Print(group);
-            }
             var platformX = platforms[i].GlobalPosition.X;
             if (i == platforms.Count) {
                 found = platforms[i];
