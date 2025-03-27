@@ -118,6 +118,8 @@ namespace TFTAtHome.util.ExtensionMethods
             int drawingCount = cards.GetTraitCountOnListAndOpponent(Drawing, opponentList);
             int fictionalCount = GetFictionalCardCountOnListAndOpponent(cards, opponentList);
 
+            drawingCount--;
+
             fictionalCount -= drawingCount;
 
             counts[0] = fictionalCount;
@@ -237,7 +239,7 @@ namespace TFTAtHome.util.ExtensionMethods
 
             public static void SetDrawingBonusOnCard(this Card card, int[] counts)
         {
-            int bonus = (counts[0] / 2) + ((counts[1] / 2) * 2);
+            int bonus = (counts[0] / 2) + (counts[1] * 2);
             card.Early += bonus;
             card.Mid += bonus;
             card.Late += bonus;

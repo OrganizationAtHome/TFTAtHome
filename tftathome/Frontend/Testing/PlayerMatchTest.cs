@@ -53,7 +53,7 @@ public partial class PlayerMatchTest : Node
         Player player2 = new Player(2, "Player 2");
 
         player1.SetPlayerHand(new List<Card> { card9, card4, card1 });
-        player2.SetPlayerHand(new List<Card> { card9, card8, card3 });
+        player2.SetPlayerHand(new List<Card> { LocalStorage.GetCardFromName("NARUTO"), card8, card3 });
 
         match = new Match(player1, player2);
 
@@ -67,7 +67,7 @@ public partial class PlayerMatchTest : Node
 
         match.AddCardToBoard(match.Player1Hand[0], player1); // Eric Cartman (Drawing): 5, 8, 5, true
 
-        match.AddCardToBoard(match.Player2Hand[0], player2); // Eric Cartman (Drawing): 5, 8, 5, true
+        match.AddCardToBoard(match.Player2Hand[0], player2); // Naruto (Drawing): 1, 5, 11, true
 
         match.AddCardToBoard(match.Player1Hand[0], player1); // Deadpool (MovieHero): 5, 1, 11, true
 
@@ -101,7 +101,7 @@ public partial class PlayerMatchTest : Node
         Player player2 = new Player(2, "Player 2");
 
         player1.SetPlayerHand(new List<Card> { card9, card4, card1 });
-        player2.SetPlayerHand(new List<Card> { card1, card8, card3 });
+        player2.SetPlayerHand(new List<Card> { LocalStorage.GetCardFromName("NARUTO"), LocalStorage.GetCardFromName("PERRY"), card3 });
 
         match = new Match(player1, player2);
 
@@ -109,11 +109,11 @@ public partial class PlayerMatchTest : Node
         // Player 1 adds Eric Cartman
         match.AddCardToBoard(match.Player1Hand[0], player1); // Eric Cartman (Drawing): 5, 8, 5, true
 
-        match.AddCardToBoard(match.Player2Hand[0], player2); // Light Yagami (Genius): 5, 8, 5, true
+        match.AddCardToBoard(match.Player2Hand[0], player2); // Naruto (Drawing): 1, 5, 11 true
 
         match.AddCardToBoard(match.Player1Hand[0], player1); // Deadpool (MovieHero): 5, 1, 11, true
 
-        match.AddCardToBoard(match.Player2Hand[0], player2); // Elon Musk (Leader): 5, 7, 6, false
+        match.AddCardToBoard(match.Player2Hand[0], player2); // Perry (Drawing): 2, 12, 4, false
 
         match.AddCardToBoard(match.Player1Hand[0], player1); // Light Yagami (Genius): 6, 12, 1, true
 
@@ -133,6 +133,7 @@ public partial class PlayerMatchTest : Node
         {
             CardUtil.CreateCardForGameBoardAndAddToContainer(card, P2Hand, 0.6f);
         }
+
     }
 
     private void SetupActiveTraitTest1(GridContainer P1Hand, GridContainer P2Hand)
@@ -140,8 +141,8 @@ public partial class PlayerMatchTest : Node
         Player player1 = new Player(1, "Player 1");
         Player player2 = new Player(2, "Player 2");
 
-        Card elizabeth = LocalStorage.getCardFromName("ELIZABETH II");
-        Card redfoo = LocalStorage.getCardFromName("REDFOO");
+        Card elizabeth = LocalStorage.GetCardFromName("ELIZABETH II");
+        Card redfoo = LocalStorage.GetCardFromName("REDFOO");
 
         player1.SetPlayerHand(new List<Card> { elizabeth, redfoo, card1 });
         player2.SetPlayerHand(new List<Card> { card9, card8, card3 });
@@ -168,10 +169,7 @@ public partial class PlayerMatchTest : Node
 
         match.AddCardToBoard(match.Player2Hand[0], player2); // Chuck Norris (TVCelebrity): 7, 8, 3, false
 
-        GD.Print(match.CurrentCardsOnBoardP1);
-
-        // match.SetCardStatsForMatchForPlayer(player1);
-        // match.SetCardStatsForMatchForPlayer(player2);
+        match.RunInitialRound();
 
         foreach (Card card in match.CurrentCardsOnBoardP1)
         {
@@ -184,12 +182,12 @@ public partial class PlayerMatchTest : Node
         }
 
         MatchUtil.SetupActiveEffectsButtons(P1Effects, player1, match);
+
     }
 
     public void SetStatsP1Pressed()
     {
         List<Node2D> list = MatchUtil.GetCardNodesFromContainer(P1Hand);
-        GD.Print(list);
         match.SetCardStatsForMatchForPlayer(match.Player1);
         MatchUtil.UpdateCardStatsListGodot(list, match.CurrentCardsOnBoardP1);
 

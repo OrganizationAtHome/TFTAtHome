@@ -12,7 +12,6 @@ namespace TFTAtHome.Backend.models.Effect
     {
         public string TraitName { get; set; }
         public Card UsedOnCard { get; set; }
-        public string UsedOnTrait { get; set; }
         public bool Persistent { get; set; }
         public int WeightedIndex { get; } = 0;
 
@@ -30,10 +29,8 @@ namespace TFTAtHome.Backend.models.Effect
             {
                 case Queen:
                     return 1;
-                    break;
                 case Genius:
                     return 2;
-                    break;
                 case Musician:
                     return 3;
                 case EarlyPeaker:

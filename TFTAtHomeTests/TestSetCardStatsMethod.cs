@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TFTAtHome.Backend.models;
+using TFTAtHome.Backend.storage;
 using static TFTAtHome.Backend.storage.TraitSingleton;
 
 namespace TFTAtHomeTests
@@ -234,6 +235,40 @@ namespace TFTAtHomeTests
             match.SetCardStatsForMatchForPlayer(player2);
 
             Assert.AreEqual(11, match.CurrentCardsOnBoardP1[0].Early); // +2 for Drawing, +1 for each other true card
+        }
+
+        [TestMethod]
+        public void TestOnePlayerWithDrawingCard_3FictionalCardsOnBoard()
+        {
+            // Arrange
+            Player player1 = new Player(1, "Player 1");
+            Player player2 = new Player(2, "Player 2");
+
+
+            player1.SetPlayerHand(new List<Card> { card9, LocalStorage.GetRandomFictionalCardNotDrawing(), card2 });
+            player2.SetPlayerHand(new List<Card> { LocalStorage.GetRandomFictionalCardNotDrawing(), LocalStorage.GetRandomFictionalCardNotDrawing(), card2 });
+
+            Match match = new Match(player1, player2);
+
+            // Act: Adding cards to the board
+            // Player 1 adds Eric Cartman
+            match.AddCardToBoard(match.Player1Hand[0], player1); // Eric Cartman (Drawing): 5, 8, 5, true
+
+            match.AddCardToBoard(match.Player2Hand[0], player2);
+
+            match.AddCardToBoard(match.Player1Hand[0], player1);
+
+            match.AddCardToBoard(match.Player2Hand[0], player2); 
+
+            match.AddCardToBoard(match.Player1Hand[0], player1); 
+            match.AddCardToBoard(match.Player2Hand[0], player2);
+
+
+            // Assert: Check Eric Cartman's updated stats for both players
+            match.SetCardStatsForMatchForPlayer(player1);
+            match.SetCardStatsForMatchForPlayer(player2);
+
+            Assert.AreEqual(7, match.CurrentCardsOnBoardP1[0].Early); // +0 for Drawing, +1 for each other true card
         }
     }
 }

@@ -8,6 +8,7 @@ namespace TFTAtHome.Backend.models
 {
     public enum GameState
     {
+
         Unknown,
         AWAITING_PLAYERS,
         CARDPICKING,

@@ -124,12 +124,56 @@ namespace TFTAtHome.Backend.storage
             return Cards;
         }
 
-        public static Card getCardFromName(string name)
+        public static Card GetCardFromName(string name)
         {
             foreach (Card card in Cards)
             {
                 if (card.CardName == name) return card;
             }
+            return null;
+        }
+
+        public static Card GetRandomCardByTrait(string trait)
+        {
+            Random random = new Random();
+            int counter = 0;
+            int index = random.Next(25);
+
+            for (; counter < 70; counter++)
+            {
+                if (Cards[index].Trait == trait)
+                {
+                    return Cards[index];
+                }
+                if (index == 33)
+                {
+                    index = 0;
+                }
+                index++;
+            }
+           
+            return null;
+        }
+
+        public static Card GetRandomFictionalCardNotDrawing()
+        {
+            Random random = new Random();
+            int counter = 0;
+            int index = random.Next(25);
+
+            for (; counter < 70; counter++)
+            {
+                if (Cards[index].IsFictional && Cards[index].Trait != Drawing)
+                {
+                    return Cards[index];
+                }
+                if (index == 33)
+                {
+                    index = 0;
+                }
+                index++;
+            }
+
             return null;
         }
 
