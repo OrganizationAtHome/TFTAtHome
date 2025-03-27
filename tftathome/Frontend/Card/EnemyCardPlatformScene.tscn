@@ -1,0 +1,19 @@
+[gd_scene load_steps=2 format=3 uid="uid://d2iiksqr4whtr"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7ul6b"]
+size = Vector2(304.529, 370)
+
+[node name="CardPlatform" type="StaticBody2D"]
+
+[node name="PlatformCollision" type="CollisionShape2D" parent="."]
+position = Vector2(-6.10352e-05, 0)
+shape = SubResource("RectangleShape2D_7ul6b")
+
+[node name="PlatformColor" type="ColorRect" parent="PlatformCollision"]
+offset_left = -152.5
+offset_top = -185.0
+offset_right = 152.5
+offset_bottom = 185.0
+mouse_filter = 2
+color = Color(0.844237, 0.107207, 0.0730698, 0.470588)
+metadata/_edit_use_anchors_ = true

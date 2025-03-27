@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://b1h27hcxnfw3o"]
+[gd_scene load_steps=7 format=3 uid="uid://b1h27hcxnfw3o"]
 
 [ext_resource type="Script" path="res://Frontend/Phases/PreBattleScene.cs" id="1_85yy1"]
 [ext_resource type="Texture2D" uid="uid://dloca4g7ymwgy" path="res://images/backgrounds/battlegroundnew.jpg" id="1_skx8a"]
 [ext_resource type="PackedScene" uid="uid://228x0lttm3ug" path="res://Frontend/Card/cardScene.tscn" id="2_irqvl"]
 [ext_resource type="PackedScene" uid="uid://dloqhavm42vma" path="res://Frontend/Card/CardPlatformScene.tscn" id="3_6f4ro"]
+[ext_resource type="PackedScene" uid="uid://d2iiksqr4whtr" path="res://Frontend/Card/EnemyCardPlatformScene.tscn" id="5_eoo57"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_quxlf"]
 size = Vector2(1766.06, 396.375)
@@ -76,5 +77,17 @@ offset_right = 312.0
 offset_bottom = 412.0
 theme_override_font_sizes/font_size = 71
 text = "Yeet"
+
+[node name="CardPlatform4" parent="." instance=ExtResource("5_eoo57")]
+position = Vector2(823, 337)
+scale = Vector2(0.425, 0.425)
+
+[node name="CardPlatform5" parent="." instance=ExtResource("5_eoo57")]
+position = Vector2(1122, 337)
+scale = Vector2(0.425, 0.425)
+
+[node name="CardPlatform6" parent="." instance=ExtResource("5_eoo57")]
+position = Vector2(1454, 339)
+scale = Vector2(0.425, 0.425)
 
 [connection signal="pressed" from="Button" to="." method="zimmer"]
