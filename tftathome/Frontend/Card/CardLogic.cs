@@ -4,6 +4,7 @@ using System.ComponentModel;
 
 public partial class CardLogic : Area2D {
     public static bool isDragging = false;
+    public static bool isAnimating = false;
     private static int printCount = 0;
     bool isDraggable = false;
     bool isInsideDroppable = false;
@@ -16,6 +17,7 @@ public partial class CardLogic : Area2D {
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process(double delta) {
+        if (isAnimating) { return;}
         Node2D card = GetParent() as Node2D;
         Node2D platform = card.GetParent() as Node2D;
         if (platform != null && platform.IsInGroup("handPlatform")) {
@@ -43,10 +45,11 @@ public partial class CardLogic : Area2D {
                         isDraggable = false; //Important! Animations can bypass MouseExited code and keep the card draggable
                     }
                 }
+                isAnimating = true;
 
-                
+
                 Tween tween = GetTree().CreateTween();
-                tween.Connect("finished", Callable.From(() => { isDragging = false; }));
+                tween.Connect("finished", Callable.From(() => { isDragging = false; isAnimating = false; }));
                 if (isInsideDroppable) {
                     var body = InstanceFromId(bodyRef) as Node2D;
                     Node2D cardParent = card.GetParent() as Node2D;

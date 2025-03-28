@@ -42,12 +42,9 @@ public partial class PreBattleScene : Node2D
             if (platformtarget != null)
             {
                 cardTargetted = platformtarget.GetNode("Card") as Node2D;
-                cardTargetted.Scale = new Vector2(1.2f, 1.2f);
+                cardTargetted.Scale = new Vector2(1.15f, 1.15f);
             }
         }
-
-
-
     }
 
     public void zimmer()
