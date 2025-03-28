@@ -102,20 +102,6 @@ namespace TFTAtHome.Backend.models
             return null;
         }
 
-        //  FIX ME GENERALKOCH
-        public void SetupPlayerEffects(Player player)
-        {
-            if (player == Player1)
-            {
-
-
-            }
-            else
-            {
-                // Player2Effects = GetEffectCountForCardOnBoardList(CurrentCardsOnBoardP2);
-            }
-        }
-
         private void SetCardStats(List<Card> currentPlayerCardsOnBoard, bool p1)
         {
             bool leaderBonus = currentPlayerCardsOnBoard.GetAllCardsWithTraitOnList(Leader).Count != 0 ?
@@ -250,6 +236,13 @@ namespace TFTAtHome.Backend.models
         {
             Player = player;
             CanUseNewEffect = true;
+        }
+
+
+        public KeyValuePair<MatchEffect, int> GetCurrentMatchEffectForPlayer()
+        {
+            var currentMatchEffect = MatchEffects.Where(me => me.Value > 0).OrderBy(me => me.Key.WeightedIndex).FirstOrDefault();
+            return currentMatchEffect;
         }
 
         public void SetupMatchEffects(List<Card> currentCardsOnBoard)

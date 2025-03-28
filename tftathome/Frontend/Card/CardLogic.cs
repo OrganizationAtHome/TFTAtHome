@@ -30,6 +30,12 @@ public partial class CardLogic : Area2D {
 
         if (isDraggable) {
             if (Input.IsActionJustPressed("click")) {
+                /*
+                if (card.Apply)
+                {
+                    // Dosomething
+                    return;
+                } */
                 initialPos = card.Position;
                 isDragging = true;
             }
@@ -83,6 +89,7 @@ public partial class CardLogic : Area2D {
     public void OnArea2DMouseEntered() {
         Node2D cardRoot = GetParent() as Node2D;
         Node2D parent = cardRoot.GetParent() as Node2D;
+        if (parent == null) return;
         if (!parent.IsInGroup("handPlatform") && !isDragging) {
 
             Vector2 vector2 = new Vector2(1.05f, 1.05f);
@@ -96,6 +103,7 @@ public partial class CardLogic : Area2D {
     public void OnArea2DMouseExited() {
         Node2D cardRoot = GetParent() as Node2D;
         Node2D parent = cardRoot.GetParent() as Node2D;
+        if (parent == null) return;
         if (!parent.IsInGroup("handPlatform") && !isDragging) {
             Vector2 vector2 = new Vector2(1f, 1f);
             cardRoot.Scale = vector2;

@@ -20,41 +20,39 @@ namespace TFTAtHome.util
                 CardUtil.UpdateCardStats(cardNodes[i], cardObjects[i].Early, cardObjects[i].Mid, cardObjects[i].Late);
             }
         }
+
         public static void SetupActiveEffectsButtons(GridContainer buttonContainer, Player player, Match match)
         {
-            Dictionary<MatchEffect, int> effectList = new Dictionary<MatchEffect, int>();
-
             Func<MatchEffect, bool> useEffectMethod; // Here we define the function type that we will use to call the effect
+            
+            KeyValuePair<MatchEffect, int> currentEffect;
+
 
             if (player == match.Player1)
             {
-                effectList = match.Player1Effects.MatchEffects;
-                match.Player1Effects.SetupMatchEffects(match.CurrentCardsOnBoardP1);
-                // Here we define the function that will be called when the button is pressed
                 useEffectMethod = (e) => match.Player1Effects.UseMatchEffect(e);
+                currentEffect = match.Player1Effects.GetCurrentMatchEffectForPlayer();
             } else
             {
-                effectList = match.Player2Effects.MatchEffects;
-                match.Player2Effects.SetupMatchEffects(match.CurrentCardsOnBoardP2);
                 useEffectMethod = (e) => match.Player2Effects.UseMatchEffect(e);
+                currentEffect = match.Player1Effects.GetCurrentMatchEffectForPlayer();
             }
 
-            foreach (KeyValuePair<MatchEffect, int> effect in effectList)
+            Button button = new Button();
+            button.Text = currentEffect.Key.TraitName + " " + currentEffect.Value;
+            button.Size = new Vector2(100, 50);
+            buttonContainer.AddChild(button);
+            button.Pressed += () =>
             {
-                Button button = new Button();
-                button.Text = effect.Key.TraitName + " " + effect.Value;
-                button.Size = new Vector2(100, 50);
-                buttonContainer.AddChild(button);
-                button.Pressed += () =>
+                if (!useEffectMethod(currentEffect.Key))
                 {
-                    if (!useEffectMethod(effect.Key)) { // Will return whether or not there are any effect uses left
-                        buttonContainer.RemoveChild(button);
-                    } else
-                    {
-                        button.Text = effect.Key.TraitName + " " + --effectList[effect.Key];
-                    }
-                };
-            }
+                    buttonContainer.RemoveChild(button);
+                }
+                else
+                {
+                    button.Text = currentEffect.Key.TraitName + " " + currentEffect.Value;
+                }
+            };
         }
 
         public static void UseEffectButton(Button button, MatchEffect effect, Player player)

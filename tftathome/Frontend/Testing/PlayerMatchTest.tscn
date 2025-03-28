@@ -49,6 +49,7 @@ offset_bottom = 369.0
 columns = 3
 
 [node name="SetStatsP1Btn" type="Button" parent="."]
+visible = false
 offset_left = 1486.0
 offset_top = 29.0
 offset_right = 1644.0
@@ -56,6 +57,7 @@ offset_bottom = 86.0
 text = "Set Stats P1"
 
 [node name="SetStatsP2Btn" type="Button" parent="."]
+visible = false
 offset_left = 1490.0
 offset_top = 869.0
 offset_right = 1644.0

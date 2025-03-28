@@ -12,15 +12,14 @@ namespace TFTAtHome.util
     public static class CardUtil
     {
         private static PackedScene cardScene = GD.Load<PackedScene>("res://Frontend/Card/cardScene.tscn");
-        
+            
         public static Node CreateGodotCard(string cardName, float scale)
         {
-                Card cardObj = LocalStorage.getCardFromName(cardName); // ?? throw new Exception("Could not find card!");
+                Card cardObj = LocalStorage.GetCardFromName(cardName); // ?? throw new Exception("Could not find card!");
                 string[] cardHeader = { "CardTitle", "CardName" };
                 string[] cardHeaderValues = { cardObj.CardTitle, cardObj.CardName };
                 string[] statsName = { "Early", "Mid", "Late", "Trait", "Cost" };
                 string[] statValues = cardObj.GetStatsValuesAsString();
-
                 // Create the card node
                 Node card = cardScene.Instantiate();
 
