@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.ComponentModel;
+using TFTAtHome.util;
 
 public partial class CardLogic : Area2D {
     public static bool isDragging = false;
@@ -172,8 +173,7 @@ public partial class CardLogic : Area2D {
     }
 
     private bool isMouseOverPlatform(CollisionShape2D collision) {
-
-        return new Rect2(collision.ToGlobal(collision.Shape.GetRect().Position), collision.Shape.GetRect().Size*collision.GlobalScale).HasPoint(GetGlobalMousePosition());
+        return MathUtil.IsMouseOverCollisionShape2D(collision.ToGlobal(collision.Shape.GetRect().Position), collision.Shape.GetRect(), collision.GlobalScale, collision.GetGlobalMousePosition());
     }
 
 }

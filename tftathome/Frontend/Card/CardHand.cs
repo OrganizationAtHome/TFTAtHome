@@ -1,6 +1,8 @@
 using Godot;
 using System;
 using System.Linq;
+using System.Security.Cryptography;
+using TFTAtHome.util;
 
 public partial class CardHand : StaticBody2D
 {
@@ -17,6 +19,8 @@ public partial class CardHand : StaticBody2D
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
+
+
         if (!CardLogic.isDragging) {
             if (cardTargetted != null)
                 cardTargetted.Scale = new Vector2(1f, 1f);
@@ -32,7 +36,20 @@ public partial class CardHand : StaticBody2D
         CollisionShape2D center = this.GetNode("CardSpace") as CollisionShape2D;
         var platforms = center.GetChildren().Cast<StaticBody2D>().ToList();
 
+
         var moooooooose = center.GetGlobalMousePosition().X;
+
+        if (platforms.Count == 0 ) return null;
+        var cardbody = center.GetChildren()[0].GetNode("Card/CardBody/CardCollision") as CollisionShape2D;
+        var width = cardbody.Shape.GetRect().Size.X *2 * cardbody.GlobalScale.X * platforms.Count;
+        var centerPos = center.GlobalPosition;
+        var newCenterPos = new Vector2(centerPos.X-width/4.5f, centerPos.Y-(center.Shape.GetRect().Size.Y/4));
+        var rect = new Rect2(newCenterPos, new Vector2( width*0.85f, center.Shape.GetRect().Size.Y));
+        if (!MathUtil.IsMouseOverCollisionShape2D(newCenterPos, rect, center.GlobalScale, center.GetGlobalMousePosition())) {
+            return null;
+        }
+
+
         StaticBody2D found = null;
         var lastindex = 0;
         for (int i = 0; i < platforms.Count; i++) {
@@ -114,7 +131,7 @@ public partial class CardHand : StaticBody2D
         }
     }
 
-    public double CalcRealisticHandWidthSize(float x, int cardCount) {
-        return x * (1 - 1 / Math.Pow(1.15, cardCount));
+    public double CalcRealisticHandWidthSize(float length, int cardCount) {
+        return length * (1 - 1 / Math.Pow(1.15, cardCount));
     }
 }
