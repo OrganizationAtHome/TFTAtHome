@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="TFTAtHome"
-run/main_scene="res://Frontend/Testing/PlayerMatchTest.tscn"
+run/main_scene="res://Frontend/Phases/PreBattleScene.tscn"
 config/features=PackedStringArray("4.3", "C#", "Forward Plus")
 config/icon="res://icon.svg"
 

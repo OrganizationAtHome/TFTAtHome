@@ -175,6 +175,16 @@ namespace TFTAtHome.util
             parentContainer.AddChild(container);
         }
 
+        public static Node2D CreateCardForBattleFieldPlatform(Card card, StaticBody2D platform)
+        {
+            Node customCard = CreateGodotCard(card, 1.0f);
+            Node2D card2D = customCard as Node2D;
+
+            platform.AddChild(card2D);
+
+            return card2D;
+        }
+
         public static float GetCardWidth()
         {
             Node card = cardScene.Instantiate();
