@@ -17,13 +17,19 @@ public partial class CardLogic : Area2D {
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process(double delta) {
-        if (isAnimating) { return;}
+        if (isAnimating) {
+            GD.Print("WEEEEEEEEEEEEEEEEEEEEEEEEE"); 
+            return;
+            
+        }
         Node2D card = GetParent() as Node2D;
         Node2D platform = card.GetParent() as Node2D;
+        CardHand handCard = platform.GetParent().GetParent() as CardHand;
+
         if (platform != null && platform.IsInGroup("handPlatform")) {
             PreBattleScene preBattleScene = InstanceFromId(PreBattleScene.PreBattleSceneId) as PreBattleScene;
-            Node2D handCard = preBattleScene.cardTargetted;
-            if (handCard != null && !this.Equals(handCard.GetNode("CardBody") as CardLogic)) {
+            Node2D targettedCard = handCard.cardTargetted;
+            if (targettedCard != null && !this.Equals(targettedCard.GetNode("CardBody") as CardLogic)) {
                 return;
             }
         }
@@ -39,10 +45,10 @@ public partial class CardLogic : Area2D {
                 initialPos = card.Position;
                 isDragging = true;
             }
-            if (Input.IsActionPressed("click")) {       
+            if (Input.IsActionPressed("click") && isDragging) {       
                 Vector2 mousePos = GetGlobalMousePosition();
                 card.GlobalPosition = mousePos;
-            } else if (Input.IsActionJustReleased("click")) {
+            } else if (Input.IsActionJustReleased("click") && isDragging) {
                 if (IsParentCardPlatform()) {
                     CollisionShape2D collision = platform.GetNode("PlatformCollision") as CollisionShape2D;
                     GD.Print(collision.ToGlobal(collision.Shape.GetRect().Position));
@@ -68,7 +74,7 @@ public partial class CardLogic : Area2D {
                     body.RemoveFromGroup("droppable");
                     if (cardParent.GetGroups().Contains("handPlatform")) {
                         cardParent.GetParent().RemoveChild(cardParent);
-                        (InstanceFromId(PreBattleScene.PreBattleSceneId) as PreBattleScene).ReshuffleHands();// reshuffle hands
+                        handCard.Shuffle();// reshuffle hands
                     } else {
                         cardParent.AddToGroup("droppable");
                     }

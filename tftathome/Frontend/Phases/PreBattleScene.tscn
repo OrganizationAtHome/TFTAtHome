@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://b1h27hcxnfw3o"]
+[gd_scene load_steps=8 format=3 uid="uid://b1h27hcxnfw3o"]
 
 [ext_resource type="Script" path="res://Frontend/Phases/PreBattleScene.cs" id="1_85yy1"]
 [ext_resource type="Texture2D" uid="uid://dloca4g7ymwgy" path="res://images/backgrounds/battlegroundnew.jpg" id="1_skx8a"]
 [ext_resource type="PackedScene" uid="uid://228x0lttm3ug" path="res://Frontend/Card/cardScene.tscn" id="2_irqvl"]
 [ext_resource type="PackedScene" uid="uid://dloqhavm42vma" path="res://Frontend/Card/CardPlatformScene.tscn" id="3_6f4ro"]
 [ext_resource type="PackedScene" uid="uid://d2iiksqr4whtr" path="res://Frontend/Card/EnemyCardPlatformScene.tscn" id="5_eoo57"]
+[ext_resource type="Script" path="res://Frontend/Card/CardHand.cs" id="5_vl8ev"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_quxlf"]
 size = Vector2(1766.06, 396.375)
@@ -32,19 +33,21 @@ offset_right = 608.0
 offset_bottom = 947.0
 text = "Zimmer's magiske knap"
 
-[node name="CardHand1" type="StaticBody2D" parent="."]
+[node name="CardHandMe" type="StaticBody2D" parent="."]
 position = Vector2(1118, 747)
 input_pickable = true
+script = ExtResource("5_vl8ev")
 
-[node name="CardSpace1" type="CollisionShape2D" parent="CardHand1"]
+[node name="CardSpace" type="CollisionShape2D" parent="CardHandMe"]
 scale = Vector2(0.5, 0.5)
 shape = SubResource("RectangleShape2D_quxlf")
 
-[node name="CardHand2" type="StaticBody2D" parent="."]
+[node name="CardHandEnemy" type="StaticBody2D" parent="."]
 position = Vector2(1117, 145)
 rotation = 1.5708
+script = ExtResource("5_vl8ev")
 
-[node name="CardSpace2" type="CollisionShape2D" parent="CardHand2"]
+[node name="CardSpace" type="CollisionShape2D" parent="CardHandEnemy"]
 rotation = 1.5708
 scale = Vector2(0.5, 0.5)
 shape = SubResource("RectangleShape2D_quxlf")
