@@ -10,7 +10,6 @@ size = Vector2(304.529, 370)
 
 [node name="Card" type="Node2D"]
 position = Vector2(0, 4.23516e-22)
-scale = Vector2(0.998265, 1)
 
 [node name="CardBody" type="Area2D" parent="."]
 position = Vector2(-4.57764e-05, 7.62939e-06)

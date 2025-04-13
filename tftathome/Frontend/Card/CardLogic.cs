@@ -10,6 +10,7 @@ public partial class CardLogic : Area2D {
     bool isInsideDroppable = false;
     ulong bodyRef;
     Vector2 initialPos;
+    bool QueuedForClick = false;
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready() {
@@ -17,25 +18,25 @@ public partial class CardLogic : Area2D {
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process(double delta) {
-        if (isAnimating) {
-            GD.Print("WEEEEEEEEEEEEEEEEEEEEEEEEE"); 
-            return;
-            
-        }
         Node2D card = GetParent() as Node2D;
         Node2D platform = card.GetParent() as Node2D;
         CardHand handCard = platform.GetParent().GetParent() as CardHand;
 
         if (platform != null && platform.IsInGroup("handPlatform")) {
-            PreBattleScene preBattleScene = InstanceFromId(PreBattleScene.PreBattleSceneId) as PreBattleScene;
             Node2D targettedCard = handCard.cardTargetted;
             if (targettedCard != null && !this.Equals(targettedCard.GetNode("CardBody") as CardLogic)) {
                 return;
             }
         }
+        CollisionShape2D collision = platform.GetNode("PlatformCollision") as CollisionShape2D;
 
         if (isDraggable) {
             if (Input.IsActionJustPressed("click")) {
+                if (isDragging) {
+                    GD.Print("Already dragging");
+                    QueuedForClick = true;
+                    return;
+                }
                 /*
                 if (card.Apply)
                 {
@@ -45,15 +46,24 @@ public partial class CardLogic : Area2D {
                 initialPos = card.Position;
                 isDragging = true;
             }
-            if (Input.IsActionPressed("click") && isDragging) {       
-                Vector2 mousePos = GetGlobalMousePosition();
-                card.GlobalPosition = mousePos;
+            if (Input.IsActionPressed("click") && (isDragging || (QueuedForClick && isMouseOverPlatform(collision)))) {  
+                if (QueuedForClick && !isAnimating) {
+                    // Do whatever is in IsActionJustPressed + falsify QueuedForClick
+                    initialPos = card.Position;
+                    isDragging = true;
+                    QueuedForClick = false;
+                }
+
+                if (isDragging) {
+                    Vector2 mousePos = GetGlobalMousePosition();
+                    card.GlobalPosition = mousePos;
+                }
             } else if (Input.IsActionJustReleased("click") && isDragging) {
+                if (isAnimating) { return; }
                 if (IsParentCardPlatform()) {
-                    CollisionShape2D collision = platform.GetNode("PlatformCollision") as CollisionShape2D;
                     GD.Print(collision.ToGlobal(collision.Shape.GetRect().Position));
                     GD.Print(GetLocalMousePosition());
-                    if (!new Rect2(collision.ToGlobal(collision.Shape.GetRect().Position), collision.Shape.GetRect().Size).HasPoint(GetGlobalMousePosition())) {
+                    if (!isMouseOverPlatform(collision)) {
                         isDraggable = false; //Important! Animations can bypass MouseExited code and keep the card draggable
                     }
                 }
@@ -61,7 +71,7 @@ public partial class CardLogic : Area2D {
 
 
                 Tween tween = GetTree().CreateTween();
-                tween.Connect("finished", Callable.From(() => { isDragging = false; isAnimating = false; }));
+                tween.Connect("finished", Callable.From(() => { softReset(); isDragging = false; isAnimating = false;  }));
                 if (isInsideDroppable) {
                     var body = InstanceFromId(bodyRef) as Node2D;
                     Node2D cardParent = card.GetParent() as Node2D;
@@ -148,4 +158,22 @@ public partial class CardLogic : Area2D {
         }
         return GetParent().GetParent().Name.ToString().Contains("CardPlatform");
     }
+
+    private void softReset() {
+        Node2D card = GetParent() as Node2D;
+        Node2D platform = card.GetParent() as Node2D;
+        CardHand handCard = platform.GetParent().GetParent() as CardHand;
+        CollisionShape2D collision = platform.GetNode("PlatformCollision") as CollisionShape2D;
+        if (!isMouseOverPlatform(collision)) {
+            isDraggable = false;
+            isInsideDroppable = false;
+            QueuedForClick = false;
+        }
+    }
+
+    private bool isMouseOverPlatform(CollisionShape2D collision) {
+
+        return new Rect2(collision.ToGlobal(collision.Shape.GetRect().Position), collision.Shape.GetRect().Size*collision.GlobalScale).HasPoint(GetGlobalMousePosition());
+    }
+
 }

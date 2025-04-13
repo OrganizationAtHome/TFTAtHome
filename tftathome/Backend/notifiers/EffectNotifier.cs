@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+/*
 namespace TFTAtHome.Backend.notifiers
 {
     public class EffectNotifier
@@ -11,3 +11,4 @@ namespace TFTAtHome.Backend.notifiers
         public event EventHandler 
     }
 }
+    */

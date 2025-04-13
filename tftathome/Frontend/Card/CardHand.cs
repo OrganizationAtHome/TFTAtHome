@@ -33,7 +33,6 @@ public partial class CardHand : StaticBody2D
         var platforms = center.GetChildren().Cast<StaticBody2D>().ToList();
 
         var moooooooose = center.GetGlobalMousePosition().X;
-        ((InstanceFromId(PreBattleScene.PreBattleSceneId) as PreBattleScene).GetNode("Moose") as Label).Text = moooooooose.ToString();
         StaticBody2D found = null;
         var lastindex = 0;
         for (int i = 0; i < platforms.Count; i++) {
@@ -48,11 +47,9 @@ public partial class CardHand : StaticBody2D
                 var lastMooCompare = Math.Abs(lastPlat - moooooooose);
                 if (currentMooCompare.CompareTo(lastMooCompare) < 0) {
                     found = platforms[i];
-                    ((InstanceFromId(PreBattleScene.PreBattleSceneId) as PreBattleScene).GetNode("FoundCounter") as Label).Text = i.ToString();
                     break;
                 } else {
                     found = platforms[lastindex];
-                    ((InstanceFromId(PreBattleScene.PreBattleSceneId) as PreBattleScene).GetNode("FoundCounter") as Label).Text = lastindex.ToString();
                     break;
                 }
             } else {
@@ -61,7 +58,7 @@ public partial class CardHand : StaticBody2D
         }
         if (found == null && platforms.Count > 0) {
             found = platforms[platforms.Count - 1];
-            ((InstanceFromId(PreBattleScene.PreBattleSceneId) as PreBattleScene).GetNode("FoundCounter") as Label).Text = (platforms.Count - 1).ToString();
+        
         }
         return found;
     }
