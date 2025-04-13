@@ -24,6 +24,14 @@ shape = SubResource("RectangleShape2D_u0bti")
 position = Vector2(-6.10352e-05, 7.62939e-06)
 script = ExtResource("2_1yo14")
 
+[node name="CardHighlight" type="ColorRect" parent="CardVisuals"]
+visible = false
+offset_left = -156.0
+offset_top = -190.0
+offset_right = 157.0
+offset_bottom = 189.0
+color = Color(1, 0, 0, 1)
+
 [node name="CardBackground" type="ColorRect" parent="CardVisuals"]
 anchors_preset = -1
 anchor_left = 0.036

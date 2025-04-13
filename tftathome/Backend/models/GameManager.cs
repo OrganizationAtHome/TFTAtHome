@@ -6,8 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using TFTAtHome.Backend.models.Matches;
 using TFTAtHome.Backend.storage;
-using TFTAtHome.Backend.models;
 using static TFTAtHome.util.MultiplayerUtil;
 
 namespace TFTAtHome.Backend.models

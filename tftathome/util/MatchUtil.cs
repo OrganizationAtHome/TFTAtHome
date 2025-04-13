@@ -7,6 +7,8 @@ using System.Text;
 using System.Threading.Tasks;
 using TFTAtHome.Backend.models;
 using TFTAtHome.Backend.models.Effect;
+using TFTAtHome.Backend.models.Matches;
+using TFTAtHome.Backend.notifiers;
 
 namespace TFTAtHome.util
 {
@@ -18,6 +20,14 @@ namespace TFTAtHome.util
             for (int i = 0; i < cardNodes.Count; i++)
             {
                 CardUtil.UpdateCardStats(cardNodes[i], cardObjects[i].Early, cardObjects[i].Mid, cardObjects[i].Late);
+            }
+        }
+
+        public static void HighLightEffectableCards(List<Node2D> cardNodes)
+        {
+            foreach (var cardNode in cardNodes)
+            {
+                CardUtil.HighLightCard(cardNode, true);
             }
         }
 
@@ -52,6 +62,7 @@ namespace TFTAtHome.util
                 {
                     button.Text = currentEffect.Key.TraitName + " " + currentEffect.Value;
                 }
+                EffectNotifier.NotifyEffectUsed();
             };
         }
 

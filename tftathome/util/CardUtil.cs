@@ -96,6 +96,21 @@ namespace TFTAtHome.util
             }
         }
 
+        public static Card GetCardModelFromCardNode(Node2D node2D)
+        {
+            string cardName = ((RichTextLabel)GetNodeFromCard(node2D, "CardName")).Text;
+
+            Card card = LocalStorage.GetCardFromName(cardName);
+
+            return card;
+        }
+
+        public static void HighLightCard(Node2D card, bool active)
+        {
+            ColorRect highlight = (ColorRect)GetNodeFromCard(card, "CardHighlight");
+            highlight.Visible = active;
+        }
+
         /**
      * RETURNS A Node OR NULL
      */
