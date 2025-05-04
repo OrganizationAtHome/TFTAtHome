@@ -41,7 +41,7 @@ public partial class CardLogic : Area2D {
                 /*
                 if (card.Apply)
                 {
-                    // Dosomething
+                    // Do something "important"
                     return;
                 } */
                 initialPos = card.Position;
@@ -64,9 +64,6 @@ public partial class CardLogic : Area2D {
                 if (IsParentCardPlatform()) {
                     GD.Print(collision.ToGlobal(collision.Shape.GetRect().Position));
                     GD.Print(GetLocalMousePosition());
-                    if (!isMouseOverPlatform(collision)) {
-                        isDraggable = false; //Important! Animations can bypass MouseExited code and keep the card draggable
-                    }
                 }
                 isAnimating = true;
 
@@ -74,6 +71,7 @@ public partial class CardLogic : Area2D {
                 Tween tween = GetTree().CreateTween();
                 tween.Connect("finished", Callable.From(() => { softReset(); isDragging = false; isAnimating = false;  }));
                 if (isInsideDroppable) {
+                    
                     var body = InstanceFromId(bodyRef) as Node2D;
                     Node2D cardParent = card.GetParent() as Node2D;
 
@@ -86,6 +84,7 @@ public partial class CardLogic : Area2D {
                     if (cardParent.GetGroups().Contains("handPlatform")) {
                         cardParent.GetParent().RemoveChild(cardParent);
                         handCard.Shuffle();// reshuffle hands
+                        softReset();
                     } else {
                         cardParent.AddToGroup("droppable");
                     }
