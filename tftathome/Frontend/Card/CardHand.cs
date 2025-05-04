@@ -84,7 +84,7 @@ public partial class CardHand : StaticBody2D
 
 
         if (platforms.Count == 0) {
-            GD.PushWarning("No platforms found: FanShuffle edition");
+            GD.PushWarning("No platforms found");
             return;
         } 
         var cardBody = center.GetChildren()[0].GetNode("Card/CardBody/CardCollision") as CollisionShape2D;
