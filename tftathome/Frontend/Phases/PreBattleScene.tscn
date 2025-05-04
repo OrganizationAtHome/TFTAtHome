@@ -10,16 +10,10 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_quxlf"]
 size = Vector2(1766.06, 396.375)
 
-[node name="PreBattleScene" type="Node2D" node_paths=PackedStringArray("CardPlatform", "CardPlatform2", "CardPlatform3", "CardPlatform4", "CardPlatform5", "CardPlatform6")]
+[node name="PreBattleScene" type="Node2D"]
 script = ExtResource("1_85yy1")
 CardScene = ExtResource("2_irqvl")
 CardPlatformScene = ExtResource("3_6f4ro")
-CardPlatform = NodePath("CardPlatform")
-CardPlatform2 = NodePath("CardPlatform2")
-CardPlatform3 = NodePath("CardPlatform3")
-CardPlatform4 = NodePath("CardPlatform4")
-CardPlatform5 = NodePath("CardPlatform5")
-CardPlatform6 = NodePath("CardPlatform6")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 clip_contents = true

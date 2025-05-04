@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\USERS\\ZIMMER\\DOCUMENTS\\GITHUB\\TFTATHOME\\TFTAtHomeTests\\TFTAtHomeTests.csproj": {}
+    "C:\\Users\\Zimmer\\Documents\\GitHub\\TFTAtHome\\TFTAtHomeTests\\TFTAtHomeTests.csproj": {}
   },
   "projects": {
-    "C:\\USERS\\ZIMMER\\DOCUMENTS\\GITHUB\\TFTATHOME\\TFTAtHomeTests\\TFTAtHomeTests.csproj": {
+    "C:\\Users\\Zimmer\\Documents\\GitHub\\TFTAtHome\\TFTAtHomeTests\\TFTAtHomeTests.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\USERS\\ZIMMER\\DOCUMENTS\\GITHUB\\TFTATHOME\\TFTAtHomeTests\\TFTAtHomeTests.csproj",
+        "projectUniqueName": "C:\\Users\\Zimmer\\Documents\\GitHub\\TFTAtHome\\TFTAtHomeTests\\TFTAtHomeTests.csproj",
         "projectName": "TFTAtHomeTests",
-        "projectPath": "C:\\USERS\\ZIMMER\\DOCUMENTS\\GITHUB\\TFTATHOME\\TFTAtHomeTests\\TFTAtHomeTests.csproj",
+        "projectPath": "C:\\Users\\Zimmer\\Documents\\GitHub\\TFTAtHome\\TFTAtHomeTests\\TFTAtHomeTests.csproj",
         "packagesPath": "C:\\Users\\Zimmer\\.nuget\\packages\\",
-        "outputPath": "C:\\USERS\\ZIMMER\\DOCUMENTS\\GITHUB\\TFTATHOME\\TFTAtHomeTests\\obj\\",
+        "outputPath": "C:\\Users\\Zimmer\\Documents\\GitHub\\TFTAtHome\\TFTAtHomeTests\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Zimmer\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -29,8 +29,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\USERS\\ZIMMER\\DOCUMENTS\\GITHUB\\TFTATHOME\\TFTATHOME\\TFTAtHome.csproj": {
-                "projectPath": "C:\\USERS\\ZIMMER\\DOCUMENTS\\GITHUB\\TFTATHOME\\TFTATHOME\\TFTAtHome.csproj"
+              "C:\\Users\\Zimmer\\Documents\\GitHub\\TFTAtHome\\TFTATHOME\\TFTAtHome.csproj": {
+                "projectPath": "C:\\Users\\Zimmer\\Documents\\GitHub\\TFTAtHome\\TFTATHOME\\TFTAtHome.csproj"
               }
             }
           }
@@ -87,14 +87,14 @@
         }
       }
     },
-    "C:\\USERS\\ZIMMER\\DOCUMENTS\\GITHUB\\TFTATHOME\\TFTATHOME\\TFTAtHome.csproj": {
+    "C:\\Users\\Zimmer\\Documents\\GitHub\\TFTAtHome\\tftathome\\TFTAtHome.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\USERS\\ZIMMER\\DOCUMENTS\\GITHUB\\TFTATHOME\\TFTATHOME\\TFTAtHome.csproj",
+        "projectUniqueName": "C:\\Users\\Zimmer\\Documents\\GitHub\\TFTAtHome\\tftathome\\TFTAtHome.csproj",
         "projectName": "TFTAtHome",
-        "projectPath": "C:\\USERS\\ZIMMER\\DOCUMENTS\\GITHUB\\TFTATHOME\\TFTATHOME\\TFTAtHome.csproj",
+        "projectPath": "C:\\Users\\Zimmer\\Documents\\GitHub\\TFTAtHome\\tftathome\\TFTAtHome.csproj",
         "packagesPath": "C:\\Users\\Zimmer\\.nuget\\packages\\",
-        "outputPath": "C:\\USERS\\ZIMMER\\DOCUMENTS\\GITHUB\\TFTATHOME\\TFTATHOME\\.godot\\mono\\temp\\obj\\",
+        "outputPath": "C:\\Users\\Zimmer\\Documents\\GitHub\\TFTAtHome\\tftathome\\.godot\\mono\\temp\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Zimmer\\AppData\\Roaming\\NuGet\\NuGet.Config",
