@@ -31,6 +31,11 @@ public partial class PreBattleScene : Node2D
     public StaticBody2D CardPlatform5 { get; set; }
     [Export]
     public StaticBody2D CardPlatform6 { get; set; }
+    [Export]
+    GridContainer P1Effects { get; set; }
+    [Export]
+    GridContainer P2Effects { get; set; }
+
     private Match match;
     private List<Node2D> p1CardNodes;
     private List<Node2D> p2CardNodes;
@@ -146,5 +151,6 @@ public partial class PreBattleScene : Node2D
         match.Player1Effects.SetupMatchEffects(match.CurrentCardsOnBoardP1);
         match.Player2Effects.SetupMatchEffects(match.CurrentCardsOnBoardP2);
 
+        MatchUtil.SetupActiveEffectsButtons(match.Player1Effects, player1, match);
     }
 }

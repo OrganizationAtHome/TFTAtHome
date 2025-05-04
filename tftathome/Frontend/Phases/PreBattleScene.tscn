@@ -87,4 +87,16 @@ script = ExtResource("5_vl8ev")
 scale = Vector2(0.5, 0.5)
 shape = SubResource("RectangleShape2D_quxlf")
 
+[node name="P2EffectButtons" type="GridContainer" parent="."]
+offset_left = 1565.0
+offset_top = 649.0
+offset_right = 1670.0
+offset_bottom = 850.0
+
+[node name="P1EffectButtons" type="GridContainer" parent="."]
+offset_left = 1565.0
+offset_top = 47.0
+offset_right = 1672.0
+offset_bottom = 238.0
+
 [connection signal="pressed" from="Button" to="." method="zimmer"]

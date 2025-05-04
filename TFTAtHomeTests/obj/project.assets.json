@@ -1092,19 +1092,27 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Zimmer\\.nuget\\packages\\": {}
+    "C:\\Users\\danie\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
+<<<<<<< HEAD
       "projectUniqueName": "C:\\Users\\Zimmer\\Documents\\GitHub\\TFTAtHome\\TFTAtHomeTests\\TFTAtHomeTests.csproj",
       "projectName": "TFTAtHomeTests",
       "projectPath": "C:\\Users\\Zimmer\\Documents\\GitHub\\TFTAtHome\\TFTAtHomeTests\\TFTAtHomeTests.csproj",
       "packagesPath": "C:\\Users\\Zimmer\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\Zimmer\\Documents\\GitHub\\TFTAtHome\\TFTAtHomeTests\\obj\\",
+=======
+      "projectUniqueName": "C:\\Users\\danie\\Documents\\GitHub\\TFTAtHome\\TFTAtHomeTests\\TFTAtHomeTests.csproj",
+      "projectName": "TFTAtHomeTests",
+      "projectPath": "C:\\Users\\danie\\Documents\\GitHub\\TFTAtHome\\TFTAtHomeTests\\TFTAtHomeTests.csproj",
+      "packagesPath": "C:\\Users\\danie\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\danie\\Documents\\GitHub\\TFTAtHome\\TFTAtHomeTests\\obj\\",
+>>>>>>> b08392e364ce56a81361e4e9f44070159b89b9a1
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Zimmer\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\danie\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -1119,8 +1127,13 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
+<<<<<<< HEAD
             "C:\\Users\\Zimmer\\Documents\\GitHub\\TFTAtHome\\TFTATHOME\\TFTAtHome.csproj": {
               "projectPath": "C:\\Users\\Zimmer\\Documents\\GitHub\\TFTAtHome\\TFTATHOME\\TFTAtHome.csproj"
+=======
+            "C:\\Users\\danie\\Documents\\GitHub\\TFTAtHome\\TFTATHOME\\TFTAtHome.csproj": {
+              "projectPath": "C:\\Users\\danie\\Documents\\GitHub\\TFTAtHome\\TFTATHOME\\TFTAtHome.csproj"
+>>>>>>> b08392e364ce56a81361e4e9f44070159b89b9a1
             }
           }
         }
@@ -1173,7 +1186,18 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.408/PortableRuntimeIdentifierGraph.json"
+      "path": "../tftathome/TFTAtHome.csproj",
+      "msbuildProject": "../tftathome/TFTAtHome.csproj"
+    "C:\\Users\\danie\\.nuget\\packages\\": {}
+      "projectUniqueName": "C:\\Users\\danie\\Documents\\GitHub\\TFTAtHome\\TFTAtHomeTests\\TFTAtHomeTests.csproj",
+      "projectPath": "C:\\Users\\danie\\Documents\\GitHub\\TFTAtHome\\TFTAtHomeTests\\TFTAtHomeTests.csproj",
+      "packagesPath": "C:\\Users\\danie\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\danie\\Documents\\GitHub\\TFTAtHome\\TFTAtHomeTests\\obj\\",
+        "C:\\Users\\danie\\AppData\\Roaming\\NuGet\\NuGet.Config",
+            "C:\\Users\\danie\\Documents\\GitHub\\TFTAtHome\\TFTATHOME\\TFTAtHome.csproj": {
+              "projectPath": "C:\\Users\\danie\\Documents\\GitHub\\TFTAtHome\\TFTATHOME\\TFTAtHome.csproj"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.408/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
