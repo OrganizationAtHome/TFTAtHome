@@ -32,9 +32,9 @@ public partial class PreBattleScene : Node2D
     [Export]
     public StaticBody2D CardPlatform6 { get; set; }
     [Export]
-    GridContainer P1Effects { get; set; }
+    GridContainer P1EffectButtons { get; set; }
     [Export]
-    GridContainer P2Effects { get; set; }
+    GridContainer P2EffectButtons { get; set; }
 
     private Match match;
     private List<Node2D> p1CardNodes;
@@ -50,6 +50,8 @@ public partial class PreBattleScene : Node2D
         
         Player testPlayer = new Player(1, "Test");
 
+        P1EffectButtons = GetNode<GridContainer>("P1EffectButtons");
+        
         SetupActiveTraitTest();
     }
 
@@ -151,6 +153,6 @@ public partial class PreBattleScene : Node2D
         match.Player1Effects.SetupMatchEffects(match.CurrentCardsOnBoardP1);
         match.Player2Effects.SetupMatchEffects(match.CurrentCardsOnBoardP2);
 
-        MatchUtil.SetupActiveEffectsButtons(match.Player1Effects, player1, match);
+        MatchUtil.SetupActiveEffectsButtons(P1EffectButtons, player1, match);
     }
 }
