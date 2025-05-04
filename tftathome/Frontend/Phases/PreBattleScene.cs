@@ -49,8 +49,7 @@ public partial class PreBattleScene : Node2D
         center1Id = this.GetNode("CardHandMe/CardSpace").GetInstanceId();
         
         Player testPlayer = new Player(1, "Test");
-
-        P1EffectButtons = GetNode<GridContainer>("P1EffectButtons");
+        
         
         SetupActiveTraitTest();
     }

@@ -45,7 +45,7 @@ namespace TFTAtHome.util
             } else
             {
                 useEffectMethod = (e) => match.Player2Effects.UseMatchEffect(e);
-                currentEffect = match.Player1Effects.GetCurrentMatchEffectForPlayer();
+                currentEffect = match.Player2Effects.GetCurrentMatchEffectForPlayer();
             }
 
             Button button = new Button();
