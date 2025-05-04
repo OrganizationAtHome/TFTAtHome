@@ -177,6 +177,11 @@ namespace TFTAtHome.util
 
         public static Node2D CreateCardForBattleFieldPlatform(Card card, StaticBody2D platform)
         {
+            if (card == null || platform == null)
+            {
+                GD.PushError("Card/platform is null");
+                return null;
+            }
             Node customCard = CreateGodotCard(card, 1.0f);
             Node2D card2D = customCard as Node2D;
 
