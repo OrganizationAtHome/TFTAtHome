@@ -180,6 +180,8 @@ namespace TFTAtHome.util
             Node customCard = CreateGodotCard(card, 1.0f);
             Node2D card2D = customCard as Node2D;
 
+            platform.RemoveFromGroup("droppable");
+
             platform.AddChild(card2D);
 
             return card2D;

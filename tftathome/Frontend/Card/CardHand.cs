@@ -15,7 +15,7 @@ public partial class CardHand : StaticBody2D
             return;
         }
     }
-
+    
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{

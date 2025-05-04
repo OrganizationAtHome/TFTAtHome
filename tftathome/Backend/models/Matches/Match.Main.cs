@@ -13,11 +13,9 @@ namespace TFTAtHome.Backend.models.Matches
 {
     public partial class Match
     {
-
         // TODO --> Implement logic for MovieHero -> Card needs to get +3 on all stages after a match
         public Player Player1 { get; set; }
         public Player Player2 { get; set; }
-
         public List<Card> Player1Hand { get; set; }
         public List<Card> Player2Hand { get; set; }
         public List<Card> CurrentCardsOnBoardP1 { get; set; }
