@@ -25,7 +25,7 @@ public partial class CardLogic : Area2D {
 
         if (handCard != null && platform.IsInGroup("handPlatform")) {
             Node2D targettedCard = handCard.cardTargetted;
-            if (targettedCard != null && !this.Equals(targettedCard.GetNode("CardBody") as CardLogic)) {
+            if (targettedCard != null && !Equals(targettedCard.GetNode("CardBody") as CardLogic)) {
                 return;
             }
         }
