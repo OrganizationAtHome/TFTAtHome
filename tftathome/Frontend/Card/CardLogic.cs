@@ -37,6 +37,7 @@ public partial class CardLogic : Area2D {
                     QueuedForClick = true;
                     return;
                 }
+                // Implement check for click when player is using effect
                 /*
                 if (card.Apply)
                 {

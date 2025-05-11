@@ -25,7 +25,7 @@ namespace TFTAtHome.Backend.models.Matches
         public int RoundNumber { get; set; }
         public List<Round> Rounds { get; set; }
         public Round CurrentRound { get; set; }
-
+        
 
         public Match(Player player1, Player player2)
         {
@@ -71,7 +71,7 @@ namespace TFTAtHome.Backend.models.Matches
 
         public void RunInitialRound()
         {
-            Round initialRound = new SpecialRound(this, "Initial");
+            Round initialRound = new EffectRound(this);
             Rounds.Add(initialRound);
             this.CurrentRound = initialRound;
             SetCardStatsForMatchForPlayer(Player1);
@@ -80,11 +80,11 @@ namespace TFTAtHome.Backend.models.Matches
             Player2Effects = new PlayerCardEffects(Player2);
             Player1Effects.SetupMatchEffects(CurrentCardsOnBoardP1);
             Player1Effects.SetupMatchEffects(CurrentCardsOnBoardP2);
-
+            /*
             if (Player1Effects.MatchEffects.Count > 0)
             {
                 EffectNotifier.NotifyNeedsToUseEffect(Player1);
-            }
+            } */
         }
 
         public void SetCardStatsForMatchForPlayer(Player player)

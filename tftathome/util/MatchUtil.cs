@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using TFTAtHome.Backend.models;
 using TFTAtHome.Backend.models.Effect;
 using TFTAtHome.Backend.models.Matches;
+using TFTAtHome.Backend.models.Rounds;
 using TFTAtHome.Backend.notifiers;
 
 namespace TFTAtHome.util
@@ -23,11 +24,16 @@ namespace TFTAtHome.util
             }
         }
 
-        public static void HighLightEffectableCards(List<Node2D> cardNodes)
+        /// <summary>
+        /// This method highlights the cards in the frontend 
+        /// </summary>
+        /// <param name="cardNodes"></param>
+        /// <param name="active"></param>
+        public static void HighLightEffectableCards(List<Node2D> cardNodes, bool active)
         {
             foreach (var cardNode in cardNodes)
             {
-                CardUtil.HighLightCard(cardNode, true);
+                CardUtil.HighLightCard(cardNode, active);
             }
         }
 
@@ -37,16 +43,21 @@ namespace TFTAtHome.util
             
             KeyValuePair<MatchEffect, int> currentEffect;
 
-
+            
+            // When button is pressed we need to notify frontend that they must click on card
+            // 
+            
             if (player == match.Player1)
             {
                 useEffectMethod = (e) => match.Player1Effects.UseMatchEffect(e);
                 currentEffect = match.Player1Effects.GetCurrentMatchEffectForPlayer();
+                if (currentEffect.Value == 0) return;
             } else
             {
                 useEffectMethod = (e) => match.Player2Effects.UseMatchEffect(e);
                 currentEffect = match.Player2Effects.GetCurrentMatchEffectForPlayer();
-            }
+                if (currentEffect.Value == 0) return;
+            } 
 
             Button button = new Button();
             button.Text = currentEffect.Key.TraitName + " " + currentEffect.Value;
@@ -57,19 +68,18 @@ namespace TFTAtHome.util
                 if (!useEffectMethod(currentEffect.Key))
                 {
                     buttonContainer.RemoveChild(button);
+                    EffectNotifier.NotifyNeedsToUseEffect(player);
+                    var currentRound = match.CurrentRound as EffectRound;
+                    if (currentRound == null) throw new Exception("Our round logic is fucked up");
+                    currentRound.IsUsingEffect = true;
                 }
                 else
                 {
                     button.Text = currentEffect.Key.TraitName + " " + currentEffect.Value;
                 }
-                EffectNotifier.NotifyEffectUsed();
             };
         }
-
-        public static void UseEffectButton(Button button, MatchEffect effect, Player player)
-        {
-            
-        }
+        
 
         /** 
          THIS METHOD NEEDS TO BE EDITED TO WORK WITH THE PROPER SCENE, RIGHT NOW IT IS USING THE TEST SCENE
