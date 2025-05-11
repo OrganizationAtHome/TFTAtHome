@@ -39,5 +39,10 @@ namespace TFTAtHome.Backend.models.Effect
                     return -1;
             }
         }
+
+        public override string ToString()
+        {
+            return "Trait: " + TraitName;
+        }
     }
 }

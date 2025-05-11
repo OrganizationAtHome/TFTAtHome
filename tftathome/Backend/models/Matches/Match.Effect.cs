@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Godot;
 using TFTAtHome.Backend.models.Effect;
 using TFTAtHome.util.ExtensionMethods;
 using static TFTAtHome.Backend.storage.TraitSingleton;
@@ -67,6 +68,7 @@ namespace TFTAtHome.Backend.models.Matches
 
         public KeyValuePair<MatchEffect, int> GetCurrentMatchEffectForPlayer()
         {
+            GD.Print(DictionaryToString(MatchEffects));
             var currentMatchEffect = MatchEffects.Where(me => me.Value > 0).OrderBy(me => me.Key.WeightedIndex).FirstOrDefault();
             return currentMatchEffect;
         }
@@ -103,9 +105,11 @@ namespace TFTAtHome.Backend.models.Matches
         {
             if (MatchEffects.ContainsKey(matchEffect))
             {
-                if (MatchEffects[matchEffect] > 1)
+                if (MatchEffects[matchEffect] >= 1)
                 {
                     MatchEffects[matchEffect]--;
+                    GD.Print("Removed MatchEffect new Dictionary:");
+                    GD.Print(DictionaryToString(MatchEffects));
                     return MatchEffects[matchEffect] != 0;
                 }
                 else
@@ -114,6 +118,16 @@ namespace TFTAtHome.Backend.models.Matches
                 }
             }
             return false;
+        }
+        
+        static string DictionaryToString<TKey, TValue>(Dictionary<TKey, TValue> dict)
+        {
+            var items = new List<string>();
+            foreach (var kvp in dict)
+            {
+                items.Add($"{kvp.Key}: {kvp.Value}");
+            }
+            return string.Join(", ", items);
         }
     }
 }

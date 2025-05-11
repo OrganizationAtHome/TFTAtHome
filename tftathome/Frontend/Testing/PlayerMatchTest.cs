@@ -44,10 +44,11 @@ public partial class PlayerMatchTest : Node
 
 
 		// Effect Notifier
+		/*
 		EffectNotifier.OnEffectUsed += () =>
 		{
 			HighlightCards();
-		};
+		}; */
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -212,22 +213,21 @@ public partial class PlayerMatchTest : Node
 	}
 
 	/* Add a list of cards as input for future active traits */
-	public void HighlightCards()
+	public void HighlightCards(List<Card> cards)
 	{
 		List<Node2D> p1Cards = MatchUtil.GetCardNodesFromContainer(P1Hand);
 		List<Node2D> p2Cards = MatchUtil.GetCardNodesFromContainer(P2Hand);
-
-		/* This code might be needed for future traits but not the current ones
-		foreach (var cardNode in list)
+		
+		foreach (var cardNode in p1Cards)
 		{
 			Card card = CardUtil.GetCardModelFromCardNode(cardNode);
 			if (!cards.Contains(card))
 			{
-				list.Remove(cardNode);
+				p1Cards.Remove(cardNode);
 			}
-		} */
+		}
 
-		MatchUtil.HighLightEffectableCards(p1Cards);
-		MatchUtil.HighLightEffectableCards(p2Cards);
+		MatchUtil.HighLightEffectableCards(p1Cards, false);
+		MatchUtil.HighLightEffectableCards(p2Cards, true);
 	}
 }

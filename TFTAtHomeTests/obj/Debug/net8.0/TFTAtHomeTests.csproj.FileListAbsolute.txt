@@ -232,3 +232,7 @@ C:\Users\Zimmer\Documents\GitHub\TFTAtHome\TFTAtHomeTests\obj\Debug\net8.0\refin
 C:\Users\Zimmer\Documents\GitHub\TFTAtHome\TFTAtHomeTests\obj\Debug\net8.0\TFTAtHomeTests.pdb
 C:\Users\Zimmer\Documents\GitHub\TFTAtHome\TFTAtHomeTests\obj\Debug\net8.0\TFTAtHomeTests.genruntimeconfig.cache
 C:\Users\Zimmer\Documents\GitHub\TFTAtHome\TFTAtHomeTests\obj\Debug\net8.0\ref\TFTAtHomeTests.dll
+C:\Users\danie\Documents\GitHub\TFTAtHome\TFTAtHomeTests\bin\Debug\net8.0\xunit.abstractions.dll
+C:\Users\danie\Documents\GitHub\TFTAtHome\TFTAtHomeTests\bin\Debug\net8.0\xunit.assert.dll
+C:\Users\danie\Documents\GitHub\TFTAtHome\TFTAtHomeTests\bin\Debug\net8.0\xunit.core.dll
+C:\Users\danie\Documents\GitHub\TFTAtHome\TFTAtHomeTests\bin\Debug\net8.0\xunit.execution.dotnet.dll

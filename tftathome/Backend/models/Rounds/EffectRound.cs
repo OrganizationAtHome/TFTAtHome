@@ -1,0 +1,36 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using TFTAtHome.Backend.models.Effect;
+using TFTAtHome.Backend.models.Matches;
+using TFTAtHome.util.ExtensionMethods;
+using static TFTAtHome.Backend.storage.PhaseSingleton;
+using static TFTAtHome.Backend.storage.TraitSingleton;
+
+namespace TFTAtHome.Backend.models.Rounds
+{
+    public class EffectRound : Round
+    {
+        public bool IsUsingEffect { get; set; } = false;
+        public bool PlayersDoneUsingEffects { get; set; } = false;
+        public EffectRound(Match match) : base(match)
+        {
+        }
+        
+        public bool UseEffect(MatchEffect matchEffect, Player player)
+        {
+            if (player == match.Player1)
+            {
+                match.GetMatchEffectsForPlayer(player);
+            }
+            else
+            {
+
+            }
+            return true;
+        }
+
+    }
+}

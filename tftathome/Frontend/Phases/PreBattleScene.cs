@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TFTAtHome.Backend.models;
 using TFTAtHome.Backend.models.Matches;
+using TFTAtHome.Backend.notifiers;
 using TFTAtHome.Backend.storage;
 using TFTAtHome.util;
 
@@ -18,7 +19,6 @@ public partial class PreBattleScene : Node2D
     private int platformCount = 0;
     ulong center1Id;
     ulong center2Id;
-    public static ulong PreBattleSceneId;
     [Export]
     public StaticBody2D CardPlatform { get; set; }
     [Export]
@@ -43,13 +43,13 @@ public partial class PreBattleScene : Node2D
 
     public override void _Ready()
 	{
-        PreBattleSceneId = this.GetInstanceId();
         Node root = GetTree().Root.GetChild(0);
         GD.Print(root);
         center1Id = this.GetNode("CardHandMe/CardSpace").GetInstanceId();
         
         Player testPlayer = new Player(1, "Test");
-        
+
+        EffectNotifier.NeedsToUseEffect += OnNeedsToUseEffects;
         
         SetupActiveTraitTest();
     }
@@ -63,17 +63,28 @@ public partial class PreBattleScene : Node2D
     public void zimmer()
     {
         CollisionShape2D center = InstanceFromId(center1Id) as CollisionShape2D;
-        var cardPlatform = CardPlatformScene.Instantiate() as Node2D;
+        var NCplayer = this.GetNode("NC-player1").GetNode("CardSpace") as CollisionShape2D;
+        var cardPlatform1 = CardPlatformScene.Instantiate() as Node2D;
+        var cardPlatform2 = CardPlatformScene.Instantiate() as Node2D;
+        DOSOMETHIKNG(cardPlatform1);
+        DOSOMETHIKNG(cardPlatform2);
+        
+        
+        
+        
+        center.AddChild(cardPlatform1);
+        NCplayer.AddChild(cardPlatform2);
+
+        (this.GetNode("CardHandMe") as CardHand).Shuffle();
+        (this.GetNode("NC-player1") as CardHand).Shuffle(false);
+    }
+
+    private void DOSOMETHIKNG(Node2D cardPlatform)
+    {
         var card = CardScene.Instantiate() as Node2D;
         cardPlatform.AddChild(card);
         cardPlatform.Name = "CardPlatform" + platformCount++;
         cardPlatform.AddToGroup("handPlatform");
-
-        CardLogic yeet = card as CardLogic;
-        
-        center.AddChild(cardPlatform);
-
-        (this.GetNode("CardHandMe") as CardHand).Shuffle();
     }
 
     public void printRecursive(Node node)
@@ -149,9 +160,46 @@ public partial class PreBattleScene : Node2D
         MatchUtil.UpdateCardStatsListGodot(p1CardNodes, match.CurrentCardsOnBoardP1);
         MatchUtil.UpdateCardStatsListGodot(p2CardNodes, match.CurrentCardsOnBoardP2);
 
-        match.Player1Effects.SetupMatchEffects(match.CurrentCardsOnBoardP1);
-        match.Player2Effects.SetupMatchEffects(match.CurrentCardsOnBoardP2);
-
         MatchUtil.SetupActiveEffectsButtons(P1EffectButtons, player1, match);
+    }
+
+    private void OnNeedsToUseEffects(Player player)
+    {
+        HighlightCards(match.CurrentCardsOnBoardP2);
+        // MatchUtil.SetupActiveEffectsButtons(P1EffectButtons, player, match);
+    }
+
+    private void HandleEffectUsed()
+    {
+        
+    }
+    
+    /* Add a list of cards as input for future active traits */
+    public void HighlightCards(List<Card> cards)
+    {
+        var p1enumerator = p2CardNodes.GetEnumerator();
+        while (p1enumerator.MoveNext())
+        {
+            var cardNode = p1enumerator.Current;
+            Card card = CardUtil.GetCardModelFromCardNode(cardNode);
+            if (!cards.Contains(card))
+            {
+                p1CardNodes.Remove(cardNode);
+            }
+        }
+        
+        var p2enumerator = p1CardNodes.GetEnumerator();
+        while (p2enumerator.MoveNext())
+        {
+            var cardNode = p2enumerator.Current;
+            Card card = CardUtil.GetCardModelFromCardNode(cardNode);
+            if (!cards.Contains(card))
+            {
+                p2CardNodes.Remove(cardNode);
+            }
+        }
+
+        MatchUtil.HighLightEffectableCards(p1CardNodes, true);
+        MatchUtil.HighLightEffectableCards(p2CardNodes, true);
     }
 }
