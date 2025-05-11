@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 namespace TFTAtHome.util {
     internal class MathUtil {
 
-        public static bool IsMouseOverCollisionShape2D(Vector2 position, Rect2 rect, Vector2 globalScale, Vector2 globalMousePos) {
-            return new Rect2(position, rect.Size * globalScale).HasPoint(globalMousePos);
+        public static bool IsMouseOverCollisionShape2D(Vector2 position, Rect2 rect, Vector2 globalMousePos) {
+            return new Rect2(position, rect.Size).HasPoint(globalMousePos);
         }
     }
 }

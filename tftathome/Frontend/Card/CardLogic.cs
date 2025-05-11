@@ -34,7 +34,6 @@ public partial class CardLogic : Area2D {
         if (isDraggable) {
             if (Input.IsActionJustPressed("click")) {
                 if (isDragging) {
-                    GD.Print("Already dragging");
                     QueuedForClick = true;
                     return;
                 }
@@ -61,10 +60,6 @@ public partial class CardLogic : Area2D {
                 }
             } else if (Input.IsActionJustReleased("click") && isDragging) {
                 if (isAnimating) { return; }
-                if (IsParentCardPlatform()) {
-                    GD.Print(collision.ToGlobal(collision.Shape.GetRect().Position));
-                    GD.Print(GetLocalMousePosition());
-                }
                 isAnimating = true;
 
 
@@ -162,7 +157,6 @@ public partial class CardLogic : Area2D {
     private void softReset() {
         Node2D card = GetParent() as Node2D;
         Node2D platform = card.GetParent() as Node2D;
-        CardHand handCard = platform.GetParent().GetParent() as CardHand;
         CollisionShape2D collision = platform.GetNode("PlatformCollision") as CollisionShape2D;
         if (!isMouseOverPlatform(collision)) {
             isDraggable = false;
@@ -171,8 +165,11 @@ public partial class CardLogic : Area2D {
         }
     }
 
-    private bool isMouseOverPlatform(CollisionShape2D collision) {
-        return MathUtil.IsMouseOverCollisionShape2D(collision.ToGlobal(collision.Shape.GetRect().Position), collision.Shape.GetRect(), collision.GlobalScale, collision.GetGlobalMousePosition());
+    private bool isMouseOverPlatform(CollisionShape2D collision)
+    {
+        var oldRect = collision.Shape.GetRect();
+        var rect = new Rect2(oldRect.Position, new Vector2(oldRect.Size.X*collision.GlobalScale.X, oldRect.Size.Y*collision.GlobalScale.Y));
+        return MathUtil.IsMouseOverCollisionShape2D(collision.ToGlobal(collision.Shape.GetRect().Position), rect, collision.GetGlobalMousePosition());
     }
 
 }

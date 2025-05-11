@@ -41,9 +41,9 @@ public partial class CardHand : StaticBody2D
         var cardbody = center.GetChildren()[0].GetNode("Card/CardBody/CardCollision") as CollisionShape2D; // Fuck you "There's typo"
         var width = (float) totalCardWidth;
         var centerPos = center.GlobalPosition;
-        var newCenterPos = new Vector2(centerPos.X-width/2, centerPos.Y-center.Shape.GetRect().Size.Y/2*center.GlobalScale.Y);
-        var rect = new Rect2(newCenterPos, new Vector2(width, center.Shape.GetRect().Size.Y));
-        if (!MathUtil.IsMouseOverCollisionShape2D(newCenterPos, rect, center.GlobalScale, center.GetGlobalMousePosition())) {
+        var newCenterPos = new Vector2(centerPos.X-(width/2), centerPos.Y-center.Shape.GetRect().Size.Y/2*center.GlobalScale.Y);
+        var rect = new Rect2(newCenterPos, new Vector2(width, center.Shape.GetRect().Size.Y*center.GlobalScale.Y));
+        if (!MathUtil.IsMouseOverCollisionShape2D(newCenterPos, rect, center.GetGlobalMousePosition())) {
             return null;
         }
 
@@ -71,7 +71,7 @@ public partial class CardHand : StaticBody2D
             }
         }
         if (found == null && platforms.Count > 0) {
-            found = platforms[platforms.Count - 1];
+            found = platforms[^1];
         
         }
         return found;
@@ -92,7 +92,7 @@ public partial class CardHand : StaticBody2D
         var firstX = Double.PositiveInfinity;
         var lastX = 0.0;
         // Dynamically increases the hand width based on the number of cards to eleminate big gaps between the cards
-        var handWidth = CalcRealisticHandWidthSize(center.Shape.GetRect().Size.X, platforms.Count);
+        var handWidth = CalcRealisticHandWidthSize(center.Shape.GetRect().Size.X*center.GlobalScale.X, platforms.Count);
         // Place many cards
         for (int cardIndex = 0; cardIndex < platforms.Count; cardIndex++) {
             var platformCount = platforms.Count;
@@ -103,14 +103,7 @@ public partial class CardHand : StaticBody2D
             // Interpolates the relative placement of the card between 0 and 1
             var interpolatedWeight = (cardIndex + 1f) / platforms.Count;
             // Calculates the horizontal with cardWidth as spacing and handWidth as the total width of the area the cards are placed in. 
-            var horizontalPlacement = cardWidth / 2 + handWidth / 2 - handWidth * interpolatedWeight;
-
-            if (cardIndex == 0)
-            {
-                firstX = horizontalPlacement + cardWidth;
-            } else if (cardIndex == platformCount - 1) {
-                lastX = horizontalPlacement - cardWidth;
-            }
+            var horizontalPlacement = cardWidth + handWidth / 2 - handWidth * interpolatedWeight;
 
             var verticalPlacement = 0f;
             var verticalAmplitude = amplitudeWeight * cardBody.GlobalScale.Y;
@@ -135,14 +128,17 @@ public partial class CardHand : StaticBody2D
             platform.Position = new Vector2((float)horizontalPlacement, verticalPlacement * -1);
 
         }
-        if (lastX < 0 || firstX < 0) {
-            totalCardWidth = Math.Abs(lastX) + Math.Abs(firstX);
-        } else {
-            totalCardWidth = lastX - firstX;
-        }
         
-        GD.Print("FirstX: " + firstX);
-        GD.Print("LastX: " + lastX);
+        var FirstPlatform = (Node2D)platforms[0];
+        var firstCardPos = FirstPlatform.GlobalPosition.X;
+        
+        var lastPlatform = (Node2D) platforms[^1];
+        var lastCardPos = lastPlatform.GlobalPosition.X;
+        // Calculate the total width of the cards
+        totalCardWidth = (firstCardPos + CalcCardWidthSize(cardBody)) - (lastCardPos - CalcCardWidthSize(cardBody)); 
+        
+        GD.Print("FirstCardPos: " + firstCardPos);
+        GD.Print("LastCardPos: " + lastCardPos);
         GD.Print("TotalCardWidth: " + totalCardWidth);
         
     }
