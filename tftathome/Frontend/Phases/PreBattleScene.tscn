@@ -85,13 +85,13 @@ scale = Vector2(0.425, 0.425)
 position = Vector2(1454, 339)
 scale = Vector2(0.425, 0.425)
 
-[node name="NC-player" type="StaticBody2D" parent="."]
+[node name="NC-player1" type="StaticBody2D" parent="."]
 position = Vector2(250, 155)
 scale = Vector2(0.5, 0.5)
 input_pickable = true
 script = ExtResource("5_vl8ev")
 
-[node name="CardSpace" type="CollisionShape2D" parent="NC-player"]
+[node name="CardSpace" type="CollisionShape2D" parent="NC-player1"]
 scale = Vector2(0.5, 0.5)
 shape = SubResource("RectangleShape2D_quxlf")
 

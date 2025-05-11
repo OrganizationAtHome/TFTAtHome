@@ -18,7 +18,6 @@ public partial class PreBattleScene : Node2D
     private int platformCount = 0;
     ulong center1Id;
     ulong center2Id;
-    public static ulong PreBattleSceneId;
     [Export]
     public StaticBody2D CardPlatform { get; set; }
     [Export]
@@ -43,7 +42,6 @@ public partial class PreBattleScene : Node2D
 
     public override void _Ready()
 	{
-        PreBattleSceneId = this.GetInstanceId();
         Node root = GetTree().Root.GetChild(0);
         GD.Print(root);
         center1Id = this.GetNode("CardHandMe/CardSpace").GetInstanceId();
@@ -63,17 +61,28 @@ public partial class PreBattleScene : Node2D
     public void zimmer()
     {
         CollisionShape2D center = InstanceFromId(center1Id) as CollisionShape2D;
-        var cardPlatform = CardPlatformScene.Instantiate() as Node2D;
+        var NCplayer = this.GetNode("NC-player1").GetNode("CardSpace") as CollisionShape2D;
+        var cardPlatform1 = CardPlatformScene.Instantiate() as Node2D;
+        var cardPlatform2 = CardPlatformScene.Instantiate() as Node2D;
+        DOSOMETHIKNG(cardPlatform1);
+        DOSOMETHIKNG(cardPlatform2);
+        
+        
+        
+        
+        center.AddChild(cardPlatform1);
+        NCplayer.AddChild(cardPlatform2);
+
+        (this.GetNode("CardHandMe") as CardHand).Shuffle();
+        (this.GetNode("NC-player1") as CardHand).Shuffle(false);
+    }
+
+    private void DOSOMETHIKNG(Node2D cardPlatform)
+    {
         var card = CardScene.Instantiate() as Node2D;
         cardPlatform.AddChild(card);
         cardPlatform.Name = "CardPlatform" + platformCount++;
         cardPlatform.AddToGroup("handPlatform");
-
-        CardLogic yeet = card as CardLogic;
-        
-        center.AddChild(cardPlatform);
-
-        (this.GetNode("CardHandMe") as CardHand).Shuffle();
     }
 
     public void printRecursive(Node node)
