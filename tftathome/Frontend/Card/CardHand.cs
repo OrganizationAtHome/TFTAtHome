@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using TFTAtHome.util;
 
@@ -11,7 +12,7 @@ public partial class CardHand : StaticBody2D
     public override void _Ready()
 	{
 		if (GetNode("CardSpace") == null) {
-            GD.PrintErr("CardSpace: "+ this.Name + " node not found in CardHand.");
+            GD.PrintErr("CardSpace: "+ Name + " node not found in CardHand.");
             return;
         }
     }
@@ -31,14 +32,11 @@ public partial class CardHand : StaticBody2D
     }
 
     public StaticBody2D PlatformTargettingSystem() {
-        CollisionShape2D center = this.GetNode("CardSpace") as CollisionShape2D;
+        CollisionShape2D center = GetNode("CardSpace") as CollisionShape2D;
         var platforms = center.GetChildren().Cast<StaticBody2D>().ToList();
-
-
         var moooooooose = center.GetGlobalMousePosition().X;
 
         if (platforms.Count == 0 ) return null;
-        var cardbody = center.GetChildren()[0].GetNode("Card/CardBody/CardCollision") as CollisionShape2D; // Fuck you "There's typo"
         var width = (float) totalCardWidth;
         var centerPos = center.GlobalPosition;
         var newCenterPos = new Vector2(centerPos.X-(width/2), centerPos.Y-center.Shape.GetRect().Size.Y/2*center.GlobalScale.Y);
@@ -46,8 +44,7 @@ public partial class CardHand : StaticBody2D
         if (!MathUtil.IsMouseOverCollisionShape2D(newCenterPos, rect, center.GetGlobalMousePosition())) {
             return null;
         }
-
-
+        
         StaticBody2D found = null;
         var lastindex = 0;
         for (int i = 0; i < platforms.Count; i++) {
@@ -71,14 +68,14 @@ public partial class CardHand : StaticBody2D
             }
         }
         if (found == null && platforms.Count > 0) {
-            found = platforms[^1];
+            found = platforms[^1]; // Last card is the first card visually
         
         }
         return found;
     }
 
     public void Shuffle(bool hasFan = true) {
-        CollisionShape2D center = this.GetNode("CardSpace") as CollisionShape2D;
+        CollisionShape2D center = GetNode("CardSpace") as CollisionShape2D;
         var platforms = center.GetChildren();
 
         var amplitudeWeight = 5;
@@ -92,12 +89,12 @@ public partial class CardHand : StaticBody2D
         var firstX = Double.PositiveInfinity;
         var lastX = 0.0;
         // Dynamically increases the hand width based on the number of cards to eleminate big gaps between the cards
-        var handWidth = CalcRealisticHandWidthSize(center.Shape.GetRect().Size.X*center.GlobalScale.X, platforms.Count);
+        var handWidth = CalcRealisticHandWidthSize(center.Shape.GetRect().Size.X/2, platforms.Count);
         // Place many cards
         for (int cardIndex = 0; cardIndex < platforms.Count; cardIndex++) {
             var platformCount = platforms.Count;
             var platform = platforms[cardIndex] as Node2D;
-            var cardWidth = CalcCardWidthSize(cardBody);
+            var cardWidth = CalcCardHalfWidthSize(cardBody);
 
 
             // Interpolates the relative placement of the card between 0 and 1
@@ -115,9 +112,7 @@ public partial class CardHand : StaticBody2D
                 if (alignResult > 0.5) alignResult = 1 - alignResult;
                 alignResult *= 2;
                 verticalPlacement = Mathf.Lerp(-verticalAmplitude * platformCount, verticalAmplitude * platformCount, alignResult);
-
-
-
+                
                 // Make the cards mad
                 var totalAngle = amplitudeWeight / 2 * platforms.Count;
                 var angle = totalAngle / 2 - 3 * cardIndex;
@@ -135,20 +130,24 @@ public partial class CardHand : StaticBody2D
         var lastPlatform = (Node2D) platforms[^1];
         var lastCardPos = lastPlatform.GlobalPosition.X;
         // Calculate the total width of the cards
-        totalCardWidth = (firstCardPos + CalcCardWidthSize(cardBody)) - (lastCardPos - CalcCardWidthSize(cardBody)); 
+        totalCardWidth = (firstCardPos + CalcCardHalfWidthSize(cardBody)) - (lastCardPos - CalcCardHalfWidthSize(cardBody)); 
         
         GD.Print("FirstCardPos: " + firstCardPos);
         GD.Print("LastCardPos: " + lastCardPos);
         GD.Print("TotalCardWidth: " + totalCardWidth);
-        
     }
     
-    private float CalcCardWidthSize(CollisionShape2D cardBody)
+    private float CalcCardHalfWidthSize(CollisionShape2D cardBody)
     {
         return cardBody.Shape.GetRect().Size.X / 2 * cardBody.GlobalScale.X;
     }
 
     public double CalcRealisticHandWidthSize(float length, int cardCount) {
         return length * (1 - 1 / Math.Pow(1.15, cardCount));
+    }
+    
+    private List<Vector2> cardPositions = new List<Vector2>();
+    private void BESTNAMEEVER() {
+        
     }
 }
