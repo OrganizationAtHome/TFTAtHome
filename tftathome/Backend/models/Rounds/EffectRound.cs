@@ -15,6 +15,7 @@ namespace TFTAtHome.Backend.models.Rounds
     {
         public bool IsUsingEffect { get; set; } = false;
         public MatchEffect CurrentEffect { get; set; }
+        public Player PlayerUsingEffect { get; set; }
         public EffectRound(Match match) : base(match)
         {
         }

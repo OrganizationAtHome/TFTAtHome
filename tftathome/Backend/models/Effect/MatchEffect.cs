@@ -11,7 +11,6 @@ namespace TFTAtHome.Backend.models.Effect
     public class MatchEffect
     {
         public string TraitName { get; set; }
-        public Card UsedOnCard { get; set; }
         public bool Persistent { get; set; }
         public int WeightedIndex { get; } = 0;
 

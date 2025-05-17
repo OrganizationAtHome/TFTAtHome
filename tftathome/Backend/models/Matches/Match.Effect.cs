@@ -16,11 +16,22 @@ namespace TFTAtHome.Backend.models.Matches
         {
             switch (effect.TraitName)
             {
-                case "Queen":
+                case Queen:
                 {
-                    ShouldUseQueenEffectWithIndex(card);
+                    if (ShouldUseQueenEffectWithIndex(card))
+                    {
+                        // Frontend needs to have the player specify which phase they want swapped
+                    }
+                    else
+                    {
+                        UseQueenEffectWithoutIndex(card);
+                    }
                 } break;
-                case "Musician":
+                case Musician:
+                {
+                    
+                } break;
+                case Genius:
                 {
                     
                 } break;
@@ -29,6 +40,11 @@ namespace TFTAtHome.Backend.models.Matches
                     throw new Exception("WHY THE FUCK ARE YOU GIVING ME A MATCH EFFECT THAT DOESN'T EXIST????");
                 }
             }
+        }
+
+        public Player GetPlayerThatCanUseNextEffect()
+        {
+            return Player1;
         }
         public bool ShouldUseQueenEffectWithIndex(Card cardToUseEffectOn)
         {
@@ -68,6 +84,11 @@ namespace TFTAtHome.Backend.models.Matches
             }
 
             cardToUseEffectOn.GetType().GetProperty(secondBestPhase).SetValue(cardToUseEffectOn, bestPhaseValueOnCard);
+        }
+
+        public void UseGeniusEffect(Player player, Card cardToUseEffectOn, string phase1, string phase2)
+        {
+            
         }
     }
 

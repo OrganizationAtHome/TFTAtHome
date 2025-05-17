@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Godot;
 using TFTAtHome.Backend.models.Effect;
 using TFTAtHome.Backend.models.Rounds;
 using TFTAtHome.Backend.notifiers;
@@ -169,19 +170,32 @@ namespace TFTAtHome.Backend.models.Matches
 
         private void OnEffectUsed(int cardId)
         {
+            int length = CurrentCardsOnBoardP1.Count;
             foreach (var card in CurrentCardsOnBoardP1)
             {
                 if (card.Id == cardId)
                 {
-                    
+                    var currentEffectRound = CurrentRound as EffectRound;
+                    if (currentEffectRound == null) throw new Exception("CurrentRound is null you absolute piece of filth in OnEffectUsed in Match");
+                    UseMatchEffectOnCard(card, currentEffectRound.CurrentEffect);
+                    currentEffectRound.IsUsingEffect = false;
+                    currentEffectRound.CurrentEffect = null;
+                    var nextPlayer = GetPlayerThatCanUseNextEffect();
+                    EffectNotifier.NotifyCardEffectUpdate(nextPlayer);
                 }
             }
-
+            int length2 = CurrentCardsOnBoardP2.Count;
             foreach (var card in CurrentCardsOnBoardP2)
             {
                 if (card.Id == cardId)
                 {
-                    
+                    var currentEffectRound = CurrentRound as EffectRound;
+                    if (currentEffectRound == null) throw new Exception("CurrentRound is null you absolute piece of filth in OnEffectUsed in Match");
+                    UseMatchEffectOnCard(card, currentEffectRound.CurrentEffect);
+                    currentEffectRound.IsUsingEffect = false;
+                    currentEffectRound.CurrentEffect = null;
+                    var nextPlayer = GetPlayerThatCanUseNextEffect();
+                    EffectNotifier.NotifyCardEffectUpdate(nextPlayer);
                 }
             }
         }

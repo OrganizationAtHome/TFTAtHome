@@ -184,37 +184,31 @@ namespace TFTAtHome.util.ExtensionMethods
 
         public static string[] GetSecondBestPhaseOnCard(this Card card)
         {
-            string bestPhase = "Early";
             string[] secondBestPhase = new string[2];
             Dictionary<string, int> phases = new Dictionary<string, int>();
             phases.Add("Early", card.Early);
             phases.Add("Mid", card.Mid);
             phases.Add("Late", card.Late);
 
-            foreach (KeyValuePair<string, int> phase in phases)
+            var phasesAsList = phases.Select(p => new Phase
             {
-                if (phase.Value > phases[bestPhase])
-                {
-                    if (secondBestPhase[0].Length == 0)
-                    {
-                        secondBestPhase[0] = bestPhase;
-                    }
-                    else
-                    {
-                        secondBestPhase[1] = bestPhase;
-                    }
-                    bestPhase = phase.Key;
-                } else if (phase.Value > phases[secondBestPhase[0]] || phase.Value > phases[secondBestPhase[1]])
-                {
-                    if (secondBestPhase[0].Length == 0)
-                    {
-                        secondBestPhase[0] = phase.Key;
-                    } else
-                    {
-                        secondBestPhase[1] = phase.Key;
-                    }
-                }
+                PhaseName = p.Key,
+                Value = p.Value
+            });
+            
+            var phasesSorted = phasesAsList.OrderByDescending(p => p.Value).ToList();
+
+            if (phasesSorted[1].Value == phasesSorted[2].Value)
+            {
+                secondBestPhase[0] = phasesSorted[1].PhaseName;
+                secondBestPhase[1] = phasesSorted[2].PhaseName;
             }
+            else
+            {
+                secondBestPhase[0] = phasesSorted[1].PhaseName;
+                secondBestPhase[1] = "";
+            }
+
             return secondBestPhase;
         }
 
@@ -250,6 +244,14 @@ namespace TFTAtHome.util.ExtensionMethods
             card.Early += amount;
             card.Mid += amount;
             card.Late += amount;
+        }
+
+
+
+        public class Phase
+        {
+            public string PhaseName { get; set; }
+            public int Value { get; set; }
         }
     }
 }

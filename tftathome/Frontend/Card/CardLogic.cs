@@ -46,7 +46,6 @@ public partial class CardLogic : Area2D {
                 if (IsEffectAble)
                 {
                     GD.Print("Effect clicked");
-                    GD.Print("CardLogic CardId: " + CardId);
                     EffectNotifier.NotifyEffectUsed(CardId);
                     return;
                 }

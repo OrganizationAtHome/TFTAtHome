@@ -10,17 +10,24 @@ namespace TFTAtHome.Backend.notifiers
 {
     public static class EffectNotifier
     {
+        public static event Action<Player> CardEffectUpdate;
         public static event Action<int> OnEffectUsed;
         public static event Action<Player> NeedsToUseEffect;
+        
+        public static void NotifyCardEffectUpdate(Player nextPlayer)
+        {
+            GD.Print("NotifyCardEffectUpdate called");
+            CardEffectUpdate?.Invoke(nextPlayer);
+        }
         public static void NotifyEffectUsed(int cardId)
         {
-            GD.Print("OnEffectUsed");
+            // GD.Print("OnEffectUsed");
             OnEffectUsed?.Invoke(cardId);
         }
 
         public static void NotifyNeedsToUseEffect(Player player)
         {
-            GD.Print("NeedsToUseEffect");
+            // GD.Print("NeedsToUseEffect");
             NeedsToUseEffect?.Invoke(player);
         }
     }

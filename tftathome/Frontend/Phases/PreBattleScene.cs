@@ -50,7 +50,7 @@ public partial class PreBattleScene : Node2D
         Player testPlayer = new Player(1, "Test");
 
         EffectNotifier.NeedsToUseEffect += OnNeedsToUseEffects;
-        
+        EffectNotifier.CardEffectUpdate += HandleCardEffectUpdate;
         SetupActiveTraitTest();
     }
 
@@ -162,17 +162,19 @@ public partial class PreBattleScene : Node2D
 
     private void OnNeedsToUseEffects(Player player)
     {
-        HighlightCards(match.CurrentCardsOnBoardP2);
-        // MatchUtil.SetupActiveEffectsButtons(P1EffectButtons, player, match);
+        HighlightCards(match.CurrentCardsOnBoardP2, true);
     }
 
-    private void HandleEffectUsed()
+    private void HandleCardEffectUpdate(Player player)
     {
-        
+        HighlightCards(match.CurrentCardsOnBoardP1, false);
+        MatchUtil.UpdateCardStatsListGodot(p1CardNodes, match.CurrentCardsOnBoardP1);
+        MatchUtil.UpdateCardStatsListGodot(p2CardNodes, match.CurrentCardsOnBoardP2);
+        MatchUtil.SetupActiveEffectsButtons(P1EffectButtons, player, match);
     }
     
     /* Add a list of cards as input for future active traits */
-    public void HighlightCards(List<Card> cards)
+    public void HighlightCards(List<Card> cards, bool active)
     {
         var p1enumerator = p2CardNodes.GetEnumerator();
         while (p1enumerator.MoveNext())
@@ -186,8 +188,6 @@ public partial class PreBattleScene : Node2D
             cardLogic.IsEffectAble = true;
 
             Card card = CardUtil.GetCardModelFromCardNode(cardNode);
-            // cardLogic.CardId = card.Id;
-            GD.Print("Id assigned to cardLogic: " + cardLogic.CardId);
             if (!cards.Contains(card))
             {
                 p1CardNodes.Remove(cardNode);
@@ -203,18 +203,15 @@ public partial class PreBattleScene : Node2D
             CardLogic cardLogic = cardBody as CardLogic;
             if (cardLogic == null) throw new Exception("Your coding skills are terrible, Cardlogic is null");
             cardLogic.IsEffectAble = true;
-            
+
             Card card = CardUtil.GetCardModelFromCardNode(cardNode);
-            // cardLogic.CardId = card.Id;
-            GD.Print("Id assigned to cardLogic: " + cardLogic.CardId);
-            
             if (!cards.Contains(card))
             {
                 p2CardNodes.Remove(cardNode);
             }
         }
 
-        MatchUtil.HighLightEffectableCards(p1CardNodes, true);
-        MatchUtil.HighLightEffectableCards(p2CardNodes, true);
+        MatchUtil.HighLightEffectableCards(p1CardNodes, active);
+        MatchUtil.HighLightEffectableCards(p2CardNodes, active);
     }
 }
