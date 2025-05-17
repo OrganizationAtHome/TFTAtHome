@@ -14,22 +14,9 @@ namespace TFTAtHome.Backend.models.Rounds
     public class EffectRound : Round
     {
         public bool IsUsingEffect { get; set; } = false;
-        public bool PlayersDoneUsingEffects { get; set; } = false;
+        public MatchEffect CurrentEffect { get; set; }
         public EffectRound(Match match) : base(match)
         {
-        }
-        
-        public bool UseEffect(MatchEffect matchEffect, Player player)
-        {
-            if (player == match.Player1)
-            {
-                match.GetMatchEffectsForPlayer(player);
-            }
-            else
-            {
-
-            }
-            return true;
         }
 
     }

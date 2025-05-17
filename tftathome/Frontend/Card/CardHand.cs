@@ -41,8 +41,10 @@ public partial class CardHand : StaticBody2D
         var cardbody = center.GetChildren()[0].GetNode("Card/CardBody/CardCollision") as CollisionShape2D; // Fuck you "There's typo"
         var width = (float) totalCardWidth;
         var centerPos = center.GlobalPosition;
-        var newCenterPos = new Vector2(centerPos.X-(width/2), centerPos.Y-center.Shape.GetRect().Size.Y/2*center.GlobalScale.Y);
-        var rect = new Rect2(newCenterPos, new Vector2(width, center.Shape.GetRect().Size.Y*center.GlobalScale.Y));
+        var newCenterPos = new Vector2(centerPos.X-width/2, centerPos.Y-center.Shape.GetRect().Size.Y/2*center.GlobalScale.Y);
+        
+        var rect = new Rect2(newCenterPos, new Vector2(width, center.Shape.GetRect().Size.Y));
+        
         if (!MathUtil.IsMouseOverCollisionShape2D(newCenterPos, rect, center.GetGlobalMousePosition())) {
             return null;
         }

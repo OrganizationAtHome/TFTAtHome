@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using TFTAtHome.Backend.storage;
 using TFTAtHome.Backend.models;
@@ -60,7 +61,14 @@ namespace TFTAtHome.util
 
             Node2D card2D = card as Node2D;
             card2D.ApplyScale(new Vector2(scale, scale));
-
+            
+            // Assigning Card Id to CardLogic
+            var cardBody = card2D.GetChildren()[0];
+            CardLogic cardLogic = cardBody as CardLogic;
+            if (cardLogic == null) throw new Exception("Your coding skills are terrible, Cardlogic is null");
+            cardLogic.IsEffectAble = true;
+            cardLogic.CardId = cardInput.Id;
+            
             // Set card stats and headers
             for (int i = 0; i < statsName.Length; i++)
             {
@@ -99,8 +107,9 @@ namespace TFTAtHome.util
         public static Card GetCardModelFromCardNode(Node2D node2D)
         {
             string cardName = ((RichTextLabel)GetNodeFromCard(node2D, "CardName")).Text;
-
-            Card card = LocalStorage.GetCardFromName(cardName);
+            string cleanedCardName = "";
+            cleanedCardName = Regex.Replace(cardName, @"\[(.*?)\]", "");
+            Card card = LocalStorage.GetCardFromName(cleanedCardName);
 
             return card;
         }

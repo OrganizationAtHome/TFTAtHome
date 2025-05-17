@@ -68,10 +68,7 @@ public partial class PreBattleScene : Node2D
         var cardPlatform2 = CardPlatformScene.Instantiate() as Node2D;
         DOSOMETHIKNG(cardPlatform1);
         DOSOMETHIKNG(cardPlatform2);
-        
-        
-        
-        
+
         center.AddChild(cardPlatform1);
         NCplayer.AddChild(cardPlatform2);
 
@@ -181,7 +178,16 @@ public partial class PreBattleScene : Node2D
         while (p1enumerator.MoveNext())
         {
             var cardNode = p1enumerator.Current;
+
+            var cardBody = cardNode.GetChildren()[0];
+            if (cardBody == null) throw new Exception("Your coding skills are terrible, cardBody in HighlightCards is null");
+            CardLogic cardLogic = cardBody as CardLogic;
+            if (cardLogic == null) throw new Exception("Your coding skills are terrible, Cardlogic in HighlightCards is null");
+            cardLogic.IsEffectAble = true;
+
             Card card = CardUtil.GetCardModelFromCardNode(cardNode);
+            // cardLogic.CardId = card.Id;
+            GD.Print("Id assigned to cardLogic: " + cardLogic.CardId);
             if (!cards.Contains(card))
             {
                 p1CardNodes.Remove(cardNode);
@@ -192,7 +198,16 @@ public partial class PreBattleScene : Node2D
         while (p2enumerator.MoveNext())
         {
             var cardNode = p2enumerator.Current;
+            
+            var cardBody = cardNode.GetChildren()[0];
+            CardLogic cardLogic = cardBody as CardLogic;
+            if (cardLogic == null) throw new Exception("Your coding skills are terrible, Cardlogic is null");
+            cardLogic.IsEffectAble = true;
+            
             Card card = CardUtil.GetCardModelFromCardNode(cardNode);
+            // cardLogic.CardId = card.Id;
+            GD.Print("Id assigned to cardLogic: " + cardLogic.CardId);
+            
             if (!cards.Contains(card))
             {
                 p2CardNodes.Remove(cardNode);

@@ -68,13 +68,21 @@ namespace TFTAtHome.util
                 if (!useEffectMethod(currentEffect.Key))
                 {
                     buttonContainer.RemoveChild(button);
+                    
                     EffectNotifier.NotifyNeedsToUseEffect(player);
-                    var currentRound = match.CurrentRound as EffectRound;
-                    if (currentRound == null) throw new Exception("Our round logic is fucked up");
-                    currentRound.IsUsingEffect = true;
+                    
+                    var effectRound = new EffectRound(match);
+                    effectRound.CurrentEffect = currentEffect.Key;
+                    match.CurrentRound = effectRound;
+                    effectRound.IsUsingEffect = true;
                 }
                 else
                 {
+                    EffectNotifier.NotifyNeedsToUseEffect(player);
+                    var effectRound = new EffectRound(match);
+                    effectRound.CurrentEffect = currentEffect.Key;
+                    match.CurrentRound = effectRound;
+                    effectRound.IsUsingEffect = true;
                     button.Text = currentEffect.Key.TraitName + " " + currentEffect.Value;
                 }
             };

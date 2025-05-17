@@ -12,12 +12,30 @@ namespace TFTAtHome.Backend.models.Matches
 {
     public partial class Match
     {
+        private void UseMatchEffectOnCard(Card card, MatchEffect effect)
+        {
+            switch (effect.TraitName)
+            {
+                case "Queen":
+                {
+                    ShouldUseQueenEffectWithIndex(card);
+                } break;
+                case "Musician":
+                {
+                    
+                } break;
+                default:
+                {
+                    throw new Exception("WHY THE FUCK ARE YOU GIVING ME A MATCH EFFECT THAT DOESN'T EXIST????");
+                }
+            }
+        }
         public bool ShouldUseQueenEffectWithIndex(Card cardToUseEffectOn)
         {
             return cardToUseEffectOn.GetSecondBestPhaseOnCard()[1].Length != 0;
         }
 
-        public void UseQueenEffectWithoutIndex(Player player, Card cardToUseEffectOn)
+        public void UseQueenEffectWithoutIndex(Card cardToUseEffectOn)
         {
             var bestPhaseProperty = cardToUseEffectOn.GetType().GetProperty(cardToUseEffectOn.GetBestPhaseOnCard());
 

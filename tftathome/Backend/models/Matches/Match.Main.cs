@@ -39,6 +39,7 @@ namespace TFTAtHome.Backend.models.Matches
             Player2Effects = new PlayerCardEffects(player2);
             Rounds = new List<Round>();
             RoundNumber = 1;
+            EffectNotifier.OnEffectUsed += OnEffectUsed;
         }
 
         public void AddCardToBoard(Card card, Player player)
@@ -162,6 +163,25 @@ namespace TFTAtHome.Backend.models.Matches
                 foreach (Card card in drawingCards)
                 {
                     card.SetDrawingBonusOnCard(fictionalAndDrawingCount);
+                }
+            }
+        }
+
+        private void OnEffectUsed(int cardId)
+        {
+            foreach (var card in CurrentCardsOnBoardP1)
+            {
+                if (card.Id == cardId)
+                {
+                    
+                }
+            }
+
+            foreach (var card in CurrentCardsOnBoardP2)
+            {
+                if (card.Id == cardId)
+                {
+                    
                 }
             }
         }

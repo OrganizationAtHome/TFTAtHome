@@ -1,11 +1,15 @@
 using Godot;
 using System;
 using System.ComponentModel;
+using TFTAtHome.Backend.models;
+using TFTAtHome.Backend.notifiers;
 using TFTAtHome.util;
 
 public partial class CardLogic : Area2D {
     public static bool isDragging = false;
     public static bool isAnimating = false;
+    public bool IsEffectAble = false;
+    public int CardId = 0;
     private static int printCount = 0;
     bool isDraggable = false;
     bool isInsideDroppable = false;
@@ -19,6 +23,7 @@ public partial class CardLogic : Area2D {
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process(double delta) {
+        
         Node2D card = GetParent() as Node2D;
         Node2D platform = card.GetParent() as Node2D;
         CardHand handCard = platform.GetParent().GetParent() as CardHand;
@@ -38,6 +43,13 @@ public partial class CardLogic : Area2D {
                     return;
                 }
                 // Implement check for click when player is using effect
+                if (IsEffectAble)
+                {
+                    GD.Print("Effect clicked");
+                    GD.Print("CardLogic CardId: " + CardId);
+                    EffectNotifier.NotifyEffectUsed(CardId);
+                    return;
+                }
                 /*
                 if (card.Apply)
                 {
