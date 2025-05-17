@@ -42,7 +42,7 @@ offset_bottom = 947.0
 text = "Zimmer's magiske knap"
 
 [node name="CardHandMe" type="StaticBody2D" parent="."]
-position = Vector2(1118, 747)
+position = Vector2(1116, 819)
 input_pickable = true
 script = ExtResource("5_vl8ev")
 
