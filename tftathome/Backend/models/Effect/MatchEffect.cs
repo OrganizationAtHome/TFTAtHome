@@ -13,6 +13,8 @@ namespace TFTAtHome.Backend.models.Effect
         public string TraitName { get; set; }
         public bool Persistent { get; set; }
         public int WeightedIndex { get; } = 0;
+        public string SelectedPhase1 { get; set; }
+        public string SelectedPhase2 { get; set; }
 
         public MatchEffect(string traitName, bool persistent)
         {

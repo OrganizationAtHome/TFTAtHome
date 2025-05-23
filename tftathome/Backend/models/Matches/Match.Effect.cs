@@ -14,6 +14,15 @@ namespace TFTAtHome.Backend.models.Matches
     {
         private void UseMatchEffectOnCard(Card card, MatchEffect effect)
         {
+            if (card == null)
+            {
+                throw new Exception("Card is null you absolute piece of filth in UseMatchEffectOnCard");
+            }
+
+            if (effect == null)
+            {
+                throw new Exception("Your match effect is null you retarded cucumber in UseMatchEffectOnCard");
+            }
             switch (effect.TraitName)
             {
                 case Queen:
@@ -33,7 +42,13 @@ namespace TFTAtHome.Backend.models.Matches
                 } break;
                 case Genius:
                 {
-                    
+                    string phase1 = effect.SelectedPhase1;
+                    string phase2 = effect.SelectedPhase2;
+                    if (phase1 == string.Empty || phase2 == string.Empty)
+                    {
+                        throw new Exception("Phase 1 or Phase 2 is empty");
+                    }
+                    UseGeniusEffect(card, phase1, phase2);
                 } break;
                 default:
                 {
@@ -86,9 +101,21 @@ namespace TFTAtHome.Backend.models.Matches
             cardToUseEffectOn.GetType().GetProperty(secondBestPhase).SetValue(cardToUseEffectOn, bestPhaseValueOnCard);
         }
 
-        public void UseGeniusEffect(Player player, Card cardToUseEffectOn, string phase1, string phase2)
+        public void UseGeniusEffect(Card cardToUseEffectOn, string phase1, string phase2)
         {
+            var phase1Property = cardToUseEffectOn.GetType().GetProperty(phase1);
+            var phase2Property = cardToUseEffectOn.GetType().GetProperty(phase2);
+
+            if (phase1Property.PropertyType != typeof(int) || phase2Property.PropertyType != typeof(int))
+            {
+                throw new Exception("PHASE 1 and PHASE 2 for the genius effect are not ints you absolute inbreed imbecile");
+            }
             
+            int phase1ValueOnCard = (int)phase1Property.GetValue(cardToUseEffectOn);
+            int phase2ValueOnCard = (int)phase2Property.GetValue(cardToUseEffectOn);
+            
+            cardToUseEffectOn.GetType().GetProperty(phase1).SetValue(cardToUseEffectOn, phase2ValueOnCard);
+            cardToUseEffectOn.GetType().GetProperty(phase2).SetValue(cardToUseEffectOn, phase1ValueOnCard);
         }
     }
 

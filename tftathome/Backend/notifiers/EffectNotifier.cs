@@ -12,7 +12,9 @@ namespace TFTAtHome.Backend.notifiers
     {
         public static event Action<Player> CardEffectUpdate;
         public static event Action<int> OnEffectUsed;
+        public static event Action<GeniusEffect> OnGeniusEffectUsed;
         public static event Action<Player> NeedsToUseEffect;
+        public static event Action<Player> NeedsToUseGeniusEffect;
         
         public static void NotifyCardEffectUpdate(Player nextPlayer)
         {
@@ -23,6 +25,11 @@ namespace TFTAtHome.Backend.notifiers
         {
             // GD.Print("OnEffectUsed");
             OnEffectUsed?.Invoke(cardId);
+        }
+
+        public static void NotifyNeedsToUseGeniusEffect(Player player)
+        {
+            NeedsToUseGeniusEffect?.Invoke(player);
         }
 
         public static void NotifyNeedsToUseEffect(Player player)

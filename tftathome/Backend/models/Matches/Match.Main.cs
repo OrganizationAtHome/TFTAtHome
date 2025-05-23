@@ -41,6 +41,7 @@ namespace TFTAtHome.Backend.models.Matches
             Rounds = new List<Round>();
             RoundNumber = 1;
             EffectNotifier.OnEffectUsed += OnEffectUsed;
+            EffectNotifier.OnGeniusEffectUsed += OnGeniusEffectUsed;
         }
 
         public void AddCardToBoard(Card card, Player player)
@@ -198,6 +199,25 @@ namespace TFTAtHome.Backend.models.Matches
                     EffectNotifier.NotifyCardEffectUpdate(nextPlayer);
                 }
             }
+        }
+
+        private void OnGeniusEffectUsed(GeniusEffect geniusEffect)
+        {
+            Card card = null;
+            var p1Card = CurrentCardsOnBoardP1.Find(c => c.Id == geniusEffect.CardId);
+            var p2Card = CurrentCardsOnBoardP2.Find(c => c.Id == geniusEffect.CardId);
+            
+            // Selects the found card
+            card = p1Card != null ? p1Card : p2Card;
+
+            if (card == null)
+            {
+                throw new Exception("You royally screwed up your OnGeniusEffectUsed logic, you retarded lama");
+            }
+            var currentEffectRound = CurrentRound as EffectRound;
+            if (currentEffectRound == null) throw new Exception("CurrentRound is null you absolute piece of filth in OnGeniusEffectUsed in Match");
+            UseMatchEffectOnCard(card, currentEffectRound.CurrentEffect);
+            
         }
 
         // HELPER METHODS

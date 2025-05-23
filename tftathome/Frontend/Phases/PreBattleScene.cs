@@ -4,9 +4,12 @@ using System.Collections.Generic;
 using System.Linq;
 using TFTAtHome.Backend.models;
 using TFTAtHome.Backend.models.Matches;
+using TFTAtHome.Backend.models.Rounds;
 using TFTAtHome.Backend.notifiers;
 using TFTAtHome.Backend.storage;
 using TFTAtHome.util;
+using TFTAtHome.util.ExtensionMethods;
+using static TFTAtHome.Backend.storage.TraitSingleton;
 
 public partial class PreBattleScene : Node2D
 {
@@ -39,6 +42,7 @@ public partial class PreBattleScene : Node2D
     private Match match;
     private List<Node2D> p1CardNodes;
     private List<Node2D> p2CardNodes;
+    private string currentEffectTrait;
 
 
     public override void _Ready()
@@ -51,6 +55,7 @@ public partial class PreBattleScene : Node2D
 
         EffectNotifier.NeedsToUseEffect += OnNeedsToUseEffects;
         EffectNotifier.CardEffectUpdate += HandleCardEffectUpdate;
+        EffectNotifier.NeedsToUseGeniusEffect += HandleGeniusEffectUsed;
         SetupActiveTraitTest();
     }
 
@@ -164,13 +169,37 @@ public partial class PreBattleScene : Node2D
     {
         HighlightCards(match.CurrentCardsOnBoardP2, true);
     }
+    
+    private void HandleGeniusEffectUsed(Player player)
+    {
+        var currentMatchEffect = match.CurrentRound as EffectRound;
+        if (currentMatchEffect == null)
+        {
+            throw new Exception("I am not an EffectRound dumbass HandleGeniusEffectUsed");
+        }
+
+        MatchUtil.SetupSelectPhaseButtons(P1EffectButtons, player, match);
+    }
 
     private void HandleCardEffectUpdate(Player player)
     {
-        HighlightCards(match.CurrentCardsOnBoardP1, false);
-        MatchUtil.UpdateCardStatsListGodot(p1CardNodes, match.CurrentCardsOnBoardP1);
-        MatchUtil.UpdateCardStatsListGodot(p2CardNodes, match.CurrentCardsOnBoardP2);
-        MatchUtil.SetupActiveEffectsButtons(P1EffectButtons, player, match);
+        if (currentEffectTrait.IsTraitWithPlayerInputRequirement())
+        {
+            if (currentEffectTrait == Genius)
+            {
+                HighlightCards(match.CurrentCardsOnBoardP1, false);
+                MatchUtil.UpdateCardStatsListGodot(p1CardNodes, match.CurrentCardsOnBoardP1);
+                MatchUtil.UpdateCardStatsListGodot(p2CardNodes, match.CurrentCardsOnBoardP2);
+                MatchUtil.SetupActiveEffectsButtons(P1EffectButtons, player, match);
+            }
+        }
+        else
+        {
+            HighlightCards(match.CurrentCardsOnBoardP1, false);
+            MatchUtil.UpdateCardStatsListGodot(p1CardNodes, match.CurrentCardsOnBoardP1);
+            MatchUtil.UpdateCardStatsListGodot(p2CardNodes, match.CurrentCardsOnBoardP2);
+            MatchUtil.SetupActiveEffectsButtons(P1EffectButtons, player, match);
+        }
     }
     
     /* Add a list of cards as input for future active traits */
@@ -185,7 +214,7 @@ public partial class PreBattleScene : Node2D
             if (cardBody == null) throw new Exception("Your coding skills are terrible, cardBody in HighlightCards is null");
             CardLogic cardLogic = cardBody as CardLogic;
             if (cardLogic == null) throw new Exception("Your coding skills are terrible, Cardlogic in HighlightCards is null");
-            cardLogic.IsEffectAble = true;
+            cardLogic.IsEffectAble = active;
 
             Card card = CardUtil.GetCardModelFromCardNode(cardNode);
             if (!cards.Contains(card))
@@ -202,7 +231,7 @@ public partial class PreBattleScene : Node2D
             var cardBody = cardNode.GetChildren()[0];
             CardLogic cardLogic = cardBody as CardLogic;
             if (cardLogic == null) throw new Exception("Your coding skills are terrible, Cardlogic is null");
-            cardLogic.IsEffectAble = true;
+            cardLogic.IsEffectAble = active;
 
             Card card = CardUtil.GetCardModelFromCardNode(cardNode);
             if (!cards.Contains(card))

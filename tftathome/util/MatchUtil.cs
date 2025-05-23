@@ -10,6 +10,8 @@ using TFTAtHome.Backend.models.Effect;
 using TFTAtHome.Backend.models.Matches;
 using TFTAtHome.Backend.models.Rounds;
 using TFTAtHome.Backend.notifiers;
+using TFTAtHome.util.ExtensionMethods;
+using static TFTAtHome.Backend.storage.TraitSingleton;
 
 namespace TFTAtHome.util
 {
@@ -57,10 +59,12 @@ namespace TFTAtHome.util
                 useEffectMethod = (e) => match.Player2Effects.UseMatchEffect(e);
                 currentEffect = match.Player2Effects.GetCurrentMatchEffectForPlayer();
                 if (currentEffect.Value == 0) return;
-            } 
+            }
+
+            string traitName = currentEffect.Key.TraitName;
 
             Button button = new Button();
-            button.Text = currentEffect.Key.TraitName + " " + currentEffect.Value;
+            button.Text = traitName + " " + currentEffect.Value;
             button.Size = new Vector2(100, 50);
             buttonContainer.AddChild(button);
             button.Pressed += () =>
@@ -68,9 +72,14 @@ namespace TFTAtHome.util
                 if (!useEffectMethod(currentEffect.Key))
                 {
                     buttonContainer.RemoveChild(button);
-                    
-                    EffectNotifier.NotifyNeedsToUseEffect(player);
-                    
+                    if (traitName == Genius)
+                    {
+                        EffectNotifier.NotifyNeedsToUseGeniusEffect(player);
+                    }
+                    else
+                    {
+                        EffectNotifier.NotifyNeedsToUseEffect(player);
+                    }
                     var effectRound = new EffectRound(match);
                     effectRound.CurrentEffect = currentEffect.Key;
                     match.CurrentRound = effectRound;
@@ -88,6 +97,32 @@ namespace TFTAtHome.util
             };
         }
         
+        public static void SetupSelectPhaseButtons(GridContainer buttonContainer, Player player, Match match)
+        {
+            Dictionary<String, String[]> stringsMap = new Dictionary<String, String[]>();
+            // String[] stringValues = new[] { "Early->Mid", "Early->Late", "Mid->Late" };
+            stringsMap.Add("Early->Mid", new []{"Early", "Mid"});
+            stringsMap.Add("Early->Late", new []{"Early", "Late"});
+            stringsMap.Add("Mid->Late", new []{"Mid", "Late"});
+
+            foreach (KeyValuePair<string, string[]> pair in stringsMap)
+            {
+                Button button = new Button();
+                button.Text = pair.Key;
+                button.Size = new Vector2(100, 50);
+                buttonContainer.AddChild(button);
+                button.Pressed += () =>
+                {
+                    var currentRound = match.CurrentRound as EffectRound;
+                    var geniusEffect = currentRound.CurrentEffect;
+                    
+                    geniusEffect.SelectedPhase1 = pair.Value[0];
+                    geniusEffect.SelectedPhase2 = pair.Value[1];
+                    EffectNotifier.NotifyNeedsToUseEffect(player);
+                    buttonContainer.RemoveAllChildren();
+                };
+            }
+        }
 
         /** 
          THIS METHOD NEEDS TO BE EDITED TO WORK WITH THE PROPER SCENE, RIGHT NOW IT IS USING THE TEST SCENE
