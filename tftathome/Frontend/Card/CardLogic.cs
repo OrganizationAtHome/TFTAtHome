@@ -3,9 +3,11 @@ using System;
 using System.ComponentModel;
 using TFTAtHome.Backend.models;
 using TFTAtHome.Backend.notifiers;
+using TFTAtHome.Frontend.Card;
 using TFTAtHome.util;
+using static TFTAtHome.Frontend.Singletons.CardNodeNameSingleton;
 
-public partial class CardLogic : Area2D {
+public partial class CardLogic : Node2D {
     public static bool isDragging = false;
     public static bool isAnimating = false;
     public bool IsEffectAble = false;
@@ -22,19 +24,19 @@ public partial class CardLogic : Area2D {
     }
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
-    public override void _Process(double delta) {
-        
-        Node2D card = GetParent() as Node2D;
-        Node2D platform = card.GetParent() as Node2D;
-        CardHand handCard = platform.GetParent().GetParent() as CardHand;
+    public override void _Process(double delta)
+    {
+        var rootCard = this.CardRoot();
+        NicePlatform platform = rootCard.Platform;
+        CardHand handCard = platform.CardHand;
 
         if (handCard != null && platform.IsInGroup("handPlatform")) {
-            Node2D targettedCard = handCard.cardTargetted;
-            if (targettedCard != null && !Equals(targettedCard.GetNode("CardBody") as CardLogic)) {
+            NiceCard targettedCard = handCard.CardTargetted;
+            if (targettedCard != null && !this.Equals(targettedCard.CardBody)) {
                 return;
             }
         }
-        CollisionShape2D collision = platform.GetNode("PlatformCollision") as CollisionShape2D;
+        CollisionShape2D collision = platform.platformCollision;
 
         if (isDraggable) {
             if (Input.IsActionJustPressed("click")) {
@@ -55,20 +57,20 @@ public partial class CardLogic : Area2D {
                     // Do something "important"
                     return;
                 } */
-                initialPos = card.Position;
+                initialPos = rootCard.Position;
                 isDragging = true;
             }
             if (Input.IsActionPressed("click") && (isDragging || (QueuedForClick && isMouseOverPlatform(collision)))) {  
                 if (QueuedForClick && !isAnimating) {
                     // Do whatever is in IsActionJustPressed + falsify QueuedForClick
-                    initialPos = card.Position;
+                    initialPos = rootCard.Position;
                     isDragging = true;
                     QueuedForClick = false;
                 }
 
                 if (isDragging) {
                     Vector2 mousePos = GetGlobalMousePosition();
-                    card.GlobalPosition = mousePos;
+                    rootCard.GlobalPosition = mousePos;
                 }
             } else if (Input.IsActionJustReleased("click") && isDragging) {
                 if (isAnimating) { return; }
@@ -80,12 +82,12 @@ public partial class CardLogic : Area2D {
                 if (isInsideDroppable) {
                     
                     var body = InstanceFromId(bodyRef) as Node2D;
-                    Node2D cardParent = card.GetParent() as Node2D;
+                    Node2D cardParent = rootCard.GetParent() as Node2D;
 
-                    cardParent.RemoveChild(card);
-                    body.AddChild(card);
-                    card.Position = new Vector2(0, 0);
-                    tween.TweenProperty(card, "position", new Vector2(0, 0), 0.15).SetEase(Tween.EaseType.Out);
+                    cardParent.RemoveChild(rootCard);
+                    body.AddChild(rootCard);
+                    rootCard.Position = new Vector2(0, 0);
+                    tween.TweenProperty(rootCard, "position", new Vector2(0, 0), 0.15).SetEase(Tween.EaseType.Out);
 
                     body.RemoveFromGroup("droppable");
                     if (cardParent.GetGroups().Contains("handPlatform")) {
@@ -97,10 +99,10 @@ public partial class CardLogic : Area2D {
                     }
                 } else {
                     if (IsParentCardPlatform()) {
-                        tween.TweenProperty(card, "position", new Vector2(0, 0), 0.15).SetEase(Tween.EaseType.Out);
+                        tween.TweenProperty(rootCard, "position", new Vector2(0, 0), 0.15).SetEase(Tween.EaseType.Out);
                     } else {
-                        tween.TweenProperty(card, "position", initialPos, 0.2).SetEase(Tween.EaseType.Out);
-                        GD.PushWarning("CardPlatform not found: " + card.GetParent().Name + " " + card.GetParent().GetType());
+                        tween.TweenProperty(rootCard, "position", initialPos, 0.2).SetEase(Tween.EaseType.Out);
+                        GD.PushWarning("CardPlatform not found: " + rootCard.GetParent().Name + " " + rootCard.GetParent().GetType());
                     }
                 }
             }
@@ -109,27 +111,28 @@ public partial class CardLogic : Area2D {
 
 
 
-    public void OnArea2DMouseEntered() {
-        Node2D cardRoot = GetParent() as Node2D;
-        Node2D parent = cardRoot.GetParent() as Node2D;
+    public void OnArea2DMouseEntered()
+    {
+
+        Node2D parent = CardRoot().Platform;
         if (parent == null) return;
         if (!parent.IsInGroup("handPlatform") && !isDragging) {
 
             Vector2 vector2 = new Vector2(1.05f, 1.05f);
-            cardRoot.Scale = vector2;
+            CardRoot().Scale = vector2;
         }
         if (!isDragging) {
             isDraggable = true;
         }
     }
 
-    public void OnArea2DMouseExited() {
-        Node2D cardRoot = GetParent() as Node2D;
-        Node2D parent = cardRoot.GetParent() as Node2D;
-        if (parent == null) return;
-        if (!parent.IsInGroup("handPlatform") && !isDragging) {
+    public void OnArea2DMouseExited()
+    {
+        var Platform = CardRoot().Platform;
+        if (Platform == null) return;
+        if (!Platform.IsInGroup("handPlatform") && !isDragging) {
             Vector2 vector2 = new Vector2(1f, 1f);
-            cardRoot.Scale = vector2;
+            CardRoot().Scale = vector2;
         }
         if (!isDragging) {
             isDraggable = false;
@@ -167,10 +170,7 @@ public partial class CardLogic : Area2D {
     }
 
     private void softReset() {
-        Node2D card = GetParent() as Node2D;
-        Node2D platform = card.GetParent() as Node2D;
-        CollisionShape2D collision = platform.GetNode("PlatformCollision") as CollisionShape2D;
-        if (!isMouseOverPlatform(collision)) {
+        if (!isMouseOverPlatform(CardRoot().CardCollision)) {
             isDraggable = false;
             isInsideDroppable = false;
             QueuedForClick = false;
@@ -184,4 +184,7 @@ public partial class CardLogic : Area2D {
         return MathUtil.IsMouseOverCollisionShape2D(collision.ToGlobal(collision.Shape.GetRect().Position), rect, collision.GetGlobalMousePosition());
     }
 
+    public NiceCard CardRoot() {
+        return GetParent() as NiceCard;
+    }
 }

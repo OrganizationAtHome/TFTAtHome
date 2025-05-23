@@ -3,21 +3,24 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Godot.Collections;
+using TFTAtHome.Frontend.Card;
 using TFTAtHome.util;
+using static TFTAtHome.Frontend.Singletons.CardNodeNameSingleton;
 
-public partial class CardHand : StaticBody2D
+public partial class CardHand : NiceCardHand
 {
-    public Node2D cardTargetted;
+    public NiceCard CardTargetted;
+    public NiceCard LastCardTargetted;
+    private NiceCard lastCard = null;
     private double totalCardWidth;
-    
+    const float highlightSpeed = 0.15f;
+    const float highlightSize = 1.5f;
+    private int cardTargettedIndex;
     
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
 	{
-		if (GetNode("CardSpace") == null) {
-            GD.PrintErr("CardSpace: "+ Name + " node not found in CardHand.");
-            return;
-        }
+        
     }
     
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -25,86 +28,90 @@ public partial class CardHand : StaticBody2D
 	{
         if (!CardLogic.isDragging) {
             
-            Node2D platformtarget = PlatformTargettingSystem();
-            if (platformtarget != null) {
-                cardTargetted = platformtarget.GetNode("Card") as Node2D;
-            }
+            CardPlatform platformtarget = PlatformTargettingSystem();
+            if (platformtarget != null && !platformtarget.GetNode(CardRoot).Equals(lastCard)) {
+                LastCardTargetted = CardTargetted;
+                CardTargetted = platformtarget.cardRoot;
+                lastCard = platformtarget.cardRoot;
+            } 
         }
     }
 
-    public StaticBody2D PlatformTargettingSystem() {
-        CollisionShape2D center = GetNode("CardSpace") as CollisionShape2D;
-        var platforms = center.GetChildren().Cast<StaticBody2D>().ToList();
-        var moooooooose = center.GetGlobalMousePosition().X;
+    public CardPlatform PlatformTargettingSystem() {
+        List<CardPlatform> platforms = this.Platforms;
+        var moooooooose = CardSpace.GetGlobalMousePosition().X;
         
         
         if (platforms.Count == 0 ) return null;
         var width = (float) totalCardWidth;
-        var centerPos = center.GlobalPosition;
-        var newCenterPos = new Vector2(centerPos.X-width/2, centerPos.Y-center.Shape.GetRect().Size.Y/2*center.GlobalScale.Y);
+        var centerPos = CardSpace.GlobalPosition;
+        var newCenterPos = new Vector2(centerPos.X-width/2, centerPos.Y-CardSpace.Shape.GetRect().Size.Y/2*CardSpace.GlobalScale.Y);
+        var rect = new Rect2(newCenterPos, new Vector2(width, CardSpace.Shape.GetRect().Size.Y));
         
-        var rect = new Rect2(newCenterPos, new Vector2(width, center.Shape.GetRect().Size.Y));
-        
-        if (!MathUtil.IsMouseOverCollisionShape2D(newCenterPos, rect, center.GetGlobalMousePosition())) {
+        if (!MathUtil.IsMouseOverCollisionShape2D(newCenterPos, rect, CardSpace.GetGlobalMousePosition())) {
+            if (CardTargetted != null)
+                CardDown(CardTargetted);
             return null;
         }
         
-        StaticBody2D found = null;
+        CardPlatform PlatformFound = null;
         var lastindex = 0;
-        int i;
-        for (i = 0; i < platforms.Count; i++) {
+        
+        for (int i = 0; i < platforms.Count; i++) {
             var platformX = platforms[i].GlobalPosition.X;
             if (i == platforms.Count) {
-                found = platforms[i];
+                PlatformFound = platforms[i];
             } else if (platformX.CompareTo(moooooooose) < 0) {
                 var lastPlat = platforms[lastindex].GlobalPosition.X;
                 var currentPlat = platforms[i].GlobalPosition.X;
                 var currentMooCompare = Math.Abs(currentPlat - moooooooose);
                 var lastMooCompare = Math.Abs(lastPlat - moooooooose);
                 if (currentMooCompare.CompareTo(lastMooCompare) < 0) {
-                    found = platforms[i];
+                    PlatformFound = platforms[i];
                     break;
                 } else {
-                    found = platforms[lastindex];
+                    PlatformFound = platforms[lastindex];
                     break;
                 }
             } else {
                 lastindex = i;
             }
         }
-        if (found == null && platforms.Count > 0) {
-            found = platforms[^1]; // Last card is the first card visually
+        if (PlatformFound == null) {
+            PlatformFound = platforms[^1]; // Last card is the first card visually
         
         }
-        highlightCard(found.GetNode("Card").GetNode("CardBody") as CardLogic, center.GetChildren());
-        return found;
+        highlightCard(PlatformFound.cardRoot);
+        return PlatformFound;
     }
 
-    private void highlightCard(CardLogic card, Array<Node> centerNodes, bool hackermode = false) {
-        const float highlightSpeed = 0.15f;
-        const float highlightSize = 1.15f;
+    private void highlightCard(NiceCard card, bool hackermode = false) {
+        CardUp(card);
         
-        int heightincease = hackermode ? 10 : 2;
-        if (cardTargetted != card) {
-            var tween = GetTree().CreateTween();
-            var rect = (card.GetNode("CardCollision") as CollisionShape2D).Shape.GetRect();
-            tween.TweenProperty(card.GetParent(), "position", new Vector2(0, -1*(rect.Size.Y*heightincease*card.GlobalScale.Y)), highlightSpeed).SetEase(Tween.EaseType.Out);
-            tween.TweenProperty(card.GetParent(), "scale", new Vector2(highlightSize, highlightSize), highlightSpeed).SetEase(Tween.EaseType.Out);
-        } if (cardTargetted != null) {
-            var tween = GetTree().CreateTween();
-            tween.TweenProperty(cardTargetted, "position", new Vector2(0, 0), highlightSpeed).SetEase(Tween.EaseType.Out);
-            tween.TweenProperty(cardTargetted, "scale", new Vector2(1, 1), highlightSpeed).SetEase(Tween.EaseType.Out);
+        if (LastCardTargetted != null) {
+            CardDown(LastCardTargetted);
         }
+    }
 
-        for (int i = 0; i < centerNodes.Count; i++) {
-            var platform = centerNodes[i] as Node2D;
-            if ((platform.GetNode("Card").GetNode("CardBody") as CardLogic).Equals(card)) {
-                var temp = centerNodes[i];
-                centerNodes.RemoveAt(i);
-                centerNodes.Insert(centerNodes.Count, temp);
-            }
-        }
+    private void CardUp(NiceCard cardRoot, float heightincease = 1) {
+        var upTween = GetTree().CreateTween();
+        var height = cardRoot.Height;
         
+        cardRoot.SetZIndex(1);
+        
+        
+        cardRoot.Scale = new Vector2(highlightSize, highlightSize);
+        cardRoot.Position = new Vector2(0, -1*(height/2));
+        //tween.TweenProperty(cardRoot, "scale", new Vector2(highlightSize, highlightSize), highlightSpeed).SetEase(Tween.EaseType.Out);
+        upTween.TweenProperty(cardRoot, "position", new Vector2(0, -1*(height/2*heightincease)), highlightSpeed).SetEase(Tween.EaseType.Out);
+    }
+
+    private void CardDown(NiceCard cardRoot) {
+        var downTween = GetTree().CreateTween();
+        downTween.TweenProperty(cardRoot, "position", new Vector2(0, 0), highlightSpeed).SetEase(Tween.EaseType.Out);
+        //tween.TweenProperty(LastCardTargetted, "scale", new Vector2(1, 1), highlightSpeed).SetEase(Tween.EaseType.Out);
+        cardRoot.Scale = new Vector2(1, 1);
+        cardRoot.SetZIndex(0);
     }
 
     public void Shuffle(bool hasFan = true) {
@@ -164,10 +171,6 @@ public partial class CardHand : StaticBody2D
         var lastCardPos = lastPlatform.GlobalPosition.X;
         // Calculate the total width of the cards
         totalCardWidth = (firstCardPos + CalcCardHalfWidthSize(cardBody)) - (lastCardPos - CalcCardHalfWidthSize(cardBody)); 
-        
-        GD.Print("FirstCardPos: " + firstCardPos);
-        GD.Print("LastCardPos: " + lastCardPos);
-        GD.Print("TotalCardWidth: " + totalCardWidth);
     }
     
     private float CalcCardHalfWidthSize(CollisionShape2D cardBody) {

@@ -1,5 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://228x0lttm3ug"]
+[gd_scene load_steps=7 format=3 uid="uid://228x0lttm3ug"]
 
+[ext_resource type="Script" path="res://Frontend/Card/AbstractThings/NiceCard.cs" id="1_31sxg"]
 [ext_resource type="Texture2D" uid="uid://d0m6opvm4r6l7" path="res://images/cardimages/eric-cartman.jpg" id="1_52fin"]
 [ext_resource type="Script" path="res://Frontend/Card/CardVisuals.cs" id="2_1yo14"]
 [ext_resource type="PackedScene" uid="uid://ds00ulykonvln" path="res://scenes/miscellaneous/Stat_Label.tscn" id="2_vy0w0"]
@@ -10,6 +11,7 @@ size = Vector2(304.529, 370)
 
 [node name="Card" type="Node2D"]
 position = Vector2(0, 4.23516e-22)
+script = ExtResource("1_31sxg")
 
 [node name="CardBody" type="Area2D" parent="."]
 position = Vector2(-4.57764e-05, 7.62939e-06)

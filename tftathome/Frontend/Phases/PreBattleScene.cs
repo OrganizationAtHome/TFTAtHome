@@ -7,6 +7,7 @@ using TFTAtHome.Backend.models.Matches;
 using TFTAtHome.Backend.notifiers;
 using TFTAtHome.Backend.storage;
 using TFTAtHome.util;
+using static TFTAtHome.Frontend.Singletons.CardNodeNameSingleton;
 
 public partial class PreBattleScene : Node2D
 {
@@ -68,6 +69,7 @@ public partial class PreBattleScene : Node2D
         var cardPlatform2 = CardPlatformScene.Instantiate() as Node2D;
         DOSOMETHIKNG(cardPlatform1);
         DOSOMETHIKNG(cardPlatform2);
+        platformCount++;
 
         center.AddChild(cardPlatform1);
         NCplayer.AddChild(cardPlatform2);
@@ -80,8 +82,9 @@ public partial class PreBattleScene : Node2D
     {
         var card = CardScene.Instantiate() as Node2D;
         cardPlatform.AddChild(card);
-        cardPlatform.Name = "CardPlatform" + platformCount++;
+        cardPlatform.Name = "CardPlatform" + platformCount;
         cardPlatform.AddToGroup("handPlatform");
+        (cardPlatform.GetNode(CardRoot).GetNode(CardBody) as CardLogic).CardId = platformCount;
     }
 
     public void printRecursive(Node node)
