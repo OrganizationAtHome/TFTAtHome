@@ -11,8 +11,7 @@ public partial class NiceCardHand : StaticBody2D {
     }
 
     public List<CardPlatform> Platforms {
-        get
-        {
+        get {
             Array<CardPlatform> platforms = new();
             foreach (Node child in CardSpace.GetChildren())
             {
@@ -20,5 +19,9 @@ public partial class NiceCardHand : StaticBody2D {
             }
             return platforms.ToList();
         }
+    }
+    
+    public float SpaceHeight { 
+        get => CardSpace.Shape.GetRect().Size.Y*CardSpace.GlobalScale.Y;
     }
 }

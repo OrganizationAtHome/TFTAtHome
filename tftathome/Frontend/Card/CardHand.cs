@@ -45,8 +45,8 @@ public partial class CardHand : NiceCardHand
         if (platforms.Count == 0 ) return null;
         var width = (float) totalCardWidth;
         var centerPos = CardSpace.GlobalPosition;
-        var newCenterPos = new Vector2(centerPos.X-width/2, centerPos.Y-CardSpace.Shape.GetRect().Size.Y/2*CardSpace.GlobalScale.Y);
-        var rect = new Rect2(newCenterPos, new Vector2(width, CardSpace.Shape.GetRect().Size.Y));
+        var newCenterPos = new Vector2(centerPos.X-width/2, centerPos.Y-SpaceHeight);
+        var rect = new Rect2(newCenterPos, new Vector2(width, SpaceHeight*1.5f));
         
         if (!MathUtil.IsMouseOverCollisionShape2D(newCenterPos, rect, CardSpace.GetGlobalMousePosition())) {
             if (CardTargetted != null)
