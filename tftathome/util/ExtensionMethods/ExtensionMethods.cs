@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TFTAtHome.Backend.models;
+using TFTAtHome.Backend.storage;
 using static TFTAtHome.Backend.storage.TraitSingleton;
 
 namespace TFTAtHome.util.ExtensionMethods
@@ -244,6 +245,16 @@ namespace TFTAtHome.util.ExtensionMethods
             card.Early += amount;
             card.Mid += amount;
             card.Late += amount;
+        }
+
+        public static bool IsTraitWithPlayerInputRequirement(this string input)
+        {
+            return input switch
+            {
+                Genius => true,
+                Queen => false,
+                _ => false
+            };
         }
 
 
