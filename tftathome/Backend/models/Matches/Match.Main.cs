@@ -15,6 +15,7 @@ namespace TFTAtHome.Backend.models.Matches
     public partial class Match
     {
         // TODO --> Implement logic for MovieHero -> Card needs to get +3 on all stages after a match
+        public Guid Id { get; set; }
         public Player Player1 { get; set; }
         public Player Player2 { get; set; }
         public List<Card> Player1Hand { get; set; }
@@ -26,11 +27,12 @@ namespace TFTAtHome.Backend.models.Matches
         public int RoundNumber { get; set; }
         public List<Round> Rounds { get; set; }
         public Round CurrentRound { get; set; }
-        public List<MatchEffect> UsedMatchEffects { get; set; }
-        
+        public List<MatchEffect> UsedMatchEffects { get; }
+        public List<string> DisabledTraits { get; set; }
 
         public Match(Player player1, Player player2)
         {
+            Id = Guid.NewGuid();
             Player1 = player1;
             Player2 = player2;
             Player1Hand = player1.GetCopyOfPlayerHand();
@@ -41,6 +43,8 @@ namespace TFTAtHome.Backend.models.Matches
             Player2Effects = new PlayerCardEffects(player2);
             Rounds = new List<Round>();
             RoundNumber = 1;
+            UsedMatchEffects = new List<MatchEffect>();
+            DisabledTraits = new List<string>();
             EffectNotifier.OnEffectUsed += OnEffectUsed;
             EffectNotifier.OnGeniusEffectUsed += OnGeniusEffectUsed;
         }
@@ -91,6 +95,18 @@ namespace TFTAtHome.Backend.models.Matches
             } */
         }
 
+        public void ResetCardStats()
+        {
+            foreach (var card in CurrentCardsOnBoardP1)
+            {
+                card.ResetCardStats();
+            }
+
+            foreach (var card in CurrentCardsOnBoardP2)
+            {
+                card.ResetCardStats();
+            }
+        }
         public void SetCardStatsForMatchForPlayer(Player player)
         {
             if (player == Player1)
@@ -113,6 +129,11 @@ namespace TFTAtHome.Backend.models.Matches
             bool leaderBonus = currentPlayerCardsOnBoard.GetAllCardsWithTraitOnList(Leader).Count != 0 ?
             CheckLeaderBonus(currentPlayerCardsOnBoard, p1) : false;
 
+            if (UsedMatchEffects.Exists(mf => mf.TraitName == Leader))
+            {
+                leaderBonus = false;
+            }
+
             Dictionary<string, int> cardBonuses = new Dictionary<string, int>();
             List<Card> opponentPlayerActiveBoard = p1 ? CurrentCardsOnBoardP2 : CurrentCardsOnBoardP1;
 
@@ -126,7 +147,7 @@ namespace TFTAtHome.Backend.models.Matches
                 leaderCard.Late += 3;
             }
 
-            if (currentPlayerCardsOnBoard.CheckTraitIsOnList(Politician))
+            if (currentPlayerCardsOnBoard.CheckTraitIsOnList(Politician) && !DisabledTraits.Contains(Politician))
             {
                 cardBonuses.Add("Politician", CheckPoliticianCount(p1));
                 if (leaderBonus)
@@ -139,7 +160,7 @@ namespace TFTAtHome.Backend.models.Matches
                     card.SetPoliticianBonusOnCard(cardBonuses["Politician"]);
                 }
             }
-            if (currentPlayerCardsOnBoard.CheckTraitIsOnList(TVCelebrity))
+            if (currentPlayerCardsOnBoard.CheckTraitIsOnList(TVCelebrity) && !DisabledTraits.Contains(TVCelebrity))
             {
                 int realCardCount = currentPlayerCardsOnBoard.GetRealCardCountOnListAndOpponent(opponentPlayerActiveBoard);
                 int tvCelebrityCount = currentPlayerCardsOnBoard.GetTraitCountOnListAndOpponent(TVCelebrity, opponentPlayerActiveBoard);
@@ -155,7 +176,7 @@ namespace TFTAtHome.Backend.models.Matches
                     card.SetTVCelebrityBonusOnCard(realCardCount, tvCelebrityCount);
                 }
             }
-            if (currentPlayerCardsOnBoard.CheckTraitIsOnList(Drawing))
+            if (currentPlayerCardsOnBoard.CheckTraitIsOnList(Drawing) && !DisabledTraits.Contains(Drawing))
             {
                 int[] fictionalAndDrawingCount = currentPlayerCardsOnBoard.GetFictionalAndDrawingCountOnListAndOpponent(opponentPlayerActiveBoard);
                 if (leaderBonus)

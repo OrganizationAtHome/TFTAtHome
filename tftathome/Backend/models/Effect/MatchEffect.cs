@@ -10,6 +10,7 @@ namespace TFTAtHome.Backend.models.Effect
 {
     public class MatchEffect: Effect
     {
+        public Guid Id { get; set; }
         public string TraitName { get; set; }
         public bool Persistent { get; set; }
         public int WeightedIndex { get; } = 0;
@@ -18,6 +19,7 @@ namespace TFTAtHome.Backend.models.Effect
 
         public MatchEffect(string traitName, bool persistent): base(traitName)
         {
+            Id = Guid.NewGuid();
             TraitName = traitName;
             Persistent = persistent;
             WeightedIndex = GenerateWeightedIndex(traitName);

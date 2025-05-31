@@ -184,7 +184,7 @@ namespace TFTAtHome.util
             parentContainer.AddChild(container);
         }
 
-        public static Node2D CreateCardForBattleFieldPlatform(Card card, StaticBody2D platform)
+        public static Node2D CreateCardForBattleFieldPlatform(Card card, NicePlatform platform)
         {
             if (card == null || platform == null)
             {
@@ -193,7 +193,8 @@ namespace TFTAtHome.util
             }
             Node customCard = CreateGodotCard(card, 1.0f);
             NiceCard rootCard = customCard as NiceCard;
-            AddCardToPlatform(rootCard, platform); // Danie, please fix
+            platform.AddCardToPlatform(rootCard);
+            // AddCardToPlatform(rootCard, platform); // Danie, please fix
             
             return rootCard;
         }

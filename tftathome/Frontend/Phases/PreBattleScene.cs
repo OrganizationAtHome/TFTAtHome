@@ -7,6 +7,7 @@ using TFTAtHome.Backend.models.Matches;
 using TFTAtHome.Backend.models.Rounds;
 using TFTAtHome.Backend.notifiers;
 using TFTAtHome.Backend.storage;
+using TFTAtHome.Frontend.Card;
 using TFTAtHome.util;
 using TFTAtHome.util.ExtensionMethods;
 using static TFTAtHome.Backend.storage.TraitSingleton;
@@ -23,18 +24,17 @@ public partial class PreBattleScene : Node2D
     private int platformCount = 0;
     ulong center1Id;
     ulong center2Id;
+    [Export] public NicePlatform CardPlatform { get; set; }
     [Export]
-    public StaticBody2D CardPlatform { get; set; }
+    public NicePlatform CardPlatform2 { get; set; }
     [Export]
-    public StaticBody2D CardPlatform2 { get; set; }
+    public NicePlatform CardPlatform3 { get; set; }
     [Export]
-    public StaticBody2D CardPlatform3 { get; set; }
+    public NicePlatform CardPlatform4 { get; set; }
     [Export]
-    public StaticBody2D CardPlatform4 { get; set; }
+    public NicePlatform CardPlatform5 { get; set; }
     [Export]
-    public StaticBody2D CardPlatform5 { get; set; }
-    [Export]
-    public StaticBody2D CardPlatform6 { get; set; }
+    public NicePlatform CardPlatform6 { get; set; }
     [Export]
     GridContainer P1EffectButtons { get; set; }
     [Export]
@@ -106,8 +106,8 @@ public partial class PreBattleScene : Node2D
         Player player1 = new Player(1, "Player 1");
         Player player2 = new Player(2, "Player 2");
 
-        List<StaticBody2D> p1Platforms = new List<StaticBody2D>() { CardPlatform4, CardPlatform5, CardPlatform6 };
-        List<StaticBody2D> p2Platforms = new List<StaticBody2D>() { CardPlatform, CardPlatform2, CardPlatform3 };
+        List<NicePlatform> p1Platforms = new List<NicePlatform>() { CardPlatform4, CardPlatform5, CardPlatform6 };
+        List<NicePlatform> p2Platforms = new List<NicePlatform>() { CardPlatform, CardPlatform2, CardPlatform3 };
 
         Card elizabeth = LocalStorage.GetCardFromName("ELIZABETH II");
         Card redfoo = LocalStorage.GetCardFromName("REDFOO");
@@ -159,9 +159,71 @@ public partial class PreBattleScene : Node2D
             Node2D card = CardUtil.CreateCardForBattleFieldPlatform(match.CurrentCardsOnBoardP2[i], p2Platforms[i]);
             p2CardNodes.Add(card);
         }
+        MatchUtil.UpdateCardStatsListGodot(p1CardNodes, match.CurrentCardsOnBoardP1);
+        MatchUtil.UpdateCardStatsListGodot(p2CardNodes, match.CurrentCardsOnBoardP2);
 
-        match.SetCardStatsForMatchForPlayer(match.Player1);
-        match.SetCardStatsForMatchForPlayer(match.Player2);
+        MatchUtil.SetupActiveEffectsButtons(P1EffectButtons, player1, match);
+    }
+    
+    public void SetupMusicianTraitTest()
+    {
+        Player player1 = new Player(1, "Player 1");
+        Player player2 = new Player(2, "Player 2");
+
+        List<NicePlatform> p1Platforms = new List<NicePlatform>() { CardPlatform4, CardPlatform5, CardPlatform6 };
+        List<NicePlatform> p2Platforms = new List<NicePlatform>() { CardPlatform, CardPlatform2, CardPlatform3 };
+
+        Card elizabeth = LocalStorage.GetCardFromName("ELIZABETH II");
+        Card redfoo = LocalStorage.GetCardFromName("REDFOO");
+        Card lightYagami = LocalStorage.GetCardFromName("LIGHT YAGAMI"); // 6, 12, 1, "Genius, true
+
+        Card ericCartman = LocalStorage.GetCardFromName("ERIC CARTMAN"); // 5, 8, 5, "Drawing", true
+        Card elonMusk = LocalStorage.GetCardFromName("ELON MUSK"); // 5, 7, 6, "Leader", false
+        Card deadpool = LocalStorage.GetCardFromName("DEADPOOL"); // 5, 1, 11, "MovieHero", true
+
+
+        player1.SetPlayerHand(new List<Card> { elizabeth, redfoo, lightYagami });
+        player2.SetPlayerHand(new List<Card> { ericCartman, elonMusk, deadpool });
+
+        match = new Match(player1, player2);
+
+        GD.Print(match);
+
+        // Act: Adding cards to the board
+        // Player 1 adds Eric Cartman
+
+        var p1Hand = match.Player1Hand;
+        var p2Hand = match.Player2Hand;
+
+        match.AddCardToBoard(match.Player1Hand[0], player1); // Elizabeth
+
+        match.AddCardToBoard(match.Player2Hand[0], player2); // Eric Cartman (Drawing): 5, 8, 5, true
+
+        match.AddCardToBoard(match.Player1Hand[0], player1); // Deadpool (MovieHero): 5, 1, 11, true
+
+        match.AddCardToBoard(match.Player2Hand[0], player2); // Elon Musk (Leader): 5, 7, 6, false
+
+        match.AddCardToBoard(match.Player1Hand[0], player1); // Light Yagami (Genius): 6, 12, 1, true
+
+        match.AddCardToBoard(match.Player2Hand[0], player2); // Chuck Norris (TVCelebrity): 7, 8, 3, false
+
+        match.RunInitialRound();
+
+        p1CardNodes = new List<Node2D>();
+        p2CardNodes = new List<Node2D>();
+
+        for (int i = 0; i < match.CurrentCardsOnBoardP1.Count; i++)
+        {
+            Node2D card = CardUtil.CreateCardForBattleFieldPlatform(match.CurrentCardsOnBoardP1[i], p1Platforms[i]);
+            p1CardNodes.Add(card);
+        }
+
+        for (int i = 0; i < match.CurrentCardsOnBoardP2.Count; i++)
+        {
+            Node2D card = CardUtil.CreateCardForBattleFieldPlatform(match.CurrentCardsOnBoardP2[i], p2Platforms[i]);
+            p2CardNodes.Add(card);
+        }
+        
         MatchUtil.UpdateCardStatsListGodot(p1CardNodes, match.CurrentCardsOnBoardP1);
         MatchUtil.UpdateCardStatsListGodot(p2CardNodes, match.CurrentCardsOnBoardP2);
 

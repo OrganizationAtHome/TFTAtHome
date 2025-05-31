@@ -41,6 +41,14 @@ namespace TFTAtHome.Backend.models
             Late = late;
         }
 
+        public void ResetCardStats()
+        {
+            var originalCard = LocalStorage.GetCardFromName(this.CardName);
+            Early = originalCard.Early;
+            Mid = originalCard.Mid;
+            Late = originalCard.Late;
+        }
+
         public Card Clone()
         {
             return (Card)MemberwiseClone();

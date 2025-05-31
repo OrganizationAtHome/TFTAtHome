@@ -257,6 +257,17 @@ namespace TFTAtHome.util.ExtensionMethods
             };
         }
 
+        public static bool IsPassiveTrait(this string input)
+        {
+            return input switch
+            {
+                Genius => false,
+                Queen => false,
+                Musician => false,
+                _ => true
+            };
+        }
+
 
 
         public class Phase

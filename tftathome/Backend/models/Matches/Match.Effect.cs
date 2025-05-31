@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Godot;
 using TFTAtHome.Backend.models.Effect;
+using TFTAtHome.Backend.storage;
 using TFTAtHome.util.ExtensionMethods;
 using static TFTAtHome.Backend.storage.TraitSingleton;
 
@@ -33,12 +34,12 @@ namespace TFTAtHome.Backend.models.Matches
                     }
                     else
                     {
-                        UseQueenEffectWithoutIndex(card);
+                        UseQueenEffectWithoutIndex(card, effect);
                     }
                 } break;
                 case Musician:
                 {
-                    
+                    UseMusicianEffect(card, effect);
                 } break;
                 case Genius:
                 {
@@ -48,7 +49,7 @@ namespace TFTAtHome.Backend.models.Matches
                     {
                         throw new Exception("Phase 1 or Phase 2 is empty");
                     }
-                    UseGeniusEffect(card, phase1, phase2);
+                    UseGeniusEffect(card, effect, phase1, phase2);
                 } break;
                 default:
                 {
@@ -66,8 +67,12 @@ namespace TFTAtHome.Backend.models.Matches
             return cardToUseEffectOn.GetSecondBestPhaseOnCard()[1].Length != 0;
         }
 
-        public void UseQueenEffectWithoutIndex(Card cardToUseEffectOn)
+        public void UseQueenEffectWithoutIndex(Card cardToUseEffectOn, MatchEffect effectUsed)
         {
+            int originalEarly = cardToUseEffectOn.Early;
+            int originalMid = cardToUseEffectOn.Mid;
+            int originalLate = cardToUseEffectOn.Late;
+            
             var bestPhaseProperty = cardToUseEffectOn.GetType().GetProperty(cardToUseEffectOn.GetBestPhaseOnCard());
 
             if (bestPhaseProperty == null || bestPhaseProperty.PropertyType != typeof(int)) return;
@@ -75,6 +80,8 @@ namespace TFTAtHome.Backend.models.Matches
             string secondBestPhase = cardToUseEffectOn.GetSecondBestPhaseOnCard()[0];
 
             cardToUseEffectOn.GetType().GetProperty(secondBestPhase).SetValue(cardToUseEffectOn, bestPhaseValueOnCard);
+            
+            SaveUsedMatchEffectStatChange(cardToUseEffectOn, effectUsed, originalEarly, originalMid, originalLate);
         }
 
         public void UseQueenEffectWithIndex(Player player, Card cardToUseEffectOn, int indexOfSecondBestPhase)
@@ -101,8 +108,12 @@ namespace TFTAtHome.Backend.models.Matches
             cardToUseEffectOn.GetType().GetProperty(secondBestPhase).SetValue(cardToUseEffectOn, bestPhaseValueOnCard);
         }
 
-        public void UseGeniusEffect(Card cardToUseEffectOn, string phase1, string phase2)
+        public void UseGeniusEffect(Card cardToUseEffectOn, MatchEffect effectUsed, string phase1, string phase2)
         {
+            int originalEarly = cardToUseEffectOn.Early;
+            int originalMid = cardToUseEffectOn.Mid;
+            int originalLate = cardToUseEffectOn.Late;
+            
             var phase1Property = cardToUseEffectOn.GetType().GetProperty(phase1);
             var phase2Property = cardToUseEffectOn.GetType().GetProperty(phase2);
 
@@ -116,13 +127,54 @@ namespace TFTAtHome.Backend.models.Matches
             
             cardToUseEffectOn.GetType().GetProperty(phase1).SetValue(cardToUseEffectOn, phase2ValueOnCard);
             cardToUseEffectOn.GetType().GetProperty(phase2).SetValue(cardToUseEffectOn, phase1ValueOnCard);
+            
+            SaveUsedMatchEffectStatChange(cardToUseEffectOn, effectUsed, originalEarly, originalMid, originalLate);
         }
         
-        public void UseMusicianEffect(Card cardToUseEffectOn)
+        public void UseMusicianEffect(Card cardToUseEffectOn, MatchEffect effectUsed)
         {
             var trait = cardToUseEffectOn.Trait;
+            DisabledTraits.Add(trait);
+            if (trait.IsPassiveTrait())
+            {
+                ResetCardStats();
+            } 
+            else
+            {
+                RevertMatchEffect(trait);
+            }
+        }
+
+        public void RevertMatchEffect(string trait)
+        {
+            var doesRevertEffectExist = UsedMatchEffects.Exists(mf => mf.TraitName == trait);
+            if (doesRevertEffectExist)
+            {
+                var effectToRevert = UsedMatchEffects.Find(mf => mf.TraitName == trait);
+                var card = effectToRevert.UsedOnCard;
+                card.SetCardStats(card.Early + effectToRevert.StatsChange[0], 
+                    card.Mid + effectToRevert.StatsChange[1], 
+                    card.Late + effectToRevert.StatsChange[2]);
+                UsedMatchEffects.Remove(effectToRevert);
+            }
+            else
+            {
+                throw new Exception(
+                    "The trait you are trying to revert doesn't exist in UsedMatchEffects. I think you might actually be retarded");
+            }
+        }
+
+        private void SaveUsedMatchEffectStatChange(Card cardToUseEffectOn, MatchEffect effectUsed, int originalEarly, int originalMid, int originalLate)
+        {
+            effectUsed.UsedOnCard = cardToUseEffectOn;
             
-            // Take all cards currently on the board
+            int earlyDiff = originalEarly - cardToUseEffectOn.Early;
+            int midDiff = originalMid - cardToUseEffectOn.Mid;
+            int lateDiff = originalLate - cardToUseEffectOn.Late;
+            
+            effectUsed.StatsChange = new int[] { earlyDiff, midDiff, lateDiff };
+            
+            UsedMatchEffects.Add(effectUsed);
         }
     }
 
