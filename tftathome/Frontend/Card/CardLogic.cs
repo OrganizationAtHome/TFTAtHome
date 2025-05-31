@@ -85,15 +85,15 @@ public partial class CardLogic : Node2D {
                 if (isInsideDroppable) {
                     
                     var PlatformTo = InstanceFromId(bodyRef) as NicePlatform;
-                    var PlatformFrom = rootCard.GetParent() as NicePlatform; 
-                    
+                    var PlatformFrom = rootCard.Platform; 
+                    tween.TweenProperty(rootCard, "position", new Vector2(0, 0), 0.15).SetEase(Tween.EaseType.Out);
                     
                     if (PlatformFrom.GetGroups().Contains("handPlatform")) {
                         PlatformTo.AddCardToPlatform(rootCard, PlatformFrom);
                         PlatformFrom.GetParent().RemoveChild(PlatformFrom);
                         handCard.Shuffle();// reshuffle hands
                         softReset();
-                    } if (PlatformFrom.GetGroups().Contains("battlefieldPlatform") && PlatformTo.cardRoot != null) {
+                    } if (PlatformFrom.GetGroups().Contains("battlefieldPlatform") && PlatformTo?.cardRoot != null) {
                         PlatformTo.SwitchCardPlatforms(PlatformFrom);
                     } 
                 } else {
