@@ -66,7 +66,6 @@ namespace TFTAtHome.util
             var cardBody = card2D.GetChildren()[0];
             CardLogic cardLogic = cardBody as CardLogic;
             if (cardLogic == null) throw new Exception("Your coding skills are terrible, Cardlogic is null");
-            cardLogic.IsEffectAble = true;
             cardLogic.CardId = cardInput.Id;
             
             // Set card stats and headers
