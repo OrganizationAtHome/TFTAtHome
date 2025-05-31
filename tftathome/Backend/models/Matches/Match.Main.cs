@@ -26,6 +26,7 @@ namespace TFTAtHome.Backend.models.Matches
         public int RoundNumber { get; set; }
         public List<Round> Rounds { get; set; }
         public Round CurrentRound { get; set; }
+        public List<MatchEffect> UsedMatchEffects { get; set; }
         
 
         public Match(Player player1, Player player2)

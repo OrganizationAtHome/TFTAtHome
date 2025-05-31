@@ -117,6 +117,13 @@ namespace TFTAtHome.Backend.models.Matches
             cardToUseEffectOn.GetType().GetProperty(phase1).SetValue(cardToUseEffectOn, phase2ValueOnCard);
             cardToUseEffectOn.GetType().GetProperty(phase2).SetValue(cardToUseEffectOn, phase1ValueOnCard);
         }
+        
+        public void UseMusicianEffect(Card cardToUseEffectOn)
+        {
+            var trait = cardToUseEffectOn.Trait;
+            
+            // Take all cards currently on the board
+        }
     }
 
     public class PlayerCardEffects

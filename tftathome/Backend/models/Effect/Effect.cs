@@ -10,8 +10,8 @@ namespace TFTAtHome.Backend.models.Effect
     public abstract class Effect
     {
         public string TraitName { get; }
-        public Card UsedOnCard { get; }
-        public string UsedOnTrait { get; }
+        public Card UsedOnCard { get; set; }
+        public string UsedOnTrait { get; set; }
 
         public Effect(string traitName)
         {

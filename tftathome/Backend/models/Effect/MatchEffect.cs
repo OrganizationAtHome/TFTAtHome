@@ -8,7 +8,7 @@ using static TFTAtHome.Backend.storage.TraitSingleton;
 
 namespace TFTAtHome.Backend.models.Effect
 {
-    public class MatchEffect
+    public class MatchEffect: Effect
     {
         public string TraitName { get; set; }
         public bool Persistent { get; set; }
@@ -16,13 +16,12 @@ namespace TFTAtHome.Backend.models.Effect
         public string SelectedPhase1 { get; set; }
         public string SelectedPhase2 { get; set; }
 
-        public MatchEffect(string traitName, bool persistent)
+        public MatchEffect(string traitName, bool persistent): base(traitName)
         {
             TraitName = traitName;
             Persistent = persistent;
             WeightedIndex = GenerateWeightedIndex(traitName);
         }
-
 
         private int GenerateWeightedIndex(string traitName)
         {
