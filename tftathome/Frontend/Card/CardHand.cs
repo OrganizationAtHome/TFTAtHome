@@ -15,7 +15,7 @@ public partial class CardHand : NiceCardHand
     private double totalCardWidth;
     const float highlightSpeed = 0.15f;
     const float highlightSize = 1.5f;
-    private int cardTargettedIndex;
+    private float[] PlatformRotations;
     
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
@@ -98,7 +98,7 @@ public partial class CardHand : NiceCardHand
         var height = cardRoot.Height;
         
         cardRoot.SetZIndex(1);
-        
+        cardRoot.Platform.Rotation = 0;
         
         cardRoot.Scale = new Vector2(highlightSize, highlightSize);
         cardRoot.Position = new Vector2(0, -1*(height/2));
@@ -112,6 +112,17 @@ public partial class CardHand : NiceCardHand
         //tween.TweenProperty(LastCardTargetted, "scale", new Vector2(1, 1), highlightSpeed).SetEase(Tween.EaseType.Out);
         cardRoot.Scale = new Vector2(1, 1);
         cardRoot.SetZIndex(0);
+        cardRoot.Platform.Rotation = PlatformRotations[FindPlatformIndexByCard(cardRoot)];
+    }
+    
+    private int FindPlatformIndexByCard(NiceCard card) {
+        var platforms = CardSpace.GetChildren();
+        for (int i = 0; i < platforms.Count; i++) {
+            if (platforms[i].GetNode(CardRoot).Equals(card)) {
+                return i;
+            }
+        }
+        return -1;
     }
 
     public void Shuffle(bool hasFan = true) {
@@ -130,6 +141,7 @@ public partial class CardHand : NiceCardHand
         var lastX = 0.0;
         // Dynamically increases the hand width based on the number of cards to eleminate big gaps between the cards
         var handWidth = CalcRealisticHandWidthSize(center.Shape.GetRect().Size.X/2, platforms.Count);
+        PlatformRotations = new float[platforms.Count];
         // Place many cards
         for (int cardIndex = 0; cardIndex < platforms.Count; cardIndex++) {
             var platformCount = platforms.Count;
@@ -157,6 +169,7 @@ public partial class CardHand : NiceCardHand
                 var totalAngle = amplitudeWeight / 2 * platforms.Count;
                 var angle = totalAngle / 2 - 3 * cardIndex;
                 platform.RotationDegrees = angle;
+                PlatformRotations[cardIndex] = platform.Rotation;
             }
 
             // Apply the calculated values
@@ -171,6 +184,9 @@ public partial class CardHand : NiceCardHand
         var lastCardPos = lastPlatform.GlobalPosition.X;
         // Calculate the total width of the cards
         totalCardWidth = (firstCardPos + CalcCardHalfWidthSize(cardBody)) - (lastCardPos - CalcCardHalfWidthSize(cardBody)); 
+        foreach (var platformRotation in PlatformRotations) {
+            GD.Print(platformRotation);
+        }
     }
     
     private float CalcCardHalfWidthSize(CollisionShape2D cardBody) {

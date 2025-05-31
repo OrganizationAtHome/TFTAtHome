@@ -8,16 +8,19 @@ using TFTAtHome.util;
 using static TFTAtHome.Frontend.Singletons.CardNodeNameSingleton;
 
 public partial class CardLogic : Node2D {
+    // Zimmer's stuff
     public static bool isDragging = false;
     public static bool isAnimating = false;
-    public bool IsEffectAble = false;
-    public int CardId = 0;
-    private static int printCount = 0;
     bool isDraggable = false;
     bool isInsideDroppable = false;
     ulong bodyRef;
     Vector2 initialPos;
     bool QueuedForClick = false;
+    
+    // Stuff Danie needs 
+    public bool IsEffectAble = false;
+    public int CardId = 0;
+
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready() {
@@ -113,7 +116,6 @@ public partial class CardLogic : Node2D {
 
     public void OnArea2DMouseEntered()
     {
-
         Node2D parent = CardRoot().Platform;
         if (parent == null) return;
         if (!parent.IsInGroup("handPlatform") && !isDragging) {
@@ -152,14 +154,6 @@ public partial class CardLogic : Node2D {
             isInsideDroppable = false;
         }
 
-    }
-
-    public void Print() {
-        printCount++;
-        GD.Print("printCount: ", printCount);
-        GD.Print("isDragging: ", isDragging);
-        GD.Print("isDraggable: ", isDraggable);
-        GD.Print("isInsideDroppable: ", isInsideDroppable);
     }
 
     private bool IsParentCardPlatform() {
