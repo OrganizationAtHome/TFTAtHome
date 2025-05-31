@@ -7,8 +7,7 @@ using TFTAtHome.Frontend.Card;
 using TFTAtHome.util;
 using static TFTAtHome.Frontend.Singletons.CardNodeNameSingleton;
 
-public partial class CardHand : NiceCardHand
-{
+public partial class CardHand : NiceCardHand {
     public NiceCard CardTargetted;
     public NiceCard LastCardTargetted;
     private NiceCard lastCard = null;
@@ -18,14 +17,12 @@ public partial class CardHand : NiceCardHand
     private float[] PlatformRotations;
     
     // Called when the node enters the scene tree for the first time.
-    public override void _Ready()
-	{
+    public override void _Ready() {
         
     }
     
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
+	public override void _Process(double delta) {
         if (!CardLogic.isDragging) {
             
             CardPlatform platformtarget = PlatformTargettingSystem();
@@ -96,14 +93,13 @@ public partial class CardHand : NiceCardHand
     private void CardUp(NiceCard cardRoot, float heightincease = 1) {
         var upTween = GetTree().CreateTween();
         var height = cardRoot.Height;
-        
         cardRoot.SetZIndex(1);
         cardRoot.Platform.Rotation = 0;
         
         cardRoot.Scale = new Vector2(highlightSize, highlightSize);
         cardRoot.Position = new Vector2(0, -1*(height/2));
         //tween.TweenProperty(cardRoot, "scale", new Vector2(highlightSize, highlightSize), highlightSpeed).SetEase(Tween.EaseType.Out);
-        upTween.TweenProperty(cardRoot, "position", new Vector2(0, -1*(height/2*heightincease)), highlightSpeed).SetEase(Tween.EaseType.Out);
+        upTween.TweenProperty(cardRoot, "position", new Vector2(0, -1*(height/2*heightincease)-cardRoot.Platform.Position.Y), highlightSpeed).SetEase(Tween.EaseType.Out);
     }
 
     private void CardDown(NiceCard cardRoot) {
@@ -122,7 +118,8 @@ public partial class CardHand : NiceCardHand
                 return i;
             }
         }
-        return -1;
+        GD.PrintErr("Card not found in hand. This is a bug. Please look at FindPlatformIndexByCard.");
+        return 0;
     }
 
     public void Shuffle(bool hasFan = true) {
@@ -184,9 +181,6 @@ public partial class CardHand : NiceCardHand
         var lastCardPos = lastPlatform.GlobalPosition.X;
         // Calculate the total width of the cards
         totalCardWidth = (firstCardPos + CalcCardHalfWidthSize(cardBody)) - (lastCardPos - CalcCardHalfWidthSize(cardBody)); 
-        foreach (var platformRotation in PlatformRotations) {
-            GD.Print(platformRotation);
-        }
     }
     
     private float CalcCardHalfWidthSize(CollisionShape2D cardBody) {

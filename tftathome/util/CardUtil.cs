@@ -7,6 +7,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using TFTAtHome.Backend.storage;
 using TFTAtHome.Backend.models;
+using TFTAtHome.Frontend.Card;
 
 namespace TFTAtHome.util
 {
@@ -191,13 +192,10 @@ namespace TFTAtHome.util
                 return null;
             }
             Node customCard = CreateGodotCard(card, 1.0f);
-            Node2D card2D = customCard as Node2D;
-
-            platform.RemoveFromGroup("droppable");
-
-            platform.AddChild(card2D);
-
-            return card2D;
+            NiceCard rootCard = customCard as NiceCard;
+            AddCardToPlatform(rootCard, platform); // Danie, please fix
+            
+            return rootCard;
         }
 
         public static float GetCardWidth()

@@ -84,22 +84,18 @@ public partial class CardLogic : Node2D {
                 tween.Connect("finished", Callable.From(() => { softReset(); isDragging = false; isAnimating = false;  }));
                 if (isInsideDroppable) {
                     
-                    var body = InstanceFromId(bodyRef) as Node2D;
-                    Node2D cardParent = rootCard.GetParent() as Node2D;
-
-                    cardParent.RemoveChild(rootCard);
-                    body.AddChild(rootCard);
-                    rootCard.Position = new Vector2(0, 0);
-                    tween.TweenProperty(rootCard, "position", new Vector2(0, 0), 0.15).SetEase(Tween.EaseType.Out);
-
-                    body.RemoveFromGroup("droppable");
-                    if (cardParent.GetGroups().Contains("handPlatform")) {
-                        cardParent.GetParent().RemoveChild(cardParent);
+                    var PlatformTo = InstanceFromId(bodyRef) as NicePlatform;
+                    var PlatformFrom = rootCard.GetParent() as NicePlatform; 
+                    
+                    
+                    if (PlatformFrom.GetGroups().Contains("handPlatform")) {
+                        PlatformTo.AddCardToPlatform(rootCard, PlatformFrom);
+                        PlatformFrom.GetParent().RemoveChild(PlatformFrom);
                         handCard.Shuffle();// reshuffle hands
                         softReset();
-                    } else {
-                        cardParent.AddToGroup("droppable");
-                    }
+                    } if (PlatformFrom.GetGroups().Contains("battlefieldPlatform") && PlatformTo.cardRoot != null) {
+                        PlatformTo.SwitchCardPlatforms(PlatformFrom);
+                    } 
                 } else {
                     if (IsParentCardPlatform()) {
                         tween.TweenProperty(rootCard, "position", new Vector2(0, 0), 0.15).SetEase(Tween.EaseType.Out);
@@ -112,10 +108,7 @@ public partial class CardLogic : Node2D {
         }
     }
 
-
-
-    public void OnArea2DMouseEntered()
-    {
+    public void OnArea2DMouseEntered() {
         Node2D parent = CardRoot().Platform;
         if (parent == null) return;
         if (!parent.IsInGroup("handPlatform") && !isDragging) {
@@ -128,8 +121,7 @@ public partial class CardLogic : Node2D {
         }
     }
 
-    public void OnArea2DMouseExited()
-    {
+    public void OnArea2DMouseExited() {
         var Platform = CardRoot().Platform;
         if (Platform == null) return;
         if (!Platform.IsInGroup("handPlatform") && !isDragging) {

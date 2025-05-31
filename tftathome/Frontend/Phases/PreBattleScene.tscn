@@ -48,15 +48,23 @@ scale = Vector2(0.5, 0.5)
 shape = SubResource("RectangleShape2D_quxlf")
 debug_color = Color(0.936741, 0.234543, 0.242137, 0.42)
 
-[node name="CardPlatform" parent="." groups=["droppable"] instance=ExtResource("3_6f4ro")]
+[node name="CardPlatform" parent="." groups=["battlefieldPlatform", "droppable"] instance=ExtResource("3_6f4ro")]
 position = Vector2(826, 534)
 scale = Vector2(0.425, 0.425)
 
-[node name="CardPlatform2" parent="." groups=["droppable"] instance=ExtResource("3_6f4ro")]
+[node name="CardPlatform8" parent="." groups=["battlefieldPlatform", "droppable"] instance=ExtResource("3_6f4ro")]
+position = Vector2(536, 532)
+scale = Vector2(0.425, 0.425)
+
+[node name="CardPlatform7" parent="." groups=["battlefieldPlatform", "droppable"] instance=ExtResource("3_6f4ro")]
+position = Vector2(342, 530)
+scale = Vector2(0.425, 0.425)
+
+[node name="CardPlatform2" parent="." groups=["battlefieldPlatform", "droppable"] instance=ExtResource("3_6f4ro")]
 position = Vector2(1122, 534)
 scale = Vector2(0.425, 0.425)
 
-[node name="CardPlatform3" parent="." groups=["droppable"] instance=ExtResource("3_6f4ro")]
+[node name="CardPlatform3" parent="." groups=["battlefieldPlatform", "droppable"] instance=ExtResource("3_6f4ro")]
 position = Vector2(1453, 531)
 scale = Vector2(0.425, 0.425)
 

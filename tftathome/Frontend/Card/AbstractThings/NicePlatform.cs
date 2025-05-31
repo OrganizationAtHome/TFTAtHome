@@ -49,7 +49,31 @@ public partial class NicePlatform : StaticBody2D
     public float Length {
         get => platformCollision.Shape.GetRect().Size.X * GlobalScale.X;
     }
+    public bool AddCardToPlatform(NiceCard rootCard) {
+        if (rootCard == null) {
+            GD.PrintErr("Cannot add card to platform: rootCard is null.");
+            return false;
+        }
+        this.AddChild(rootCard);
+        rootCard.Position = new Vector2(0, 0);
+        return true;
+    }
     
+    public void AddCardToPlatform(NiceCard rootCard, Node2D platformFrom) {
+        platformFrom.RemoveChild(rootCard);
+        this.AddChild(rootCard);
+        rootCard.Position = new Vector2(0, 0);
+    }
+        
+    public void SwitchCardPlatforms(NicePlatform platformFrom) {
+        var cardFrom = platformFrom.cardRoot;
+        var cardTo = this.cardRoot;
+        platformFrom.RemoveChild(cardFrom);
+        this.RemoveChild(cardTo);
+        
+        this.AddChild(cardFrom);
+        platformFrom.AddChild(cardTo);
+    }
     
     
 }
