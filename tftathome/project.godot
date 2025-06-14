@@ -27,6 +27,7 @@ project/assembly_name="TFTAtHome"
 [global_group]
 
 cardMovePhysics=""
+droppable=""
 
 [input]
 

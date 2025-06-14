@@ -8,8 +8,8 @@ using TFTAtHome.util;
 using static TFTAtHome.Frontend.Singletons.CardNodeNameSingleton;
 
 public partial class CardHand : NiceCardHand {
-    public NiceCard CardTargetted;
     public NiceCard LastCardTargetted;
+    public NiceCard LastLastCardTargetted;
     private NiceCard lastCard = null;
     private double totalCardWidth;
     const float highlightSpeed = 0.15f;
@@ -26,10 +26,10 @@ public partial class CardHand : NiceCardHand {
         if (!CardLogic.isDragging) {
             
             CardPlatform platformtarget = PlatformTargettingSystem();
-            if (platformtarget != null && !platformtarget.GetNode(CardRoot).Equals(lastCard)) {
-                LastCardTargetted = CardTargetted;
-                CardTargetted = platformtarget.cardRoot;
-                lastCard = platformtarget.cardRoot;
+            if (platformtarget != null && !platformtarget.CardRoot.Equals(lastCard)) {
+                LastLastCardTargetted = LastCardTargetted;
+                LastCardTargetted = platformtarget.CardRoot;
+                lastCard = platformtarget.CardRoot;
             } 
         }
     }
@@ -46,47 +46,47 @@ public partial class CardHand : NiceCardHand {
         var rect = new Rect2(newCenterPos, new Vector2(width, SpaceHeight*1.5f));
         
         if (!MathUtil.IsMouseOverCollisionShape2D(newCenterPos, rect, CardSpace.GetGlobalMousePosition())) {
-            if (CardTargetted != null)
-                CardDown(CardTargetted);
+            if (LastCardTargetted != null && LastCardTargetted.isInHandPlatform)
+                CardDown(LastCardTargetted);
             return null;
         }
         
-        CardPlatform PlatformFound = null;
+        CardPlatform platformFound = null;
         var lastindex = 0;
-        
+        // I forgot how this works, but I was really cocking when I did, so please don't touch it. 
         for (int i = 0; i < platforms.Count; i++) {
             var platformX = platforms[i].GlobalPosition.X;
             if (i == platforms.Count) {
-                PlatformFound = platforms[i];
+                platformFound = platforms[i];
             } else if (platformX.CompareTo(moooooooose) < 0) {
                 var lastPlat = platforms[lastindex].GlobalPosition.X;
                 var currentPlat = platforms[i].GlobalPosition.X;
                 var currentMooCompare = Math.Abs(currentPlat - moooooooose);
                 var lastMooCompare = Math.Abs(lastPlat - moooooooose);
                 if (currentMooCompare.CompareTo(lastMooCompare) < 0) {
-                    PlatformFound = platforms[i];
+                    platformFound = platforms[i];
                     break;
                 } else {
-                    PlatformFound = platforms[lastindex];
+                    platformFound = platforms[lastindex];
                     break;
                 }
             } else {
                 lastindex = i;
             }
         }
-        if (PlatformFound == null) {
-            PlatformFound = platforms[^1]; // Last card is the first card visually
+        if (platformFound == null) {
+            platformFound = platforms[^1]; // Last card is the first card visually
         
         }
-        highlightCard(PlatformFound.cardRoot);
-        return PlatformFound;
+        HighlightCard(platformFound.CardRoot);
+        return platformFound;
     }
 
-    private void highlightCard(NiceCard card, bool hackermode = false) {
+    private void HighlightCard(NiceCard card, bool hackermode = false) {
         CardUp(card);
         
-        if (LastCardTargetted != null) {
-            CardDown(LastCardTargetted);
+        if (LastLastCardTargetted != null) {
+            CardDown(LastLastCardTargetted);
         }
     }
 
@@ -108,23 +108,25 @@ public partial class CardHand : NiceCardHand {
         //tween.TweenProperty(LastCardTargetted, "scale", new Vector2(1, 1), highlightSpeed).SetEase(Tween.EaseType.Out);
         cardRoot.Scale = new Vector2(1, 1);
         cardRoot.SetZIndex(0);
-        cardRoot.Platform.Rotation = PlatformRotations[FindPlatformIndexByCard(cardRoot)];
+        var index = FindPlatformIndexByCard(cardRoot);
+        if (index != -1) {
+            cardRoot.Platform.Rotation = PlatformRotations[index];
+        }
+        
     }
     
     private int FindPlatformIndexByCard(NiceCard card) {
-        var platforms = CardSpace.GetChildren();
+        var platforms = Platforms;
         for (int i = 0; i < platforms.Count; i++) {
-            if (platforms[i].GetNode(CardRoot).Equals(card)) {
+            if (platforms[i].CardRoot != null && platforms[i].CardRoot.Equals(card)) {
                 return i;
             }
         }
-        GD.PrintErr("Card not found in hand. This is a bug. Please look at FindPlatformIndexByCard.");
-        return 0;
+        return -1;
     }
-
+    
     public void Shuffle(bool hasFan = true) {
-        CollisionShape2D center = GetNode("CardSpace") as CollisionShape2D;
-        var platforms = center.GetChildren();
+        var platforms = Platforms;
 
         var amplitudeWeight = 5;
 
@@ -133,11 +135,11 @@ public partial class CardHand : NiceCardHand {
             GD.PushWarning("No platforms found");
             return;
         } 
-        var cardBody = center.GetChildren()[0].GetNode("Card/CardBody/CardCollision") as CollisionShape2D;
+        var cardBody = platforms[0].CardRoot.CardCollision;
         var firstX = Double.PositiveInfinity;
-        var lastX = 0.0;
+        var lastX = 0.0; // I forgot why 0.0 is important, but it is.
         // Dynamically increases the hand width based on the number of cards to eleminate big gaps between the cards
-        var handWidth = CalcRealisticHandWidthSize(center.Shape.GetRect().Size.X/2, platforms.Count);
+        var handWidth = CalcRealisticHandWidthSize(CardSpace.Shape.GetRect().Size.X/2, platforms.Count);
         PlatformRotations = new float[platforms.Count];
         // Place many cards
         for (int cardIndex = 0; cardIndex < platforms.Count; cardIndex++) {
@@ -187,7 +189,7 @@ public partial class CardHand : NiceCardHand {
         return cardBody.Shape.GetRect().Size.X / 2 * cardBody.GlobalScale.X;
     }
 
-    public double CalcRealisticHandWidthSize(float length, int cardCount) {
+    private double CalcRealisticHandWidthSize(float length, int cardCount) {
         return length * (1 - 1 / Math.Pow(1.15, cardCount));
     }
 }

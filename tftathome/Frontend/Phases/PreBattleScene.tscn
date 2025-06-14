@@ -52,14 +52,6 @@ debug_color = Color(0.936741, 0.234543, 0.242137, 0.42)
 position = Vector2(826, 534)
 scale = Vector2(0.425, 0.425)
 
-[node name="CardPlatform8" parent="." groups=["battlefieldPlatform", "droppable"] instance=ExtResource("3_6f4ro")]
-position = Vector2(536, 532)
-scale = Vector2(0.425, 0.425)
-
-[node name="CardPlatform7" parent="." groups=["battlefieldPlatform", "droppable"] instance=ExtResource("3_6f4ro")]
-position = Vector2(342, 530)
-scale = Vector2(0.425, 0.425)
-
 [node name="CardPlatform2" parent="." groups=["battlefieldPlatform", "droppable"] instance=ExtResource("3_6f4ro")]
 position = Vector2(1122, 534)
 scale = Vector2(0.425, 0.425)
@@ -159,5 +151,13 @@ offset_top = 844.0
 offset_right = 608.0
 offset_bottom = 947.0
 text = "Zimmer's magiske knap"
+
+[node name="CardPlatform7" parent="." groups=["battlefieldPlatform", "droppable"] instance=ExtResource("3_6f4ro")]
+position = Vector2(177, 528)
+scale = Vector2(0.425, 0.425)
+
+[node name="CardPlatform8" parent="." groups=["battlefieldPlatform", "droppable"] instance=ExtResource("3_6f4ro")]
+position = Vector2(465, 534)
+scale = Vector2(0.425, 0.425)
 
 [connection signal="pressed" from="Button" to="." method="zimmer"]
