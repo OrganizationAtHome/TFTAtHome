@@ -60,7 +60,7 @@ scale = Vector2(0.425, 0.425)
 position = Vector2(1453, 531)
 scale = Vector2(0.425, 0.425)
 
-[node name="CardPlatform4" type="StaticBody2D" parent="." groups=["droppable"]]
+[node name="CardPlatform4" type="StaticBody2D" parent="."]
 position = Vector2(826, 345)
 scale = Vector2(0.425, 0.425)
 script = ExtResource("6_xdx23")
@@ -78,7 +78,7 @@ mouse_filter = 2
 color = Color(0.937255, 0.235294, 0.243137, 0.419608)
 metadata/_edit_use_anchors_ = true
 
-[node name="CardPlatform5" type="StaticBody2D" parent="." groups=["droppable"]]
+[node name="CardPlatform5" type="StaticBody2D" parent="."]
 position = Vector2(1123, 347)
 scale = Vector2(0.425, 0.425)
 script = ExtResource("6_xdx23")
@@ -96,7 +96,7 @@ mouse_filter = 2
 color = Color(0.937255, 0.235294, 0.243137, 0.419608)
 metadata/_edit_use_anchors_ = true
 
-[node name="CardPlatform6" type="StaticBody2D" parent="." groups=["droppable"]]
+[node name="CardPlatform6" type="StaticBody2D" parent="."]
 position = Vector2(1454, 345)
 scale = Vector2(0.425, 0.425)
 script = ExtResource("6_xdx23")

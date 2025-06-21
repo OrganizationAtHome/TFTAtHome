@@ -12,6 +12,7 @@ public partial class CardLogic : Node2D {
     public static bool isDragging = false;
     public static bool isAnimating = false;
     bool isDraggable = false;
+    bool queueIsDraggable = false;
     bool isInsideDroppable = false;
     ulong bodyRef;
     Vector2 initialPos;
@@ -32,8 +33,10 @@ public partial class CardLogic : Node2D {
         NicePlatform platform = rootCard.Platform;
         CardHand handCard = platform.CardHand;
         var isMousedOver = IsMouseOverPlatform(platform.platformCollision);
-        if (!isDragging && queueIsDraggable && isMousedOver)
+        if (!isDragging && queueIsDraggable && isMousedOver) {
             isDraggable = true;
+            queueIsDraggable = false;
+        }
         
         
         if (handCard != null && platform.IsInGroup("handPlatform")) {
@@ -59,16 +62,10 @@ public partial class CardLogic : Node2D {
                     EffectNotifier.NotifyEffectUsed(CardId);
                     return;
                 }
-                /*
-                if (card.Apply)
-                {
-                    // Do something "important"
-                    return;
-                } */
                 initialPos = rootCard.Position;
                 isDragging = true;
             }
-            if (Input.IsActionPressed("click") && (isDragging || (QueuedForClick && IsMouseOverPlatform(collision)))) {  
+            if (Input.IsActionPressed("click") && (isDragging || (QueuedForClick && isMousedOver))) {  
                 if (QueuedForClick && !isAnimating) {
                     // Do whatever is in IsActionJustPressed + falsify QueuedForClick
                     initialPos = rootCard.Position;
@@ -100,11 +97,14 @@ public partial class CardLogic : Node2D {
                     if (platformFrom.GetGroups().Contains("handPlatform")) {
                         platformTo.AddCardToPlatform(rootCard, platformFrom, true);
                         handCard.Shuffle();// CardHand have changed card amount, so we need to shuffle
+                        platformFrom.CardRoot.Position = new Vector2(0, 0);
                         HardReset();
                         // Case for switching card positions 
                     } else if (platformFrom.GetGroups().Contains("battlefieldPlatform") && platformTo?.CardRoot != null) {
+                        platformFrom.CardRoot.Position = new Vector2(0, 0);
                         platformTo.SwitchCardPlatforms(platformFrom);
                     } else {
+                        platformFrom.CardRoot.Position = new Vector2(0, 0);
                         platformTo.AddCardToPlatform(rootCard, true);
                     }
                     
@@ -130,6 +130,8 @@ public partial class CardLogic : Node2D {
         }
         if (!isDragging) {
             isDraggable = true;
+        } else {
+            queueIsDraggable = true;
         }
     }
 
@@ -142,6 +144,8 @@ public partial class CardLogic : Node2D {
         }
         if (!isDragging) {
             isDraggable = false;
+        } else {
+            queueIsDraggable = false;
         }
     }
     private void OnArea2DBodyEntered(Node2D platformTo) {
@@ -178,6 +182,7 @@ public partial class CardLogic : Node2D {
             QueuedForClick = false;
             return true;
         }
+        
         return false;
     }
 

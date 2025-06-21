@@ -76,7 +76,6 @@ public partial class CardHand : NiceCardHand {
         }
         if (platformFound == null) {
             platformFound = platforms[^1]; // Last card is the first card visually
-        
         }
         HighlightCard(platformFound.CardRoot);
         return platformFound;

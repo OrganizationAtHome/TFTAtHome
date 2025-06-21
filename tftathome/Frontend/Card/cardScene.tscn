@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://228x0lttm3ug"]
+[gd_scene load_steps=9 format=3 uid="uid://228x0lttm3ug"]
 
 [ext_resource type="Script" path="res://Frontend/Card/AbstractThings/NiceCard.cs" id="1_31sxg"]
 [ext_resource type="Texture2D" uid="uid://d0m6opvm4r6l7" path="res://images/cardimages/eric-cartman.jpg" id="1_52fin"]
@@ -8,6 +8,14 @@
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_u0bti"]
 size = Vector2(304.529, 370)
+
+[sub_resource type="LabelSettings" id="LabelSettings_palce"]
+font_size = 40
+font_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_rsk7c"]
+font_size = 40
+font_color = Color(0, 0, 0, 1)
 
 [node name="Card" type="Node2D"]
 position = Vector2(0, 4.23516e-22)
@@ -93,11 +101,10 @@ metadata/_edit_use_anchors_ = true
 [node name="Mid_Label_Name" parent="CardVisuals" instance=ExtResource("2_vy0w0")]
 offset_left = 2.00354
 offset_top = -90.0
-offset_right = 492.004
-offset_bottom = 252.0
-scale = Vector2(0.15, 0.15)
-theme_override_font_sizes/font_size = 250
+offset_right = 80.0035
+offset_bottom = -35.0
 text = "MID"
+label_settings = SubResource("LabelSettings_palce")
 horizontal_alignment = 1
 metadata/_edit_use_anchors_ = true
 
@@ -115,11 +122,10 @@ metadata/_edit_use_anchors_ = true
 [node name="Late_Label_Name" parent="CardVisuals" instance=ExtResource("2_vy0w0")]
 offset_left = 1.73409
 offset_top = -52.0
-offset_right = 450.734
-offset_bottom = 153.0
-scale = Vector2(0.15, 0.15)
-theme_override_font_sizes/font_size = 250
+offset_right = 71.7341
+offset_bottom = -10.0
 text = "LATE"
+label_settings = SubResource("LabelSettings_rsk7c")
 horizontal_alignment = 1
 metadata/_edit_use_anchors_ = true
 
