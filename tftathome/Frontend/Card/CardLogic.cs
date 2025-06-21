@@ -42,9 +42,7 @@ public partial class CardLogic : Node2D {
                 return;
             }
         }
-        CollisionShape2D collision = platform.platformCollision;
-
-
+        
         if (isDraggable) {
             if (Input.IsActionJustPressed("click")) {
                 if (isDragging) {
