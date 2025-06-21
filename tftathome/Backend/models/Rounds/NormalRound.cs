@@ -109,19 +109,6 @@ namespace TFTAtHome.Backend.models.Rounds
             return totals;
         }
 
-
-        /// <summary>
-        /// Gets total stats for both players, using the phase set for the round
-        /// </summary>
-        /// <returns></returns>
-        public int[] TotalStatsBothPlayersCurrentPhase()
-        {
-            int[] totals = new int[2];
-            totals[0] = GetTotalStatsP1(Phase);
-            totals[1] = GetTotalStatsP2(Phase);
-            return totals;
-        }
-
         public int GetTotalStatsP1(string phase)
         {
             int totals = 0;

@@ -26,7 +26,7 @@ namespace TFTAtHome.Backend.models
         {
             Id = id;
             GameState = GameState.AWAITING_PLAYERS;
-            _activeCardPool = LocalStorage.getCards();
+            _activeCardPool = LocalStorage.GetCards();
             //Upnp upnp = new();
             //SetupUpnp(upnp, 1234, "UDP");
 
