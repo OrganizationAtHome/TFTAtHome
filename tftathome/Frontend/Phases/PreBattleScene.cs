@@ -40,7 +40,10 @@ public partial class PreBattleScene : Node2D
     [Export]
     GridContainer P2EffectButtons { get; set; }
     [Export]
+
     GridContainer ScoreBoard { get; set; }
+
+    Label RoundStatusLabel { get; set; }
     [Export]
     public BoxContainer PlayerTotals { get; set; }
     private Match match;
@@ -369,6 +372,8 @@ public partial class PreBattleScene : Node2D
         {
             PlayerTotals.RemoveChild(child);
         }
+        GD.Print("PlayerTotals1: " + totals[0].ToString());
+        GD.Print("PlayerTotals2: " + totals[1].ToString());
         Label p1Total = new Label();
         Label p2Total = new Label();
         
