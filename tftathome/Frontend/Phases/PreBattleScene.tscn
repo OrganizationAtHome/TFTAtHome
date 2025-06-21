@@ -13,7 +13,7 @@ size = Vector2(1766.06, 396.375)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7ul6b"]
 size = Vector2(304.529, 370)
 
-[node name="PreBattleScene" type="Node2D" node_paths=PackedStringArray("CardPlatform", "CardPlatform2", "CardPlatform3", "CardPlatform4", "CardPlatform5", "CardPlatform6", "P1EffectButtons", "P2EffectButtons")]
+[node name="PreBattleScene" type="Node2D" node_paths=PackedStringArray("CardPlatform", "CardPlatform2", "CardPlatform3", "CardPlatform4", "CardPlatform5", "CardPlatform6", "P1EffectButtons", "P2EffectButtons", "ScoreBoard", "PlayerTotals")]
 script = ExtResource("1_85yy1")
 CardScene = ExtResource("2_irqvl")
 CardPlatformScene = ExtResource("3_6f4ro")
@@ -25,6 +25,8 @@ CardPlatform5 = NodePath("CardPlatform5")
 CardPlatform6 = NodePath("CardPlatform6")
 P1EffectButtons = NodePath("P1EffectButtons")
 P2EffectButtons = NodePath("P2EffectButtons")
+ScoreBoard = NodePath("ScoreBoard")
+PlayerTotals = NodePath("PlayerTotals")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 clip_contents = true
@@ -135,9 +137,9 @@ shape = SubResource("RectangleShape2D_quxlf")
 
 [node name="P2EffectButtons" type="GridContainer" parent="."]
 offset_left = 1565.0
-offset_top = 649.0
+offset_top = 719.0
 offset_right = 1670.0
-offset_bottom = 850.0
+offset_bottom = 920.0
 
 [node name="P1EffectButtons" type="GridContainer" parent="."]
 offset_left = 1565.0
@@ -152,6 +154,12 @@ offset_right = 608.0
 offset_bottom = 947.0
 text = "Zimmer's magiske knap"
 
+[node name="PlayerTotals" type="VBoxContainer" parent="."]
+offset_left = 1566.0
+offset_top = 345.0
+offset_right = 1676.0
+offset_bottom = 507.0
+
 [node name="CardPlatform7" parent="." groups=["battlefieldPlatform", "droppable"] instance=ExtResource("3_6f4ro")]
 position = Vector2(177, 528)
 scale = Vector2(0.425, 0.425)
@@ -159,5 +167,24 @@ scale = Vector2(0.425, 0.425)
 [node name="CardPlatform8" parent="." groups=["battlefieldPlatform", "droppable"] instance=ExtResource("3_6f4ro")]
 position = Vector2(465, 534)
 scale = Vector2(0.425, 0.425)
+
+[node name="ScoreBoard" type="GridContainer" parent="."]
+offset_left = 470.0
+offset_top = 261.0
+offset_right = 643.0
+offset_bottom = 432.0
+columns = 3
+
+[node name="ScoreBoardPhaseLabel" type="Label" parent="ScoreBoard"]
+layout_mode = 2
+text = "Phase"
+
+[node name="ScoreBoardRoundLabel" type="Label" parent="ScoreBoard"]
+layout_mode = 2
+text = "Round"
+
+[node name="ScoreBoardWinnerLabel" type="Label" parent="ScoreBoard"]
+layout_mode = 2
+text = "Winner"
 
 [connection signal="pressed" from="Button" to="." method="zimmer"]

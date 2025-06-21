@@ -39,7 +39,10 @@ public partial class PreBattleScene : Node2D
     GridContainer P1EffectButtons { get; set; }
     [Export]
     GridContainer P2EffectButtons { get; set; }
-
+    [Export]
+    GridContainer ScoreBoard { get; set; }
+    [Export]
+    public BoxContainer PlayerTotals { get; set; }
     private Match match;
     private List<Node2D> p1CardNodes;
     private List<Node2D> p2CardNodes;
@@ -57,7 +60,9 @@ public partial class PreBattleScene : Node2D
         EffectNotifier.NeedsToUseEffect += OnNeedsToUseEffects;
         EffectNotifier.CardEffectUpdate += HandleCardEffectUpdate;
         EffectNotifier.NeedsToUseGeniusEffect += HandleGeniusEffectUsed;
-        SetupActiveTraitTest();
+        DiceNotifier.MustThrowDice += HandleMustThrowDice;
+        RoundNotifier.PlayerTotalsFrontend += HandlePlayerTotals;
+        SetupMusicianTraitTest();
     }
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -229,6 +234,71 @@ public partial class PreBattleScene : Node2D
 
         MatchUtil.SetupActiveEffectsButtons(P1EffectButtons, player1, match);
     }
+    
+     public void SetupRandomTest()
+    {
+        Player player1 = new Player(1, "Player 1");
+        Player player2 = new Player(2, "Player 2");
+
+        List<NicePlatform> p1Platforms = new List<NicePlatform>() { CardPlatform4, CardPlatform5, CardPlatform6 };
+        List<NicePlatform> p2Platforms = new List<NicePlatform>() { CardPlatform, CardPlatform2, CardPlatform3 };
+
+        Card card1 = LocalStorage.GetRandomCardByTrait(Queen);
+        Card card2 = LocalStorage.GetRandomCardByTrait(TVCelebrity);
+        Card card3 = LocalStorage.GetRandomCardByTrait(TVCelebrity);
+
+        Card card4 = LocalStorage.GetRandomCardByTrait(Genius); // 5, 8, 5, "Drawing", true
+        Card card5 = LocalStorage.GetRandomCardByTrait(TVCelebrity); // 5, 7, 6, "Leader", false
+        Card card6 = LocalStorage.GetCardFromName("DEADPOOL"); // 5, 1, 11, "MovieHero", true
+
+
+        player1.SetPlayerHand(new List<Card> { card1, card2, card3 });
+        player2.SetPlayerHand(new List<Card> { card4, card5, card6 });
+
+        match = new Match(player1, player2);
+
+        GD.Print(match);
+
+        // Act: Adding cards to the board
+        // Player 1 adds Eric Cartman
+
+        var p1Hand = match.Player1Hand;
+        var p2Hand = match.Player2Hand;
+
+        match.AddCardToBoard(match.Player1Hand[0], player1); // Elizabeth
+
+        match.AddCardToBoard(match.Player2Hand[0], player2); // Eric Cartman (Drawing): 5, 8, 5, true
+
+        match.AddCardToBoard(match.Player1Hand[0], player1); // Deadpool (MovieHero): 5, 1, 11, true
+
+        match.AddCardToBoard(match.Player2Hand[0], player2); // Elon Musk (Leader): 5, 7, 6, false
+
+        match.AddCardToBoard(match.Player1Hand[0], player1); // Light Yagami (Genius): 6, 12, 1, true
+
+        match.AddCardToBoard(match.Player2Hand[0], player2); // Chuck Norris (TVCelebrity): 7, 8, 3, false
+
+        match.RunInitialRound();
+
+        p1CardNodes = new List<Node2D>();
+        p2CardNodes = new List<Node2D>();
+
+        for (int i = 0; i < match.CurrentCardsOnBoardP1.Count; i++)
+        {
+            Node2D card = CardUtil.CreateCardForBattleFieldPlatform(match.CurrentCardsOnBoardP1[i], p1Platforms[i]);
+            p1CardNodes.Add(card);
+        }
+
+        for (int i = 0; i < match.CurrentCardsOnBoardP2.Count; i++)
+        {
+            Node2D card = CardUtil.CreateCardForBattleFieldPlatform(match.CurrentCardsOnBoardP2[i], p2Platforms[i]);
+            p2CardNodes.Add(card);
+        }
+        
+        MatchUtil.UpdateCardStatsListGodot(p1CardNodes, match.CurrentCardsOnBoardP1);
+        MatchUtil.UpdateCardStatsListGodot(p2CardNodes, match.CurrentCardsOnBoardP2);
+
+        MatchUtil.SetupActiveEffectsButtons(P1EffectButtons, player1, match);
+    }
 
     private void OnNeedsToUseEffects(Player player)
     {
@@ -255,7 +325,14 @@ public partial class PreBattleScene : Node2D
                 HighlightCards(match.CurrentCardsOnBoardP1, false);
                 MatchUtil.UpdateCardStatsListGodot(p1CardNodes, match.CurrentCardsOnBoardP1);
                 MatchUtil.UpdateCardStatsListGodot(p2CardNodes, match.CurrentCardsOnBoardP2);
-                MatchUtil.SetupActiveEffectsButtons(P1EffectButtons, player, match);
+                if (player == match.Player1)
+                {
+                    MatchUtil.SetupActiveEffectsButtons(P1EffectButtons, player, match);
+                }
+                else
+                {
+                    MatchUtil.SetupActiveEffectsButtons(P2EffectButtons, player, match);
+                }
             }
         }
         else
@@ -263,8 +340,43 @@ public partial class PreBattleScene : Node2D
             HighlightCards(match.CurrentCardsOnBoardP1, false);
             MatchUtil.UpdateCardStatsListGodot(p1CardNodes, match.CurrentCardsOnBoardP1);
             MatchUtil.UpdateCardStatsListGodot(p2CardNodes, match.CurrentCardsOnBoardP2);
-            MatchUtil.SetupActiveEffectsButtons(P1EffectButtons, player, match);
+            if (player == match.Player1)
+            {
+                MatchUtil.SetupActiveEffectsButtons(P1EffectButtons, player, match);
+            }
+            else
+            {
+                MatchUtil.SetupActiveEffectsButtons(P2EffectButtons, player, match);
+            }
         }
+    }
+
+    private void HandleMustThrowDice(Player player)
+    {
+        if (player == match.Player1)
+        {
+            MatchUtil.SetupDiceRollButton(P1EffectButtons, player, match);
+        }
+        else
+        {
+            MatchUtil.SetupDiceRollButton(P2EffectButtons, player, match);
+        }
+    }
+    private void HandlePlayerTotals(int[] totals)
+    {
+        var children = PlayerTotals.GetChildren();
+        foreach (var child in children)
+        {
+            PlayerTotals.RemoveChild(child);
+        }
+        Label p1Total = new Label();
+        Label p2Total = new Label();
+        
+        p1Total.Text = "Player1: " + totals[0].ToString();
+        p2Total.Text = "Player2: " + totals[1].ToString();
+        
+        PlayerTotals.AddChild(p1Total);
+        PlayerTotals.AddChild(p2Total);
     }
     
     /* Add a list of cards as input for future active traits */

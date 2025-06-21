@@ -81,7 +81,7 @@ namespace TFTAtHome.Backend.storage
 
             Card card32 = new Card(32, "XYP9X", "THE CLUTCH MINISTER", "images/cardimages/xyp9x.png", 3, 3, 11, TVCelebrity, 1, false);
 
-            Card card33 = new Card(33, "ZAGARA", "THE OVERQUEEN", "images/cardimages/zagara.png", 14, 4, 1, Queen, 5, false);
+            Card card33 = new Card(33, "ZAGARA", "THE OVERQUEEN", "images/cardimages/zagara.jpg", 14, 4, 1, Queen, 5, false);
 
             Cards.Add(card1);
             Cards.Add(card2);
@@ -119,7 +119,7 @@ namespace TFTAtHome.Backend.storage
 
         }
 
-        public static List<Card> getCards()
+        public static List<Card> GetCards()
         {
             return Cards;
         }
@@ -145,7 +145,7 @@ namespace TFTAtHome.Backend.storage
                 {
                     return Cards[index];
                 }
-                if (index == 33)
+                if (index == 32)
                 {
                     index = 0;
                 }

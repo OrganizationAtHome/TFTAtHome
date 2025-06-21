@@ -58,10 +58,40 @@ namespace TFTAtHome.Backend.models.Matches
             }
         }
 
+        /// <summary>
+        /// This method returns which player can use the next effect
+        /// </summary>
+        /// <returns>Player</returns>
         public Player GetPlayerThatCanUseNextEffect()
         {
+            var p1Index = Player1Effects.GetCurrentMatchEffectForPlayer()?.Key.WeightedIndex;
+            var p2Index = Player2Effects.GetCurrentMatchEffectForPlayer()?.Key.WeightedIndex;
+
+            if (p1Index == null && p2Index == null)
+            {
+                return null;
+            }
+
+            if (p1Index == null)
+            {
+                return Player2;
+            }
+            if (p2Index == null)
+            {
+                return Player1;
+            }
+
+            if (p1Index > p2Index)
+            {
+                return Player1;
+            } 
+            if (p2Index > p1Index)
+            {
+                return Player2;
+            }
             return Player1;
         }
+
         public bool ShouldUseQueenEffectWithIndex(Card cardToUseEffectOn)
         {
             return cardToUseEffectOn.GetSecondBestPhaseOnCard()[1].Length != 0;
@@ -191,11 +221,22 @@ namespace TFTAtHome.Backend.models.Matches
         }
 
 
-        public KeyValuePair<MatchEffect, int> GetCurrentMatchEffectForPlayer()
+        public KeyValuePair<MatchEffect, int>? GetCurrentMatchEffectForPlayer()
         {
-            GD.Print(DictionaryToString(MatchEffects));
-            var currentMatchEffect = MatchEffects.Where(me => me.Value > 0).OrderBy(me => me.Key.WeightedIndex).FirstOrDefault();
-            return currentMatchEffect;
+            try
+            {
+                var currentMatchEffect = MatchEffects.Where(me => me.Value > 0).OrderBy(me => me.Key.WeightedIndex)
+                    .FirstOrDefault();
+                if (currentMatchEffect.Key == null)
+                {
+                    return null;
+                }
+                return currentMatchEffect;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
         }
 
         public void SetupMatchEffects(List<Card> currentCardsOnBoard)
