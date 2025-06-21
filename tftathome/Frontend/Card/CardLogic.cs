@@ -31,7 +31,11 @@ public partial class CardLogic : Node2D {
         var rootCard = this.CardRoot();
         NicePlatform platform = rootCard.Platform;
         CardHand handCard = platform.CardHand;
-
+        var isMousedOver = IsMouseOverPlatform(platform.platformCollision);
+        if (!isDragging && queueIsDraggable && isMousedOver)
+            isDraggable = true;
+        
+        
         if (handCard != null && platform.IsInGroup("handPlatform")) {
             NiceCard targettedCard = handCard.LastCardTargetted;
             if (targettedCard != null && !this.Equals(targettedCard.CardBody)) {
