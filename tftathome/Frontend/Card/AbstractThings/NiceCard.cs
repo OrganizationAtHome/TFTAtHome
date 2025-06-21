@@ -67,13 +67,13 @@ public partial class NiceCard : Node2D {
     {
         get => CardVisuals.GetNode("CardImg") as Sprite2D;
     }
-    public RichTextLabel CardName
+    public Label CardName
     {
-        get => CardVisuals.GetNode("CardName") as RichTextLabel;
+        get => CardVisuals.GetNode("CardName") as Label;
     }
-    public RichTextLabel CardTitle
+    public Label CardTitle
     {
-        get => CardVisuals.GetNode("CardTitle") as RichTextLabel;
+        get => CardVisuals.GetNode("CardTitle") as Label;
     }
     public Label Mid_Label_Name
     {

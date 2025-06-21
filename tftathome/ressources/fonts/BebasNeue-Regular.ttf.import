@@ -2,13 +2,13 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://dgwlp8m0yb52n"
-path="res://.godot/imported/Fontspring-DEMO-theseasons-bd.otf-c5eaf5798e91336945f4afb96658c627.fontdata"
+uid="uid://cc3e27eruxyxt"
+path="res://.godot/imported/BebasNeue-Regular.ttf-8850aa52187641f8297c4fca84f42c54.fontdata"
 
 [deps]
 
-source_file="res://ressources/fonts/Fontspring-DEMO-theseasons-bd.otf"
-dest_files=["res://.godot/imported/Fontspring-DEMO-theseasons-bd.otf-c5eaf5798e91336945f4afb96658c627.fontdata"]
+source_file="res://ressources/fonts/BebasNeue-Regular.ttf"
+dest_files=["res://.godot/imported/BebasNeue-Regular.ttf-8850aa52187641f8297c4fca84f42c54.fontdata"]
 
 [params]
 

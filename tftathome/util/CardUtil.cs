@@ -13,7 +13,7 @@ namespace TFTAtHome.util
 {
     public static class CardUtil
     {
-        private static PackedScene cardScene = GD.Load<PackedScene>("res://Frontend/Card/cardScene.tscn");
+        private static PackedScene cardScene = GD.Load<PackedScene>("res://Frontend/Card/FancyCardScene.tscn");
             
         public static Node CreateGodotCard(string cardName, float scale)
         {
@@ -37,8 +37,8 @@ namespace TFTAtHome.util
 
                 for (int i = 0; i < cardHeader.Length; i++)
                 {
-                    RichTextLabel node = (RichTextLabel)GetNodeFromCard(card2D, cardHeader[i]);
-                    node.Text = "[center]" + cardHeaderValues[i] + "[/center]";
+                    Label node = (Label)GetNodeFromCard(card2D, cardHeader[i]);
+                    node.Text = cardHeaderValues[i];
                 }
 
             Texture2D newTexture = (Texture2D)GD.Load($"res://{cardObj.CardImgSrc}");
@@ -78,8 +78,8 @@ namespace TFTAtHome.util
 
             for (int i = 0; i < cardHeader.Length; i++)
             {
-                RichTextLabel node = (RichTextLabel)GetNodeFromCard(card2D, cardHeader[i]);
-                node.Text = "[center]" + cardHeaderValues[i] + "[/center]";
+                Label node = (Label)GetNodeFromCard(card2D, cardHeader[i]);
+                node.Text = cardHeaderValues[i];
             }
 
             Texture2D newTexture = (Texture2D)GD.Load($"res://{cardInput.CardImgSrc}");

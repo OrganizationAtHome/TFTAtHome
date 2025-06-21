@@ -1,0 +1,18 @@
+[gd_resource type="Theme" load_steps=5 format=3 uid="uid://byxtlgm1nrgi4"]
+
+[ext_resource type="Texture2D" uid="uid://dncucecq85fvr" path="res://ressources/textures/Cartman_2.png" id="1_jl7xo"]
+[ext_resource type="Texture2D" uid="uid://dtsqlymd55yw1" path="res://ressources/textures/Paper texture.png" id="2_pdfmn"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_4lply"]
+texture = ExtResource("1_jl7xo")
+expand_margin_left = 17.0
+expand_margin_top = 35.0
+expand_margin_right = 12.0
+expand_margin_bottom = 20.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_nfdse"]
+texture = ExtResource("2_pdfmn")
+
+[resource]
+Panel/styles/panel = SubResource("StyleBoxTexture_4lply")
+PanelContainer/styles/panel = SubResource("StyleBoxTexture_nfdse")

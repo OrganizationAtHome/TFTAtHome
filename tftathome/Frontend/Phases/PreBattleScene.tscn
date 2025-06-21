@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Frontend/Phases/PreBattleScene.cs" id="1_85yy1"]
 [ext_resource type="Texture2D" uid="uid://dloca4g7ymwgy" path="res://images/backgrounds/battlegroundnew.jpg" id="1_skx8a"]
-[ext_resource type="PackedScene" uid="uid://228x0lttm3ug" path="res://Frontend/Card/cardScene.tscn" id="2_irqvl"]
+[ext_resource type="PackedScene" uid="uid://dv7nj2fsi2f10" path="res://Frontend/Card/FancyCardScene.tscn" id="2_aeg5y"]
 [ext_resource type="PackedScene" uid="uid://dloqhavm42vma" path="res://Frontend/Card/CardPlatformScene.tscn" id="3_6f4ro"]
 [ext_resource type="Script" path="res://Frontend/Card/CardHand.cs" id="5_vl8ev"]
 [ext_resource type="Script" path="res://Frontend/Card/CardPlatform.cs" id="6_xdx23"]
@@ -15,7 +15,7 @@ size = Vector2(304.529, 370)
 
 [node name="PreBattleScene" type="Node2D" node_paths=PackedStringArray("CardPlatform", "CardPlatform2", "CardPlatform3", "CardPlatform4", "CardPlatform5", "CardPlatform6", "P1EffectButtons", "P2EffectButtons", "ScoreBoard", "PlayerTotals")]
 script = ExtResource("1_85yy1")
-CardScene = ExtResource("2_irqvl")
+CardScene = ExtResource("2_aeg5y")
 CardPlatformScene = ExtResource("3_6f4ro")
 CardPlatform = NodePath("CardPlatform")
 CardPlatform2 = NodePath("CardPlatform2")
@@ -31,10 +31,10 @@ PlayerTotals = NodePath("PlayerTotals")
 [node name="TextureRect" type="TextureRect" parent="."]
 clip_contents = true
 custom_minimum_size = Vector2(700, 350)
-offset_left = 673.0
-offset_top = 253.0
-offset_right = 1561.0
-offset_bottom = 613.0
+offset_left = 623.0
+offset_top = 252.0
+offset_right = 1637.0
+offset_bottom = 663.0
 size_flags_horizontal = 4
 texture = ExtResource("1_skx8a")
 expand_mode = 1
@@ -45,25 +45,26 @@ rotation = 1.5708
 script = ExtResource("5_vl8ev")
 
 [node name="CardSpace" type="CollisionShape2D" parent="CardHandEnemy"]
+position = Vector2(-76, -3.99972)
 rotation = 1.5708
 scale = Vector2(0.5, 0.5)
 shape = SubResource("RectangleShape2D_quxlf")
 debug_color = Color(0.936741, 0.234543, 0.242137, 0.42)
 
 [node name="CardPlatform" parent="." groups=["battlefieldPlatform", "droppable"] instance=ExtResource("3_6f4ro")]
-position = Vector2(826, 534)
+position = Vector2(806, 581)
 scale = Vector2(0.425, 0.425)
 
 [node name="CardPlatform2" parent="." groups=["battlefieldPlatform", "droppable"] instance=ExtResource("3_6f4ro")]
-position = Vector2(1122, 534)
+position = Vector2(1154, 581)
 scale = Vector2(0.425, 0.425)
 
 [node name="CardPlatform3" parent="." groups=["battlefieldPlatform", "droppable"] instance=ExtResource("3_6f4ro")]
-position = Vector2(1453, 531)
+position = Vector2(1475, 581)
 scale = Vector2(0.425, 0.425)
 
 [node name="CardPlatform4" type="StaticBody2D" parent="."]
-position = Vector2(826, 345)
+position = Vector2(808, 339)
 scale = Vector2(0.425, 0.425)
 script = ExtResource("6_xdx23")
 
@@ -81,7 +82,7 @@ color = Color(0.937255, 0.235294, 0.243137, 0.419608)
 metadata/_edit_use_anchors_ = true
 
 [node name="CardPlatform5" type="StaticBody2D" parent="."]
-position = Vector2(1123, 347)
+position = Vector2(1151, 344)
 scale = Vector2(0.425, 0.425)
 script = ExtResource("6_xdx23")
 
@@ -99,7 +100,7 @@ color = Color(0.937255, 0.235294, 0.243137, 0.419608)
 metadata/_edit_use_anchors_ = true
 
 [node name="CardPlatform6" type="StaticBody2D" parent="."]
-position = Vector2(1454, 345)
+position = Vector2(1475, 342)
 scale = Vector2(0.425, 0.425)
 script = ExtResource("6_xdx23")
 
@@ -132,6 +133,7 @@ input_pickable = true
 script = ExtResource("5_vl8ev")
 
 [node name="CardSpace" type="CollisionShape2D" parent="CardHandMe"]
+position = Vector2(0, 72)
 scale = Vector2(0.5, 0.5)
 shape = SubResource("RectangleShape2D_quxlf")
 

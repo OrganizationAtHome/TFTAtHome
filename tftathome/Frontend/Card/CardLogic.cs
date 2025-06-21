@@ -52,10 +52,6 @@ public partial class CardLogic : Node2D {
                     QueuedForClick = true;
                     return;
                 }
-                GD.Print("Yeet");
-                foreach (var group in CardRoot().Platform.GetGroups()) {
-                    GD.Print(group);
-                }
                 // Implement check for click when player is using effect
                 if (IsEffectAble) {
                     GD.Print("Effect clicked");
@@ -89,15 +85,17 @@ public partial class CardLogic : Node2D {
                     var platformTo = InstanceFromId(bodyRef) as NicePlatform;
                     var platformFrom = rootCard.Platform; 
                     tween.TweenProperty(rootCard, "position", new Vector2(0, 0), 0.15).SetEase(Tween.EaseType.Out);
-                    if (!platformFrom.IsInGroup("droppable")) {
+
+                    var isHandPlatform = platformFrom.GetGroups().Contains("handPlatform");
+                    if (!platformFrom.IsInGroup("droppable") && !isHandPlatform) {
                         return;
                     }
                     
                     // Case for moving card to battlefield (from CardHand)
-                    if (platformFrom.GetGroups().Contains("handPlatform")) {
+                    if (isHandPlatform) {
+                        
                         platformTo.AddCardToPlatform(rootCard, platformFrom, true);
                         handCard.Shuffle();// CardHand have changed card amount, so we need to shuffle
-                        platformFrom.CardRoot.Position = new Vector2(0, 0);
                         HardReset();
                         // Case for switching card positions 
                     } else if (platformFrom.GetGroups().Contains("battlefieldPlatform") && platformTo?.CardRoot != null) {
@@ -124,7 +122,6 @@ public partial class CardLogic : Node2D {
         var platformFrom = CardRoot().Platform;
         if (platformFrom == null) return;
         if (!platformFrom.IsInGroup("handPlatform") && !isDragging) {
-
             Vector2 vector2 = new Vector2(1.05f, 1.05f);
             CardRoot().Scale = vector2;
         }
@@ -188,7 +185,11 @@ public partial class CardLogic : Node2D {
 
     private void HardReset() {
         if (SoftReset()) {
-            
+            var cardRoot = CardRoot();
+            cardRoot.Position = new Vector2(0, 0);
+            cardRoot.Scale = new Vector2(1, 1);
+            cardRoot.SetZIndex(0);
+            cardRoot.Platform.Rotation = 0;
         }
     }
 
@@ -201,5 +202,13 @@ public partial class CardLogic : Node2D {
 
     public NiceCard CardRoot() {
         return GetParent() as NiceCard;
+    }
+
+    // Useful for debugging
+    private void printGroups(Node node) {
+        GD.Print("Yeet");
+        foreach (var group in node.GetGroups()) {
+            GD.Print(group);
+        }
     }
 }
