@@ -17,7 +17,6 @@ namespace TFTAtHome.util
 {
     public static class MatchUtil
     {
-        delegate void ButtonPressedDelegate(MatchEffect effect);
         public static void UpdateCardStatsListGodot(List<Node2D> cardNodes, List<Card> cardObjects)
         {
             for (int i = 0; i < cardNodes.Count; i++)
@@ -52,12 +51,16 @@ namespace TFTAtHome.util
             if (player == match.Player1)
             {
                 useEffectMethod = (e) => match.Player1Effects.UseMatchEffect(e);
-                currentEffect = match.Player1Effects.GetCurrentMatchEffectForPlayer();
+                var p1CurrentEff = match.Player1Effects.GetCurrentMatchEffectForPlayer();
+                if (p1CurrentEff == null) return;
+                currentEffect = (KeyValuePair<MatchEffect, int>)p1CurrentEff;
                 if (currentEffect.Value == 0) return;
             } else
             {
                 useEffectMethod = (e) => match.Player2Effects.UseMatchEffect(e);
-                currentEffect = match.Player2Effects.GetCurrentMatchEffectForPlayer();
+                var p2CurrentEff = match.Player2Effects.GetCurrentMatchEffectForPlayer();
+                if (p2CurrentEff == null) return;
+                currentEffect = (KeyValuePair<MatchEffect, int>)p2CurrentEff;
                 if (currentEffect.Value == 0) return;
             }
 
@@ -122,6 +125,27 @@ namespace TFTAtHome.util
                     buttonContainer.RemoveAllChildren();
                 };
             }
+        }
+
+        public static void SetupDiceRollButton(GridContainer buttonContainer, Player player, Match match)
+        {
+            buttonContainer.RemoveAllChildren();
+            Button button = new Button();
+            button.Text = "Roll dice";
+            button.Size = new Vector2(100, 50);
+            buttonContainer.AddChild(button);
+            button.Pressed += () =>
+            {
+                match.ThrowDice(player);
+                int[] diceResults = match.GetDiceResultsForMatchForPlayer(player);
+                Label dice1 = new Label();
+                dice1.Text = diceResults[0].ToString();
+                Label dice2 = new Label();
+                dice2.Text = diceResults[1].ToString();
+                buttonContainer.AddChild(dice1);
+                buttonContainer.AddChild(dice2);
+                buttonContainer.RemoveChild(button);
+            };
         }
 
         /** 

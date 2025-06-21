@@ -25,7 +25,7 @@ namespace TFTAtHome.Backend.models.Matches
         public PlayerCardEffects Player1Effects { get; set; }
         public PlayerCardEffects Player2Effects { get; set; }
         public int RoundNumber { get; set; }
-        public List<Round> Rounds { get; set; }
+        public List<Round> Rounds { get; set; } 
         public Round CurrentRound { get; set; }
         public List<MatchEffect> UsedMatchEffects { get; }
         public List<string> DisabledTraits { get; set; }
@@ -82,17 +82,29 @@ namespace TFTAtHome.Backend.models.Matches
             Round initialRound = new EffectRound(this);
             Rounds.Add(initialRound);
             this.CurrentRound = initialRound;
+            SetupRounds();
             SetCardStatsForMatchForPlayer(Player1);
             SetCardStatsForMatchForPlayer(Player2);
             Player1Effects = new PlayerCardEffects(Player1);
             Player2Effects = new PlayerCardEffects(Player2);
             Player1Effects.SetupMatchEffects(CurrentCardsOnBoardP1);
-            Player1Effects.SetupMatchEffects(CurrentCardsOnBoardP2);
-            /*
-            if (Player1Effects.MatchEffects.Count > 0)
+            Player2Effects.SetupMatchEffects(CurrentCardsOnBoardP2);
+        }
+
+        private void SetupRounds()
+        {
+            Dictionary<string, int[]> phases = new Dictionary<string, int[]>();
+            phases.Add("Early", new int[] { 1, 2, 3 });
+            phases.Add("Mid", new int[] { 1, 2 });
+            phases.Add("Late", new int[] { 1, 2, 3 });
+            foreach (KeyValuePair<string, int[]> phase in phases)
             {
-                EffectNotifier.NotifyNeedsToUseEffect(Player1);
-            } */
+                for (int i = 0; i < phase.Value.Length; i++)
+                {
+                    var round = new NormalRound(this, phase.Key);
+                    Rounds.Add(round);
+                }
+            }
         }
 
         public void ResetCardStats()
@@ -119,11 +131,38 @@ namespace TFTAtHome.Backend.models.Matches
             }
         }
 
-        public List<MatchEffect> GetMatchEffectsForPlayer(Player player)
+        public void ThrowDice(Player player)
         {
-            return null;
+            if (player == Player1)
+            {
+                var round = CurrentRound as NormalRound;
+                round.ThrowDiceP1();
+                if (round.CanThrowDice())
+                {
+                    DiceNotifier.NotifyMustThrowDice(Player2);
+                }
+            }
+            else
+            {
+                var round = CurrentRound as NormalRound;
+                round.ThrowDiceP2();
+                if (round.CanThrowDice())
+                {
+                    DiceNotifier.NotifyMustThrowDice(Player1);
+                }
+            }
         }
 
+        public int[] GetDiceResultsForMatchForPlayer(Player player)
+        {
+            var round = CurrentRound as NormalRound;
+            if (player == Player1)
+            {
+                return round.GetDiceResultsP1();
+            }
+            return round.GetDiceResultsP2();
+        }
+        
         private void SetCardStats(List<Card> currentPlayerCardsOnBoard, bool p1)
         {
             bool leaderBonus = currentPlayerCardsOnBoard.GetAllCardsWithTraitOnList(Leader).Count != 0 ?
@@ -193,6 +232,7 @@ namespace TFTAtHome.Backend.models.Matches
 
         private void OnEffectUsed(int cardId)
         {
+            var nextPlayer = GetPlayerThatCanUseNextEffect();
             int length = CurrentCardsOnBoardP1.Count;
             foreach (var card in CurrentCardsOnBoardP1)
             {
@@ -203,8 +243,16 @@ namespace TFTAtHome.Backend.models.Matches
                     UseMatchEffectOnCard(card, currentEffectRound.CurrentEffect);
                     currentEffectRound.IsUsingEffect = false;
                     currentEffectRound.CurrentEffect = null;
-                    var nextPlayer = GetPlayerThatCanUseNextEffect();
                     EffectNotifier.NotifyCardEffectUpdate(nextPlayer);
+                    if (nextPlayer == null)
+                    {
+                        GD.Print("All effects have been used");
+                        RoundNumber++;
+                        CurrentRound = Rounds[RoundNumber];
+                        var normalCurrentRound = CurrentRound as NormalRound;
+                        RoundNotifier.UpdatePlayerTotalsFrontend(normalCurrentRound.TotalStatsBothPlayersCurrentPhase());
+                        DiceNotifier.NotifyMustThrowDice(nextPlayer);
+                    }
                 }
             }
             int length2 = CurrentCardsOnBoardP2.Count;
@@ -217,8 +265,14 @@ namespace TFTAtHome.Backend.models.Matches
                     UseMatchEffectOnCard(card, currentEffectRound.CurrentEffect);
                     currentEffectRound.IsUsingEffect = false;
                     currentEffectRound.CurrentEffect = null;
-                    var nextPlayer = GetPlayerThatCanUseNextEffect();
                     EffectNotifier.NotifyCardEffectUpdate(nextPlayer);
+                    if (nextPlayer == null)
+                    {
+                        GD.Print("All effects have been used");
+                        RoundNumber++;
+                        CurrentRound = Rounds[RoundNumber];
+                        DiceNotifier.NotifyMustThrowDice(nextPlayer);
+                    }
                 }
             }
         }

@@ -120,9 +120,12 @@ namespace TFTAtHome.util
             highlight.Visible = active;
         }
 
-        /**
-     * RETURNS A Node OR NULL
-     */
+        /// <summary>
+        /// Gets a Node from the card name
+        /// </summary>
+        /// <param name="card"></param>
+        /// <param name="name"></param>
+        /// <returns>Returns a Node OR Null</returns>
         private static Node GetNodeFromCard(Node2D card, string name)
         {
             Godot.Collections.Array<Node> slaves = card.GetNode("CardVisuals").GetChildren();
