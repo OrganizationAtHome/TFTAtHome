@@ -92,7 +92,9 @@ public partial class CardLogic : Node2D {
                     var platformTo = InstanceFromId(bodyRef) as NicePlatform;
                     var platformFrom = rootCard.Platform; 
                     tween.TweenProperty(rootCard, "position", new Vector2(0, 0), 0.15).SetEase(Tween.EaseType.Out);
-                    platformFrom.CardRoot.Position = new Vector2(0, 0);
+                    if (!platformFrom.IsInGroup("droppable")) {
+                        return;
+                    }
                     
                     // Case for moving card to battlefield (from CardHand)
                     if (platformFrom.GetGroups().Contains("handPlatform")) {
