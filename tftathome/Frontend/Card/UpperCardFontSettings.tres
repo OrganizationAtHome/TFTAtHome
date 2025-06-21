@@ -1,0 +1,8 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://bu0rxdxwwg76u"]
+
+[ext_resource type="FontFile" uid="uid://dgwlp8m0yb52n" path="res://ressources/fonts/Fontspring-DEMO-theseasons-bd.otf" id="1_23fuf"]
+
+[resource]
+font = ExtResource("1_23fuf")
+font_size = 34
+font_color = Color(0, 0, 0, 1)

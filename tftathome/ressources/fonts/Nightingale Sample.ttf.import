@@ -2,13 +2,13 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://b38htbixewd3t"
-path="res://.godot/imported/AstroSpace-0Wl3o.otf-87419caad056811a19f6b70c95bc8a58.fontdata"
+uid="uid://c42d00vcav7rp"
+path="res://.godot/imported/Nightingale Sample.ttf-2d31e962de18ec11d6f962b12ce10ef5.fontdata"
 
 [deps]
 
-source_file="res://ressources/fonts/AstroSpace-0Wl3o.otf"
-dest_files=["res://.godot/imported/AstroSpace-0Wl3o.otf-87419caad056811a19f6b70c95bc8a58.fontdata"]
+source_file="res://ressources/fonts/Nightingale Sample.ttf"
+dest_files=["res://.godot/imported/Nightingale Sample.ttf-2d31e962de18ec11d6f962b12ce10ef5.fontdata"]
 
 [params]
 

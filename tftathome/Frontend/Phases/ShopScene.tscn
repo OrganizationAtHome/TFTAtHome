@@ -16,7 +16,7 @@ font_color = Color(0, 0, 0, 1)
 [node name="ShopScene" type="Node2D"]
 
 [node name="CardHandMe" type="StaticBody2D" parent="."]
-position = Vector2(894, 867)
+position = Vector2(852, 861)
 scale = Vector2(0.8, 0.8)
 input_pickable = true
 script = ExtResource("1_r5sh8")
@@ -25,66 +25,182 @@ script = ExtResource("1_r5sh8")
 scale = Vector2(0.5, 0.5)
 shape = SubResource("RectangleShape2D_5fb2v")
 
-[node name="CardHandMe2" type="StaticBody2D" parent="."]
-position = Vector2(1344, 124)
+[node name="CardHandShop1" type="StaticBody2D" parent="."]
+position = Vector2(1371, 142)
 scale = Vector2(0.75, 0.75)
 input_pickable = true
 script = ExtResource("1_r5sh8")
 
-[node name="CardSpace" type="CollisionShape2D" parent="CardHandMe2"]
-scale = Vector2(0.5, 0.5)
+[node name="CardSpace" type="CollisionShape2D" parent="CardHandShop1"]
+scale = Vector2(0.4, 0.4)
 shape = SubResource("RectangleShape2D_5fb2v")
 
-[node name="CardHandMe3" type="StaticBody2D" parent="."]
-position = Vector2(1344, 307)
-scale = Vector2(0.75, 0.75)
-input_pickable = true
-script = ExtResource("1_r5sh8")
+[node name="ColorRect" type="ColorRect" parent="CardHandShop1"]
+offset_left = -570.667
+offset_top = -40.0
+offset_right = -455.667
+offset_bottom = 18.0
+scale = Vector2(1.5, 1.5)
+metadata/_edit_use_anchors_ = true
 
-[node name="CardSpace" type="CollisionShape2D" parent="CardHandMe3"]
-scale = Vector2(0.5, 0.5)
-shape = SubResource("RectangleShape2D_5fb2v")
-
-[node name="ColorRect" type="ColorRect" parent="."]
-offset_left = 770.0
-offset_top = 114.0
-offset_right = 885.0
-offset_bottom = 172.0
-
-[node name="Cost" type="Label" parent="ColorRect"]
+[node name="Cost" type="Label" parent="CardHandShop1/ColorRect"]
 offset_left = -2.0
 offset_top = 9.0
 offset_right = 86.0
 offset_bottom = 51.0
 text = " Cost: "
 label_settings = SubResource("LabelSettings_ueu8q")
+metadata/_edit_use_anchors_ = true
 
-[node name="Number" type="Label" parent="ColorRect"]
+[node name="Number" type="Label" parent="CardHandShop1/ColorRect"]
 offset_left = 84.0
 offset_top = 9.0
 offset_right = 109.0
 offset_bottom = 51.0
 text = "1"
 label_settings = SubResource("LabelSettings_grn5c")
+metadata/_edit_use_anchors_ = true
 
-[node name="ColorRect" type="ColorRect" parent="ColorRect"]
-offset_left = -1.0
-offset_top = 156.0
-offset_right = 114.0
-offset_bottom = 214.0
+[node name="CardHandShop2" type="StaticBody2D" parent="."]
+position = Vector2(1372, 320)
+scale = Vector2(0.75, 0.75)
+input_pickable = true
+script = ExtResource("1_r5sh8")
 
-[node name="Cost" type="Label" parent="ColorRect/ColorRect"]
+[node name="CardSpace" type="CollisionShape2D" parent="CardHandShop2"]
+scale = Vector2(0.4, 0.4)
+shape = SubResource("RectangleShape2D_5fb2v")
+
+[node name="ColorRect2" type="ColorRect" parent="CardHandShop2"]
+offset_left = -570.667
+offset_top = -40.0
+offset_right = -455.667
+offset_bottom = 18.0
+scale = Vector2(1.5, 1.5)
+metadata/_edit_use_anchors_ = true
+
+[node name="Cost" type="Label" parent="CardHandShop2/ColorRect2"]
 offset_left = -2.0
 offset_top = 9.0
 offset_right = 86.0
 offset_bottom = 51.0
 text = " Cost: "
 label_settings = SubResource("LabelSettings_ueu8q")
+metadata/_edit_use_anchors_ = true
 
-[node name="Number" type="Label" parent="ColorRect/ColorRect"]
+[node name="Number" type="Label" parent="CardHandShop2/ColorRect2"]
 offset_left = 84.0
 offset_top = 9.0
 offset_right = 109.0
 offset_bottom = 51.0
 text = "2"
 label_settings = SubResource("LabelSettings_grn5c")
+metadata/_edit_use_anchors_ = true
+
+[node name="CardHandShop3" type="StaticBody2D" parent="."]
+position = Vector2(309, 132)
+scale = Vector2(0.75, 0.75)
+input_pickable = true
+script = ExtResource("1_r5sh8")
+
+[node name="CardSpace" type="CollisionShape2D" parent="CardHandShop3"]
+scale = Vector2(0.4, 0.4)
+shape = SubResource("RectangleShape2D_5fb2v")
+
+[node name="ColorRect5" type="ColorRect" parent="CardHandShop3"]
+offset_left = 397.333
+offset_top = -38.2222
+offset_right = 512.333
+offset_bottom = 19.7778
+scale = Vector2(1.5, 1.5)
+metadata/_edit_use_anchors_ = true
+
+[node name="Cost" type="Label" parent="CardHandShop3/ColorRect5"]
+offset_left = -2.0
+offset_top = 9.0
+offset_right = 86.0
+offset_bottom = 51.0
+text = " Cost: "
+label_settings = SubResource("LabelSettings_ueu8q")
+metadata/_edit_use_anchors_ = true
+
+[node name="Number" type="Label" parent="CardHandShop3/ColorRect5"]
+offset_left = 84.0
+offset_top = 9.0
+offset_right = 109.0
+offset_bottom = 51.0
+text = "3"
+label_settings = SubResource("LabelSettings_grn5c")
+metadata/_edit_use_anchors_ = true
+
+[node name="CardHandShop4" type="StaticBody2D" parent="."]
+position = Vector2(309, 324)
+scale = Vector2(0.75, 0.75)
+input_pickable = true
+script = ExtResource("1_r5sh8")
+
+[node name="CardSpace" type="CollisionShape2D" parent="CardHandShop4"]
+scale = Vector2(0.4, 0.4)
+shape = SubResource("RectangleShape2D_5fb2v")
+
+[node name="ColorRect3" type="ColorRect" parent="CardHandShop4"]
+offset_left = 404.0
+offset_top = -42.6667
+offset_right = 519.0
+offset_bottom = 15.3333
+scale = Vector2(1.5, 1.5)
+metadata/_edit_use_anchors_ = true
+
+[node name="Cost" type="Label" parent="CardHandShop4/ColorRect3"]
+offset_left = -2.0
+offset_top = 9.0
+offset_right = 86.0
+offset_bottom = 51.0
+text = " Cost: "
+label_settings = SubResource("LabelSettings_ueu8q")
+metadata/_edit_use_anchors_ = true
+
+[node name="Number" type="Label" parent="CardHandShop4/ColorRect3"]
+offset_left = 84.0
+offset_top = 9.0
+offset_right = 109.0
+offset_bottom = 51.0
+text = "4"
+label_settings = SubResource("LabelSettings_grn5c")
+metadata/_edit_use_anchors_ = true
+
+[node name="CardHandShop5" type="StaticBody2D" parent="."]
+position = Vector2(849, 544)
+scale = Vector2(0.75, 0.75)
+input_pickable = true
+script = ExtResource("1_r5sh8")
+
+[node name="CardSpace" type="CollisionShape2D" parent="CardHandShop5"]
+scale = Vector2(0.4, 0.4)
+shape = SubResource("RectangleShape2D_5fb2v")
+
+[node name="ColorRect4" type="ColorRect" parent="CardHandShop5"]
+offset_left = -89.3334
+offset_top = 101.333
+offset_right = 25.6666
+offset_bottom = 159.333
+scale = Vector2(1.5, 1.5)
+metadata/_edit_use_anchors_ = true
+
+[node name="Cost" type="Label" parent="CardHandShop5/ColorRect4"]
+offset_left = -2.0
+offset_top = 9.0
+offset_right = 86.0
+offset_bottom = 51.0
+text = " Cost: "
+label_settings = SubResource("LabelSettings_ueu8q")
+metadata/_edit_use_anchors_ = true
+
+[node name="Number" type="Label" parent="CardHandShop5/ColorRect4"]
+offset_left = 84.0
+offset_top = 9.0
+offset_right = 109.0
+offset_bottom = 51.0
+text = "5"
+label_settings = SubResource("LabelSettings_grn5c")
+metadata/_edit_use_anchors_ = true
