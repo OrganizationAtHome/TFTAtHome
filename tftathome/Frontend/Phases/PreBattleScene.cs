@@ -40,7 +40,6 @@ public partial class PreBattleScene : Node2D
     [Export]
     GridContainer P2EffectButtons { get; set; }
     [Export]
-
     GridContainer ScoreBoard { get; set; }
 
     Label RoundStatusLabel { get; set; }
@@ -65,6 +64,7 @@ public partial class PreBattleScene : Node2D
         EffectNotifier.NeedsToUseGeniusEffect += HandleGeniusEffectUsed;
         DiceNotifier.MustThrowDice += HandleMustThrowDice;
         RoundNotifier.PlayerTotalsFrontend += HandlePlayerTotals;
+        RoundNotifier.PlayerPhaseTotalsFrontend += HandlePlayerPhaseTotalsFrontend;
         SetupMusicianTraitTest();
     }
 
@@ -390,7 +390,7 @@ public partial class PreBattleScene : Node2D
         var p1enumerator = p2CardNodes.GetEnumerator();
         while (p1enumerator.MoveNext())
         {
-            var cardNode = p1enumerator.Current;
+            var cardNode = p1enumerator.Current as NiceCard;
 
             var cardBody = cardNode.GetChildren()[0];
             if (cardBody == null) throw new Exception("Your coding skills are terrible, cardBody in HighlightCards is null");
@@ -408,7 +408,7 @@ public partial class PreBattleScene : Node2D
         var p2enumerator = p1CardNodes.GetEnumerator();
         while (p2enumerator.MoveNext())
         {
-            var cardNode = p2enumerator.Current;
+            var cardNode = p2enumerator.Current as NiceCard;
             
             var cardBody = cardNode.GetChildren()[0];
             CardLogic cardLogic = cardBody as CardLogic;
@@ -424,5 +424,20 @@ public partial class PreBattleScene : Node2D
 
         MatchUtil.HighLightEffectableCards(p1CardNodes, active);
         MatchUtil.HighLightEffectableCards(p2CardNodes, active);
+    }
+
+    public void HandlePlayerPhaseTotalsFrontend(string[] values)
+    {
+        Label phase = new Label();
+        Label round = new Label();
+        Label winner = new Label();
+        
+        phase.Text = values[0];
+        round.Text = values[1];
+        winner.Text = values[2];
+        
+        ScoreBoard.AddChild(phase);
+        ScoreBoard.AddChild(round);
+        ScoreBoard.AddChild(winner);
     }
 }

@@ -141,6 +141,10 @@ namespace TFTAtHome.Backend.models.Matches
                 {
                     DiceNotifier.NotifyMustThrowDice(Player2);
                 }
+                else
+                {
+                    RoundNotifier.UpdatePlayerPhaseTotalsFrontend(GetRoundResultStrings());
+                }
             }
             else
             {
@@ -149,6 +153,10 @@ namespace TFTAtHome.Backend.models.Matches
                 if (round.CanThrowDice())
                 {
                     DiceNotifier.NotifyMustThrowDice(Player1);
+                }
+                else
+                {
+                    RoundNotifier.UpdatePlayerPhaseTotalsFrontend(GetRoundResultStrings());
                 }
             }
         }
@@ -312,6 +320,16 @@ namespace TFTAtHome.Backend.models.Matches
             {
                 return !CurrentCardsOnBoardP1.CheckTraitIsOnList("Leader");
             }
+        }
+
+        private string[] GetRoundResultStrings()
+        {
+            var round = CurrentRound as NormalRound;
+            string phase = round.Phase;
+            string rounds = RoundNumber.ToString();
+            string winner = round.Winner.Name;
+            
+            return new string[] { phase, rounds, winner };
         }
     }
 }

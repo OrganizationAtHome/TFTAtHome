@@ -8,6 +8,7 @@ using TFTAtHome.Backend.models;
 using TFTAtHome.Backend.storage;
 using TFTAtHome.Backend.notifiers;
 using TFTAtHome.Backend.models.Matches;
+using TFTAtHome.Frontend.Card;
 
 public partial class PlayerMatchTest : Node
 {
@@ -220,7 +221,8 @@ public partial class PlayerMatchTest : Node
 		
 		foreach (var cardNode in p1Cards)
 		{
-			Card card = CardUtil.GetCardModelFromCardNode(cardNode);
+			var niceCard = cardNode as NiceCard;
+			Card card = CardUtil.GetCardModelFromCardNode(niceCard);
 			if (!cards.Contains(card))
 			{
 				p1Cards.Remove(cardNode);

@@ -104,9 +104,9 @@ namespace TFTAtHome.util
             }
         }
 
-        public static Card GetCardModelFromCardNode(Node2D node2D)
+        public static Card GetCardModelFromCardNode(NiceCard niceCard)
         {
-            string cardName = ((RichTextLabel)GetNodeFromCard(node2D, "CardName")).Text;
+            string cardName = niceCard.CardName.Text;
             string cleanedCardName = "";
             cleanedCardName = Regex.Replace(cardName, @"\[(.*?)\]", "");
             Card card = LocalStorage.GetCardFromName(cleanedCardName);
