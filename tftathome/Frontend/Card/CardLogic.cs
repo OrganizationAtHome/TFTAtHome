@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using TFTAtHome.Backend.models;
 using TFTAtHome.Backend.notifiers;
 using TFTAtHome.Frontend.Card;
@@ -28,7 +29,7 @@ public partial class CardLogic : Node2D {
     }
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
-    public override void _Process(double delta) {
+    public async override void _Process(double delta) {
         var rootCard = this.CardRoot();
         NicePlatform platform = rootCard.Platform;
         CardHand handCard = platform.CardHand;

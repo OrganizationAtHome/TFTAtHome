@@ -12,43 +12,38 @@
 [ext_resource type="Script" path="res://Frontend/Card/CardLogic.cs" id="8_u7wpu"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_x8on4"]
-size = Vector2(670.001, 811)
+size = Vector2(400, 500)
 
 [sub_resource type="Theme" id="Theme_yj0fq"]
 default_font_size = 27
 
 [sub_resource type="LabelSettings" id="LabelSettings_wy870"]
 font = ExtResource("7_l24x4")
-font_size = 55
+font_size = 36
 font_color = Color(0.785865, 0.679672, 0.341141, 1)
 
 [node name="Card" type="Node2D"]
-position = Vector2(0, 6)
 script = ExtResource("1_fbyl4")
 
 [node name="CardBody" type="Area2D" parent="."]
 position = Vector2(-4.57764e-05, 7.62939e-06)
-scale = Vector2(0.6, 0.6)
 script = ExtResource("8_u7wpu")
 
 [node name="CardCollision" type="CollisionShape2D" parent="CardBody"]
-position = Vector2(-0.999954, -9.50002)
 scale = Vector2(0.999999, 1)
 shape = SubResource("RectangleShape2D_x8on4")
 
 [node name="CardVisuals" type="Node2D" parent="."]
-scale = Vector2(0.6, 0.6)
 script = ExtResource("1_o88uy")
 
 [node name="PaperTexture" type="PanelContainer" parent="CardVisuals"]
-offset_left = -237.5
-offset_top = -356.25
-offset_right = 229.5
-offset_bottom = 216.75
+offset_left = -143.0
+offset_top = -222.0
+offset_right = 136.0
+offset_bottom = 127.0
 pivot_offset = Vector2(159, 215)
 mouse_filter = 2
 theme = ExtResource("1_bo146")
-metadata/_edit_use_anchors_ = true
 
 [node name="CardHighlight" type="ColorRect" parent="CardVisuals"]
 visible = false
@@ -60,8 +55,8 @@ mouse_filter = 2
 color = Color(1, 0, 0, 1)
 
 [node name="CardImg" type="Sprite2D" parent="CardVisuals"]
-position = Vector2(-78.3333, -121.667)
-scale = Vector2(1.26652, 1.19086)
+position = Vector2(-48, -68)
+scale = Vector2(0.742626, 0.698262)
 texture = ExtResource("3_yadhq")
 offset = Vector2(59.3704, -38.2681)
 
@@ -77,6 +72,7 @@ offset_right = 327.0
 offset_bottom = 388.0
 grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(0.6, 0.6)
 pivot_offset = Vector2(326, 403)
 mouse_filter = 2
 theme = ExtResource("1_bo146")
@@ -88,10 +84,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -166.667
-offset_top = -408.333
-offset_right = 168.333
-offset_bottom = -333.333
+offset_left = -168.0
+offset_top = -259.0
+offset_right = 167.0
+offset_bottom = -184.0
 grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(166.667, 33.3333)
@@ -103,10 +99,17 @@ vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="CardTitle" type="Label" parent="CardVisuals"]
-offset_left = -228.333
-offset_top = 218.333
-offset_right = 225.667
-offset_bottom = 285.333
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -112.0
+offset_top = 127.0
+offset_right = 106.0
+offset_bottom = 177.0
+grow_horizontal = 2
+grow_vertical = 2
 pivot_offset = Vector2(228.333, 31.6667)
 text = "CHARACTER TITLE"
 label_settings = SubResource("LabelSettings_wy870")
@@ -126,10 +129,10 @@ horizontal_alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="Early_Label_Name" parent="CardVisuals" instance=ExtResource("5_nxaje")]
-offset_left = -236.25
-offset_top = 8.75
-offset_right = -47.25
-offset_bottom = 104.75
+offset_left = -178.0
+offset_top = 8.0
+offset_right = 11.0
+offset_bottom = 104.0
 pivot_offset = Vector2(99.5833, 44.5833)
 text = "EARLY"
 label_settings = ExtResource("6_aylhg")
@@ -137,10 +140,10 @@ horizontal_alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="Late_Label_Name" parent="CardVisuals" instance=ExtResource("5_nxaje")]
-offset_left = 85.0
-offset_top = 11.25
-offset_right = 212.0
-offset_bottom = 107.25
+offset_left = 27.0
+offset_top = 8.0
+offset_right = 154.0
+offset_bottom = 104.0
 pivot_offset = Vector2(65, 45.4167)
 text = "LATE"
 label_settings = ExtResource("6_aylhg")
@@ -148,10 +151,10 @@ horizontal_alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="Early" parent="CardVisuals" instance=ExtResource("5_nxaje")]
-offset_left = -186.5
-offset_top = 81.75
-offset_right = -120.5
-offset_bottom = 177.75
+offset_left = -125.0
+offset_top = 57.0
+offset_right = -59.0
+offset_bottom = 153.0
 pivot_offset = Vector2(36.5, 44.9167)
 theme_override_font_sizes/font_size = 200
 text = "10"
@@ -160,10 +163,10 @@ horizontal_alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="Mid" parent="CardVisuals" instance=ExtResource("5_nxaje")]
-offset_left = -25.0
-offset_top = 82.5
-offset_right = 39.0
-offset_bottom = 178.5
+offset_left = -21.0
+offset_top = 57.0
+offset_right = 43.0
+offset_bottom = 153.0
 pivot_offset = Vector2(33.3333, 42.5)
 text = "10"
 label_settings = ExtResource("6_aylhg")
@@ -171,10 +174,10 @@ horizontal_alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="Late" parent="CardVisuals" instance=ExtResource("5_nxaje")]
-offset_left = 114.75
-offset_top = 81.5
-offset_right = 178.75
-offset_bottom = 177.5
+offset_left = 57.0
+offset_top = 58.0
+offset_right = 121.0
+offset_bottom = 154.0
 pivot_offset = Vector2(33.5833, 45.1667)
 text = "10"
 label_settings = ExtResource("6_aylhg")
@@ -187,24 +190,25 @@ anchor_left = -1.61
 anchor_top = -2.031
 anchor_right = 3.16333
 anchor_bottom = 5.26341
-offset_left = -126.25
-offset_top = 305.0
-offset_right = 124.75
-offset_bottom = 387.0
+offset_left = -124.0
+offset_top = 180.0
+offset_right = 127.0
+offset_bottom = 262.0
 text = "UNKNOWN"
 label_settings = ExtResource("7_pwtth")
 horizontal_alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="Cost" parent="CardVisuals" instance=ExtResource("5_nxaje")]
-offset_left = 222.5
-offset_top = -360.0
-offset_right = 276.5
-offset_bottom = -278.0
+offset_left = 131.0
+offset_top = -219.0
+offset_right = 169.0
+offset_bottom = -161.0
 pivot_offset = Vector2(30.8333, 36.6667)
 text = "10"
 label_settings = ExtResource("7_pwtth")
 horizontal_alignment = 1
+vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [connection signal="body_entered" from="CardBody" to="CardBody" method="OnArea2DBodyEntered"]

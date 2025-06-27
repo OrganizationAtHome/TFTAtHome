@@ -46,7 +46,7 @@ public partial class NiceCard : Node2D {
         get => CardBody.GetNode(CardNodeNameSingleton.CardCollision) as CollisionShape2D;
     }
     public Node2D CardVisuals {
-        get => CardBody.GetNode(CardNodeNameSingleton.CardVisuals) as Node2D;
+        get => cardRoot.GetNode(CardNodeNameSingleton.CardVisuals) as Node2D;
     }
     public ColorRect CardHighlight {
         get => CardVisuals.GetNode("CardHighlight") as ColorRect;

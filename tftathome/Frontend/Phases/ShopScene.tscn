@@ -44,6 +44,7 @@ scale = Vector2(1.5, 1.5)
 metadata/_edit_use_anchors_ = true
 
 [node name="Cost" type="Label" parent="CardHandShop1/ColorRect"]
+layout_mode = 0
 offset_left = -2.0
 offset_top = 9.0
 offset_right = 86.0
@@ -53,6 +54,7 @@ label_settings = SubResource("LabelSettings_ueu8q")
 metadata/_edit_use_anchors_ = true
 
 [node name="Number" type="Label" parent="CardHandShop1/ColorRect"]
+layout_mode = 0
 offset_left = 84.0
 offset_top = 9.0
 offset_right = 109.0
@@ -80,6 +82,7 @@ scale = Vector2(1.5, 1.5)
 metadata/_edit_use_anchors_ = true
 
 [node name="Cost" type="Label" parent="CardHandShop2/ColorRect2"]
+layout_mode = 0
 offset_left = -2.0
 offset_top = 9.0
 offset_right = 86.0
@@ -89,6 +92,7 @@ label_settings = SubResource("LabelSettings_ueu8q")
 metadata/_edit_use_anchors_ = true
 
 [node name="Number" type="Label" parent="CardHandShop2/ColorRect2"]
+layout_mode = 0
 offset_left = 84.0
 offset_top = 9.0
 offset_right = 109.0
@@ -116,6 +120,7 @@ scale = Vector2(1.5, 1.5)
 metadata/_edit_use_anchors_ = true
 
 [node name="Cost" type="Label" parent="CardHandShop3/ColorRect5"]
+layout_mode = 0
 offset_left = -2.0
 offset_top = 9.0
 offset_right = 86.0
@@ -125,6 +130,7 @@ label_settings = SubResource("LabelSettings_ueu8q")
 metadata/_edit_use_anchors_ = true
 
 [node name="Number" type="Label" parent="CardHandShop3/ColorRect5"]
+layout_mode = 0
 offset_left = 84.0
 offset_top = 9.0
 offset_right = 109.0
@@ -152,6 +158,7 @@ scale = Vector2(1.5, 1.5)
 metadata/_edit_use_anchors_ = true
 
 [node name="Cost" type="Label" parent="CardHandShop4/ColorRect3"]
+layout_mode = 0
 offset_left = -2.0
 offset_top = 9.0
 offset_right = 86.0
@@ -161,6 +168,7 @@ label_settings = SubResource("LabelSettings_ueu8q")
 metadata/_edit_use_anchors_ = true
 
 [node name="Number" type="Label" parent="CardHandShop4/ColorRect3"]
+layout_mode = 0
 offset_left = 84.0
 offset_top = 9.0
 offset_right = 109.0
@@ -188,6 +196,7 @@ scale = Vector2(1.5, 1.5)
 metadata/_edit_use_anchors_ = true
 
 [node name="Cost" type="Label" parent="CardHandShop5/ColorRect4"]
+layout_mode = 0
 offset_left = -2.0
 offset_top = 9.0
 offset_right = 86.0
@@ -197,6 +206,7 @@ label_settings = SubResource("LabelSettings_ueu8q")
 metadata/_edit_use_anchors_ = true
 
 [node name="Number" type="Label" parent="CardHandShop5/ColorRect4"]
+layout_mode = 0
 offset_left = 84.0
 offset_top = 9.0
 offset_right = 109.0
