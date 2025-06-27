@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Godot.Collections;
 using TFTAtHome.Frontend.Card;
+using TFTAtHome.Frontend.Singletons;
 using TFTAtHome.util;
 using static TFTAtHome.Frontend.Singletons.CardNodeNameSingleton;
 
@@ -133,7 +134,7 @@ public partial class CardHand : NiceCardHand {
         if (platforms.Count == 0) {
             GD.PushWarning("No platforms found");
             return;
-        } 
+        }
         var cardBody = platforms[0].CardRoot.CardCollision;
         var firstX = Double.PositiveInfinity;
         var lastX = 0.0; // I forgot why 0.0 is important, but it is.
@@ -189,7 +190,7 @@ public partial class CardHand : NiceCardHand {
     }
 
     private double CalcRealisticHandWidthSize(float length, int cardCount) {
-        return length * (1 - 1 / Math.Pow(1.15, cardCount));
+        return length * (1 - 1 / Math.Pow(1.15, cardCount)); 
     }
     
     public void AddCardToHand(NiceCard card) {
@@ -201,7 +202,11 @@ public partial class CardHand : NiceCardHand {
         
         if (card.GetParent() != null)
             card.GetParent().RemoveChild(card);
-        CardSpace.AddChild(card);
+        var cardPlatform = PackedScenesSingleton.platformScene.Instantiate() as NicePlatform;
+        CardSpace.AddChild(cardPlatform);
+        cardPlatform.AddChild(card);
+        cardPlatform.AddToGroup(GroupNameSingleton.HandPlatform);
+        
         Shuffle(!GetGroups().Contains("Fanless"));
         card.SetZIndex(0);
         card.Scale = new Vector2(1, 1);

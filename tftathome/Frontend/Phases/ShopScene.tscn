@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://Frontend/Card/CardHand.cs" id="1_r5sh8"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5fb2v"]
-size = Vector2(1025.53, 396.375)
+size = Vector2(1297.5, 396.375)
 
 [sub_resource type="LabelSettings" id="LabelSettings_ueu8q"]
 font_size = 30
@@ -20,7 +20,7 @@ cost1CardHand = NodePath("CardHandShop1")
 cost2CardHand = NodePath("CardHandShop2")
 
 [node name="CardHandMe" type="StaticBody2D" parent="."]
-position = Vector2(852, 861)
+position = Vector2(852, 886)
 scale = Vector2(0.8, 0.8)
 input_pickable = true
 script = ExtResource("1_r5sh8")
@@ -30,7 +30,7 @@ scale = Vector2(0.5, 0.5)
 shape = SubResource("RectangleShape2D_5fb2v")
 
 [node name="CardHandShop1" type="StaticBody2D" parent="." groups=["Fanless"]]
-position = Vector2(1371, 124)
+position = Vector2(1420, 267)
 input_pickable = true
 script = ExtResource("1_r5sh8")
 
@@ -67,11 +67,12 @@ label_settings = SubResource("LabelSettings_grn5c")
 metadata/_edit_use_anchors_ = true
 
 [node name="CardHandShop2" type="StaticBody2D" parent="." groups=["Fanless"]]
-position = Vector2(1372, 320)
+position = Vector2(1421, 463)
 input_pickable = true
 script = ExtResource("1_r5sh8")
 
 [node name="CardSpace" type="CollisionShape2D" parent="CardHandShop2"]
+position = Vector2(-5.5, 0)
 scale = Vector2(0.4, 0.4)
 shape = SubResource("RectangleShape2D_5fb2v")
 
@@ -104,7 +105,7 @@ label_settings = SubResource("LabelSettings_grn5c")
 metadata/_edit_use_anchors_ = true
 
 [node name="CardHandShop3" type="StaticBody2D" parent="." groups=["Fanless"]]
-position = Vector2(309, 132)
+position = Vector2(264, 275)
 input_pickable = true
 script = ExtResource("1_r5sh8")
 
@@ -141,7 +142,7 @@ label_settings = SubResource("LabelSettings_grn5c")
 metadata/_edit_use_anchors_ = true
 
 [node name="CardHandShop4" type="StaticBody2D" parent="." groups=["Fanless"]]
-position = Vector2(309, 324)
+position = Vector2(264, 467)
 input_pickable = true
 script = ExtResource("1_r5sh8")
 
@@ -178,7 +179,7 @@ label_settings = SubResource("LabelSettings_grn5c")
 metadata/_edit_use_anchors_ = true
 
 [node name="CardHandShop5" type="StaticBody2D" parent="." groups=["Fanless"]]
-position = Vector2(849, 544)
+position = Vector2(857, 603)
 input_pickable = true
 script = ExtResource("1_r5sh8")
 
@@ -187,10 +188,10 @@ scale = Vector2(0.4, 0.4)
 shape = SubResource("RectangleShape2D_5fb2v")
 
 [node name="ColorRect4" type="ColorRect" parent="CardHandShop5"]
-offset_left = -89.3334
-offset_top = 101.333
-offset_right = 25.6666
-offset_bottom = 159.333
+offset_left = -88.0
+offset_top = -174.0
+offset_right = 27.0
+offset_bottom = -116.0
 scale = Vector2(1.5, 1.5)
 metadata/_edit_use_anchors_ = true
 

@@ -37,7 +37,7 @@ public partial class NiceCard : Node2D {
     }
     
     public bool isInHandPlatform {
-        get => Platform != null && Platform.IsInGroup("handPlatform");
+        get => Platform != null && Platform.IsInGroup(GroupNameSingleton.HandPlatform);
     }
     public CardLogic CardBody {
         get => cardRoot.GetNode(CardNodeNameSingleton.CardBody) as CardLogic;
