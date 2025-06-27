@@ -28,6 +28,7 @@ project/assembly_name="TFTAtHome"
 
 cardMovePhysics=""
 droppable=""
+Fanless="Does the CardHand have the cards arranged in a fan?"
 
 [input]
 

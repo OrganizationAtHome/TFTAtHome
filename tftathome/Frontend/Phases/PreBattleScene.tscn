@@ -141,7 +141,7 @@ mouse_filter = 2
 color = Color(0.937255, 0.235294, 0.243137, 0.419608)
 metadata/_edit_use_anchors_ = true
 
-[node name="NC-player1" type="StaticBody2D" parent="."]
+[node name="NC-player1" type="StaticBody2D" parent="." groups=["Fanless"]]
 position = Vector2(250, 155)
 scale = Vector2(0.5, 0.5)
 input_pickable = true

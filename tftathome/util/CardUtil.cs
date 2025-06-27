@@ -17,58 +17,17 @@ namespace TFTAtHome.util
             
         public static Node CreateGodotCard(string cardName, float scale)
         {
-                Card cardObj = LocalStorage.GetCardFromName(cardName); // ?? throw new Exception("Could not find card!");
-                string[] cardHeader = { "CardTitle", "CardName" };
-                string[] cardHeaderValues = { cardObj.CardTitle, cardObj.CardName };
-                string[] statsName = { "Early", "Mid", "Late", "Trait", "Cost" };
-                string[] statValues = cardObj.GetStatsValuesAsString();
-                // Create the card node
-                Node card = cardScene.Instantiate();
-
-                Node2D card2D = card as Node2D;
-                card2D.ApplyScale(new Vector2(scale, scale));
-
-                // Set card stats and headers
-                for (int i = 0; i < statsName.Length; i++)
-                {
-                    Label node = (Label)GetNodeFromCard(card2D, statsName[i]);
-                    node.Text = statValues[i];
-                }
-
-                for (int i = 0; i < cardHeader.Length; i++)
-                {
-                    Label node = (Label)GetNodeFromCard(card2D, cardHeader[i]);
-                    node.Text = cardHeaderValues[i];
-                }
-
-            Texture2D newTexture = (Texture2D)GD.Load($"res://{cardObj.CardImgSrc}");
-            Texture2D scaledTexture = RenderUtil.ResizeTexture(newTexture, 300f, 300f);
-
-            Sprite2D sprite2D = (Sprite2D)GetNodeFromCard(card2D, "CardImg");
-            
-            sprite2D.Texture = scaledTexture;
-            return card;
-        }
-
-        public static Node CreateGodotCard(Card cardInput, float scale)
-        {
+            Card cardObj = LocalStorage.GetCardFromName(cardName); // ?? throw new Exception("Could not find card!");
             string[] cardHeader = { "CardTitle", "CardName" };
-            string[] cardHeaderValues = { cardInput.CardTitle, cardInput.CardName };
+            string[] cardHeaderValues = { cardObj.CardTitle, cardObj.CardName };
             string[] statsName = { "Early", "Mid", "Late", "Trait", "Cost" };
-            string[] statValues = cardInput.GetStatsValuesAsString();
-
+            string[] statValues = cardObj.GetStatsValuesAsString();
             // Create the card node
             Node card = cardScene.Instantiate();
 
             Node2D card2D = card as Node2D;
             card2D.ApplyScale(new Vector2(scale, scale));
-            
-            // Assigning Card Id to CardLogic
-            var cardBody = card2D.GetChildren()[0];
-            CardLogic cardLogic = cardBody as CardLogic;
-            if (cardLogic == null) throw new Exception("Your coding skills are terrible, Cardlogic is null");
-            cardLogic.CardId = cardInput.Id;
-            
+
             // Set card stats and headers
             for (int i = 0; i < statsName.Length; i++)
             {
@@ -82,10 +41,50 @@ namespace TFTAtHome.util
                 node.Text = cardHeaderValues[i];
             }
 
-            Texture2D newTexture = (Texture2D)GD.Load($"res://{cardInput.CardImgSrc}");
+            Texture2D newTexture = (Texture2D)GD.Load($"res://{cardObj.CardImgSrc}");
             Texture2D scaledTexture = RenderUtil.ResizeTexture(newTexture, 300f, 300f);
 
             Sprite2D sprite2D = (Sprite2D)GetNodeFromCard(card2D, "CardImg");
+            
+            sprite2D.Texture = scaledTexture;
+            return card;
+        }
+
+        public static NiceCard CreateGodotCard(this Card cardInput, float scale)
+        {
+            string[] cardHeader = { "CardTitle", "CardName" };
+            string[] cardHeaderValues = { cardInput.CardTitle, cardInput.CardName };
+            string[] statsName = { "Early", "Mid", "Late", "Trait", "Cost" };
+            string[] statValues = cardInput.GetStatsValuesAsString();
+
+            // Create the card node
+            NiceCard card = cardScene.Instantiate() as NiceCard;
+            
+            card.ApplyScale(new Vector2(scale, scale));
+            
+            // Assigning Card Id to CardLogic
+            var cardBody = card.GetChildren()[0];
+            CardLogic cardLogic = cardBody as CardLogic;
+            if (cardLogic == null) throw new Exception("Your coding skills are terrible, Cardlogic is null");
+            cardLogic.CardId = cardInput.Id;
+            
+            // Set card stats and headers
+            for (int i = 0; i < statsName.Length; i++)
+            {
+                Label node = (Label)GetNodeFromCard(card, statsName[i]);
+                node.Text = statValues[i];
+            }
+
+            for (int i = 0; i < cardHeader.Length; i++)
+            {
+                Label node = (Label)GetNodeFromCard(card, cardHeader[i]);
+                node.Text = cardHeaderValues[i];
+            }
+
+            Texture2D newTexture = (Texture2D)GD.Load($"res://{cardInput.CardImgSrc}");
+            Texture2D scaledTexture = RenderUtil.ResizeTexture(newTexture, 300f, 300f);
+
+            Sprite2D sprite2D = (Sprite2D)GetNodeFromCard(card, "CardImg");
 
             sprite2D.Texture = scaledTexture;
             return card;

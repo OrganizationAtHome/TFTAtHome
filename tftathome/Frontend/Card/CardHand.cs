@@ -191,4 +191,19 @@ public partial class CardHand : NiceCardHand {
     private double CalcRealisticHandWidthSize(float length, int cardCount) {
         return length * (1 - 1 / Math.Pow(1.15, cardCount));
     }
+    
+    public void AddCardToHand(NiceCard card) {
+        if (card == null) {
+            GD.PushError("Cannot add card to hand: card is null. In CardHand.AddCardToHand");
+            return;
+        }
+            
+        
+        if (card.GetParent() != null)
+            card.GetParent().RemoveChild(card);
+        CardSpace.AddChild(card);
+        Shuffle(!GetGroups().Contains("Fanless"));
+        card.SetZIndex(0);
+        card.Scale = new Vector2(1, 1);
+    }
 }
