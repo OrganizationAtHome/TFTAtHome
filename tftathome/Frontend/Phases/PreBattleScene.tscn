@@ -39,17 +39,33 @@ size_flags_horizontal = 4
 texture = ExtResource("1_skx8a")
 expand_mode = 1
 
-[node name="CardHandEnemy" type="StaticBody2D" parent="."]
-position = Vector2(1117, 145)
+[node name="CardHandEnemy" type="StaticBody2D" parent="." groups=["hasColor"]]
+position = Vector2(1118, 91)
 rotation = 1.5708
 script = ExtResource("5_vl8ev")
 
 [node name="CardSpace" type="CollisionShape2D" parent="CardHandEnemy"]
-position = Vector2(-76, -3.99972)
 rotation = 1.5708
 scale = Vector2(0.5, 0.5)
 shape = SubResource("RectangleShape2D_quxlf")
 debug_color = Color(0.936741, 0.234543, 0.242137, 0.42)
+
+[node name="CardHandColor" type="ColorRect" parent="CardHandEnemy"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -99.0016
+offset_top = -442.0
+offset_right = 98.8934
+offset_bottom = 441.17
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(99.0045, 441.991)
+mouse_filter = 2
+color = Color(0.937255, 0.235294, 0.243137, 0.419608)
+metadata/_edit_use_anchors_ = true
 
 [node name="CardPlatform" parent="." groups=["battlefieldPlatform", "droppable"] instance=ExtResource("3_6f4ro")]
 position = Vector2(806, 583)
@@ -151,15 +167,31 @@ script = ExtResource("5_vl8ev")
 scale = Vector2(0.5, 0.5)
 shape = SubResource("RectangleShape2D_quxlf")
 
-[node name="CardHandMe" type="StaticBody2D" parent="."]
-position = Vector2(1116, 819)
+[node name="CardHandMe" type="StaticBody2D" parent="." groups=["droppable", "hasColor"]]
+position = Vector2(1115, 870)
 input_pickable = true
 script = ExtResource("5_vl8ev")
 
 [node name="CardSpace" type="CollisionShape2D" parent="CardHandMe"]
-position = Vector2(0, 72)
 scale = Vector2(0.5, 0.5)
 shape = SubResource("RectangleShape2D_quxlf")
+
+[node name="CardHandColor" type="ColorRect" parent="CardHandMe"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -442.0
+offset_top = -100.0
+offset_right = 441.51
+offset_bottom = 99.135
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(442, 100)
+mouse_filter = 2
+color = Color(0, 0.6, 0.701961, 0.419608)
+metadata/_edit_use_anchors_ = true
 
 [node name="P2EffectButtons" type="GridContainer" parent="."]
 offset_left = 1565.0

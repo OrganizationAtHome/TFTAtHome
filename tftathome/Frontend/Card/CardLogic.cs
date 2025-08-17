@@ -29,19 +29,19 @@ public partial class CardLogic : Node2D {
     }
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
-    public async override void _Process(double delta) {
+    public override void _Process(double delta) {
         var rootCard = this.CardRoot();
         NicePlatform platform = rootCard.Platform;
-        CardHand handCard = platform.CardHand;
-        var isMousedOver = IsMouseOverPlatform(platform.platformCollision);
+        CardHand CardHand = platform.CardHand;
+        var isMousedOver = IsMouseOverCollision(platform.platformCollision);
         if (!isDragging && queueIsDraggable && isMousedOver) {
             isDraggable = true;
             queueIsDraggable = false;
         }
         
         
-        if (handCard != null && platform.IsInGroup("handPlatform")) {
-            NiceCard targettedCard = handCard.LastCardTargetted;
+        if (CardHand != null && platform.IsInGroup("handPlatform")) {
+            NiceCard targettedCard = CardHand.LastCardTargetted;
             if (targettedCard != null && !this.Equals(targettedCard.CardBody)) {
                 return;
             }
@@ -87,6 +87,7 @@ public partial class CardLogic : Node2D {
                     var platformFrom = rootCard.Platform; 
                     tween.TweenProperty(rootCard, "position", new Vector2(0, 0), 0.15).SetEase(Tween.EaseType.Out);
 
+
                     var isHandPlatform = platformFrom.GetGroups().Contains("handPlatform");
                     if (!platformFrom.IsInGroup("droppable") && !isHandPlatform) {
                         return;
@@ -94,15 +95,18 @@ public partial class CardLogic : Node2D {
                     
                     // Case for moving card to battlefield (from CardHand)
                     if (isHandPlatform) {
-                        
                         platformTo.AddCardToPlatform(rootCard, platformFrom, true);
-                        handCard.Shuffle();// CardHand have changed card amount, so we need to shuffle
+                        CardHand.Shuffle();// CardHand have changed card amount, so we need to reshuffle
                         HardReset();
                         // Case for switching card positions 
                     } else if (platformFrom.GetGroups().Contains("battlefieldPlatform") && platformTo?.CardRoot != null) {
                         platformFrom.CardRoot.Position = new Vector2(0, 0);
                         platformTo.SwitchCardPlatforms(platformFrom);
-                    } else {
+                        // Case for adding card to CardHand
+                    } else if (InstanceFromId(bodyRef) is CardHand fetchedCardHand && IsMouseOverCollision(fetchedCardHand.GetCollisionShape())) {
+                        fetchedCardHand.AddCardToHand(platformFrom.CardRoot);
+                    } else if (platformTo != null && platformTo.CardRoot == null) {
+                        // Case for moving card to another empty platform 
                         platformFrom.CardRoot.Position = new Vector2(0, 0);
                         platformTo.AddCardToPlatform(rootCard, true);
                     }
@@ -147,13 +151,16 @@ public partial class CardLogic : Node2D {
         }
     }
     private void OnArea2DBodyEntered(Node2D platformTo) {
-        if (platformTo is not CardPlatform platformTo2) {
-            return;
-        }
+        var platformTo2 = platformTo as CardPlatform;
         var platformFrom = CardRoot().Platform;
-        if (platformTo.IsInGroup("droppable") && CardRoot().Platform != platformTo && 
+        
+        if (platformTo2 != null && platformTo.IsInGroup("droppable") && CardRoot().Platform != platformTo && 
             (platformTo2.CardRoot == null || (!platformFrom.GetGroups().Contains("handPlatform") && platformTo2.CardRoot != null))) {
             GD.Print("Body entered");
+            isInsideDroppable = true;
+            bodyRef = platformTo.GetInstanceId();
+        } else if (platformTo is CardHand) {
+            GD.Print("cardhand entered");
             isInsideDroppable = true;
             bodyRef = platformTo.GetInstanceId();
         }
@@ -174,7 +181,7 @@ public partial class CardLogic : Node2D {
     }
 
     private Boolean SoftReset() {
-        if (!IsMouseOverPlatform(CardRoot().CardCollision)) {
+        if (!IsMouseOverCollision(CardRoot().CardCollision)) {
             isDraggable = false;
             isInsideDroppable = false;
             QueuedForClick = false;
@@ -194,7 +201,7 @@ public partial class CardLogic : Node2D {
         }
     }
 
-    private bool IsMouseOverPlatform(CollisionShape2D collision)
+    private bool IsMouseOverCollision(CollisionShape2D collision)
     {
         var oldRect = collision.Shape.GetRect();
         var rect = new Rect2(oldRect.Position, new Vector2(oldRect.Size.X*collision.GlobalScale.X, oldRect.Size.Y*collision.GlobalScale.Y));

@@ -9,6 +9,10 @@ public partial class NiceCardHand : StaticBody2D {
     public CollisionShape2D CardSpace {
         get => GetNodeOrNull("CardSpace") as CollisionShape2D;
     }
+    
+    public ColorRect ColorRect {
+        get => GetNodeOrNull("CardHandColor") as ColorRect;
+    }
 
     public List<CardPlatform> Platforms {
         get {

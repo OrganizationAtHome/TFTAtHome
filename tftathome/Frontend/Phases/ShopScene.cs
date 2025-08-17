@@ -22,7 +22,7 @@ public partial class ShopScene : Node2D {
 					cost1CardHand.AddCardToHand(card.CreateGodotCard(1f));
 					break;
 				case 2:
-					var card2 = CardUtil.CreateGodotCard(card, 1f) as NiceCard;
+					var card2 = CardUtil.CreateGodotCard(card, 1f);
 					cost2CardHand.AddCardToHand(card2);
 					break;
 			}

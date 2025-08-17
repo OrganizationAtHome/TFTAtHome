@@ -10,7 +10,7 @@ using static TFTAtHome.Frontend.Singletons.CardNodeNameSingleton;
 
 public partial class CardHand : NiceCardHand {
     public NiceCard LastCardTargetted;
-    public NiceCard LastLastCardTargetted;
+    private NiceCard LastLastCardTargetted;
     private NiceCard lastCard = null;
     private double totalCardWidth;
     const float highlightSpeed = 0.15f;
@@ -24,15 +24,24 @@ public partial class CardHand : NiceCardHand {
     
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta) {
+
+        
         if (!CardLogic.isDragging) {
             
+            if (GetGroups().Contains("hasColor"))
+                ColorRect.SetVisible(false);
             CardPlatform platformtarget = PlatformTargettingSystem();
             if (platformtarget != null && !platformtarget.CardRoot.Equals(lastCard)) {
                 LastLastCardTargetted = LastCardTargetted;
                 LastCardTargetted = platformtarget.CardRoot;
                 lastCard = platformtarget.CardRoot;
             } 
+        } else {
+            if (GetGroups().Contains("hasColor"))
+                ColorRect.SetVisible(true);
         }
+        
+        
     }
 
     public CardPlatform PlatformTargettingSystem() {
@@ -211,4 +220,6 @@ public partial class CardHand : NiceCardHand {
         card.SetZIndex(0);
         card.Scale = new Vector2(1, 1);
     }
+
+    public CollisionShape2D GetCollisionShape() { return GetNode("CardSpace") as CollisionShape2D; }
 }
