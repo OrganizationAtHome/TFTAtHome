@@ -147,6 +147,20 @@ namespace TFTAtHome.util
                 buttonContainer.RemoveChild(button);
             };
         }
+        
+        public static void SetupNextRoundButton(GridContainer diceResultsP1, GridContainer diceResultsP2, Control buttonControl, Match match)
+        {
+            Button nextRoundBtn = new Button();
+            nextRoundBtn.Text = "Next Round";
+            nextRoundBtn.Size = new Vector2(100, 50);
+            buttonControl.AddChild(nextRoundBtn);
+            nextRoundBtn.Pressed += () =>
+            {
+                diceResultsP1.RemoveAllChildren();
+                diceResultsP2.RemoveAllChildren();
+                match.NextRound();
+            };
+        }
 
         /** 
          THIS METHOD NEEDS TO BE EDITED TO WORK WITH THE PROPER SCENE, RIGHT NOW IT IS USING THE TEST SCENE

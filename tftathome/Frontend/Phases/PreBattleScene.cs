@@ -41,6 +41,8 @@ public partial class PreBattleScene : Node2D
     GridContainer P2EffectButtons { get; set; }
     [Export]
     GridContainer ScoreBoard { get; set; }
+    [Export]
+    Control NextRoundButtonControl { get; set; }
 
     Label RoundStatusLabel { get; set; }
     [Export]
@@ -372,8 +374,6 @@ public partial class PreBattleScene : Node2D
         {
             PlayerTotals.RemoveChild(child);
         }
-        GD.Print("PlayerTotals1: " + totals[0].ToString());
-        GD.Print("PlayerTotals2: " + totals[1].ToString());
         Label p1Total = new Label();
         Label p2Total = new Label();
         
@@ -439,5 +439,7 @@ public partial class PreBattleScene : Node2D
         ScoreBoard.AddChild(phase);
         ScoreBoard.AddChild(round);
         ScoreBoard.AddChild(winner);
+        
+        MatchUtil.SetupNextRoundButton(P1EffectButtons, P2EffectButtons, NextRoundButtonControl, match);
     }
 }
