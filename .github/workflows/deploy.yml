@@ -13,7 +13,7 @@ jobs:
     steps: 
     - name: install dependencies and libraries
       run: |
-        sudo snap install godot
+        sudo snap install godot --classic
     - name: idk yet
       run: | 
         godot --headless --export-release "WinClient" /var/builds/project
