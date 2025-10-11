@@ -42,7 +42,7 @@ namespace TFTAtHome.Backend.models.Matches
             Player1Effects = new PlayerCardEffects(player1);
             Player2Effects = new PlayerCardEffects(player2);
             Rounds = new List<Round>();
-            RoundNumber = 1;
+            RoundNumber = 0;
             UsedMatchEffects = new List<MatchEffect>();
             DisabledTraits = new List<string>();
             EffectNotifier.OnEffectUsed += OnEffectUsed;
@@ -81,7 +81,7 @@ namespace TFTAtHome.Backend.models.Matches
         {
             Round initialRound = new EffectRound(this);
             Rounds.Add(initialRound);
-            this.CurrentRound = initialRound;
+            CurrentRound = initialRound;
             SetupRounds();
             SetCardStatsForMatchForPlayer(Player1);
             SetCardStatsForMatchForPlayer(Player2);
@@ -94,7 +94,7 @@ namespace TFTAtHome.Backend.models.Matches
         private void SetupRounds()
         {
             Dictionary<string, int[]> phases = new Dictionary<string, int[]>();
-            phases.Add("Early", new int[] { 1, 2, 3 });
+            phases.Add("Early", new int[] { 1, 2 });
             phases.Add("Mid", new int[] { 1, 2 });
             phases.Add("Late", new int[] { 1, 2, 3 });
             foreach (KeyValuePair<string, int[]> phase in phases)
@@ -170,6 +170,14 @@ namespace TFTAtHome.Backend.models.Matches
             }
             return round.GetDiceResultsP2();
         }
+
+        // Remove me please
+        // public void GoToNextRound()
+        // {
+        //     int roundIndex = ++RoundNumber;
+        //     CurrentRound = Rounds[roundIndex];
+        //     DiceNotifier.NotifyMustThrowDice(Player1);
+        // }
         
         private void SetCardStats(List<Card> currentPlayerCardsOnBoard, bool p1)
         {
@@ -241,8 +249,28 @@ namespace TFTAtHome.Backend.models.Matches
         private void OnEffectUsed(int cardId)
         {
             var nextPlayer = GetPlayerThatCanUseNextEffect();
-            int length = CurrentCardsOnBoardP1.Count;
             foreach (var card in CurrentCardsOnBoardP1)
+            {
+                if (card.Id == cardId)
+                {
+                    var currentEffectRound = CurrentRound as EffectRound;
+                    if (currentEffectRound == null) throw new Exception("CurrentRound is null you absolute piece of shit in OnEffectUsed in Match");
+                    UseMatchEffectOnCard(card, currentEffectRound.CurrentEffect);
+                    currentEffectRound.IsUsingEffect = false;
+                    currentEffectRound.CurrentEffect = null;
+                    EffectNotifier.NotifyCardEffectUpdate(nextPlayer);
+                    if (nextPlayer == null)
+                    {
+                        GD.Print("All effects have been used");
+                        RoundNumber++;
+                        CurrentRound = Rounds[RoundNumber];
+                        var normalCurrentRound = CurrentRound as NormalRound;
+                        RoundNotifier.UpdatePlayerTotalsFrontend(normalCurrentRound.TotalStatsBothPlayersCurrentPhase());
+                        DiceNotifier.NotifyMustThrowDice(nextPlayer);
+                    }
+                }
+            }
+            foreach (var card in CurrentCardsOnBoardP2)
             {
                 if (card.Id == cardId)
                 {
@@ -259,26 +287,6 @@ namespace TFTAtHome.Backend.models.Matches
                         CurrentRound = Rounds[RoundNumber];
                         var normalCurrentRound = CurrentRound as NormalRound;
                         RoundNotifier.UpdatePlayerTotalsFrontend(normalCurrentRound.TotalStatsBothPlayersCurrentPhase());
-                        DiceNotifier.NotifyMustThrowDice(nextPlayer);
-                    }
-                }
-            }
-            int length2 = CurrentCardsOnBoardP2.Count;
-            foreach (var card in CurrentCardsOnBoardP2)
-            {
-                if (card.Id == cardId)
-                {
-                    var currentEffectRound = CurrentRound as EffectRound;
-                    if (currentEffectRound == null) throw new Exception("CurrentRound is null you absolute piece of filth in OnEffectUsed in Match");
-                    UseMatchEffectOnCard(card, currentEffectRound.CurrentEffect);
-                    currentEffectRound.IsUsingEffect = false;
-                    currentEffectRound.CurrentEffect = null;
-                    EffectNotifier.NotifyCardEffectUpdate(nextPlayer);
-                    if (nextPlayer == null)
-                    {
-                        GD.Print("All effects have been used");
-                        RoundNumber++;
-                        CurrentRound = Rounds[RoundNumber];
                         DiceNotifier.NotifyMustThrowDice(nextPlayer);
                     }
                 }
@@ -301,7 +309,6 @@ namespace TFTAtHome.Backend.models.Matches
             var currentEffectRound = CurrentRound as EffectRound;
             if (currentEffectRound == null) throw new Exception("CurrentRound is null you absolute piece of filth in OnGeniusEffectUsed in Match");
             UseMatchEffectOnCard(card, currentEffectRound.CurrentEffect);
-            
         }
 
         // HELPER METHODS
@@ -309,6 +316,18 @@ namespace TFTAtHome.Backend.models.Matches
         {
             return p1 ? Player1Hand.Count : Player2Hand.Count;
         }
+        
+        public void NextRound()
+        {
+            CurrentRound = Rounds[++RoundNumber];
+            var normalCurrentRound = CurrentRound as NormalRound;
+            if (normalCurrentRound == null)
+            {
+                throw new NullReferenceException("NextRound method gives nullpointer exception. The current round for match seems to be null");
+            }
+            RoundNotifier.UpdatePlayerTotalsFrontend(normalCurrentRound.TotalStatsBothPlayersCurrentPhase());
+            DiceNotifier.NotifyMustThrowDice(Player1);
+        } 
 
         private bool CheckLeaderBonus(List<Card> currentBoardPlayer, bool p1)
         {

@@ -60,6 +60,7 @@ namespace TFTAtHome.Backend.models.Rounds
                 int p1Total = diceResultsP1[0] + diceResultsP1[1] + GetTotalStatsP1(Phase);
                 int p2Total = diceResultsP2[0] + diceResultsP2[1] + GetTotalStatsP2(Phase);
                 int[] totals = { p1Total, p2Total };
+                Winner = GetWinnnerForRound();
                 RoundNotifier.UpdatePlayerTotalsFrontend(totals);
             }
         }

@@ -10,8 +10,10 @@ namespace TFTAtHome.Backend.models.Rounds
     public abstract class Round
     {
         protected Match match;
+        public Guid Id;
         public Round(Match match)
         {
+            Id = Guid.NewGuid();
             this.match = match;
         }
     }
