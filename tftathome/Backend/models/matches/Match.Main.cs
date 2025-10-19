@@ -328,6 +328,70 @@ namespace TFTAtHome.Backend.models.Matches
             RoundNotifier.UpdatePlayerTotalsFrontend(normalCurrentRound.TotalStatsBothPlayersCurrentPhase());
             DiceNotifier.NotifyMustThrowDice(Player1);
         } 
+        
+        public Player GetMatchWinner()
+        {
+            if (GetWinsInRowForPlayer(Player1) == 4)
+            {
+                return Player1;
+            } 
+            if (GetWinsInRowForPlayer(Player2) == 4)
+            {
+                return Player2;
+            }
+            
+            int p1Wins = 0;
+            int p2Wins = 0;
+            
+            foreach (var round in Rounds)
+            {
+                var normalRound = round as NormalRound;
+                if (normalRound != null)
+                {
+                    try
+                    {
+                        var roundWinner = normalRound.GetWinnnerForRound();
+                        if (roundWinner == Player1)
+                        {
+                            p1Wins++;
+                        } else if (roundWinner == Player2)
+                        {
+                            p2Wins++;
+                        }
+                    }
+                    catch (Exception) { }
+                }
+            }
+            Player winner = null;
+            if (p1Wins == 4)
+            {
+                return Player1;
+            }
+            if (p2Wins == 4)
+            {
+                return Player2;
+            }
+            return null;
+        }
+
+        private int GetWinsInRowForPlayer(Player player)
+        {
+            int winsInRowCounter = 0;
+            int MaxWinsInRow = 0;
+            foreach (var round in Rounds)
+            {
+                var normalRound = round as NormalRound;
+                if (normalRound != null && normalRound.Winner != null && normalRound.Winner == player)
+                {
+                    winsInRowCounter++;
+                } else if (winsInRowCounter > 0)
+                {
+                    MaxWinsInRow = MaxWinsInRow < winsInRowCounter ? winsInRowCounter : MaxWinsInRow;
+                    winsInRowCounter = 0;
+                }
+            }
+            return MaxWinsInRow;
+        } 
 
         private bool CheckLeaderBonus(List<Card> currentBoardPlayer, bool p1)
         {
